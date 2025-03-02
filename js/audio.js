@@ -11,6 +11,12 @@ let backgroundMusic = new Audio('audio/game.mp3');
 let gameWon = new Audio('audio/game_won.mp3');
 
 /**
+ * Audio element for the yes sound.
+ * @type {HTMLAudioElement}
+ */
+let yesSound = new Audio('audio/yes.mp3');
+
+/**
  * Audio element for the game lost sound.
  * @type {HTMLAudioElement}
  */
@@ -34,6 +40,7 @@ let backgroundMusicMuted = false;
 function gameWonSound() {
     if (!isGameMuted) {
         gameWon.play();
+        yesSound.play();
     }
 }
 
