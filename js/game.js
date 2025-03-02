@@ -1,6 +1,8 @@
 let canvas;
 let world;
 let gameActive = true;
+let gameOver = false;
+let bossEscaped = false;
 let keyboard = new Keyboard();
 let intervals = [];
 
@@ -89,7 +91,7 @@ function showEndScreen() {
     const mobileButtonContainer = document.querySelector('.mobile-button-container');
     if (world.isEndbossDefeated()) {
         showGameWonScreen(endScreen, mobileButtonContainer);
-    } else if (world.isCharacterDead()) {
+    } else if (world.isCharacterDead() || bossEscaped) {
         showGameLostScreen(endScreen, mobileButtonContainer);
     }
     endScreen.style.display = 'flex';

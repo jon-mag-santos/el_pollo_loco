@@ -19,7 +19,6 @@ class World {
     collectedCoins = 0;
     DKeyPressed = false;
     showEndbossHealthbar = false;
-    gameOver = false;
     canThrowBottle = true;
 
     constructor(canvas, keyboard) {
@@ -48,6 +47,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollisions();
             this.checkBottleHitEndbossCollisions();
+            this.isEndbossEscaped();
         }, 10);
     }
 
@@ -263,6 +263,22 @@ class World {
     }
 
     /**
+     *  Checks if endboss escaped
+     */
+
+    isEndbossEscaped() {
+        if( this.level.endboss[0].x <= 0) {
+           gameActive = false;
+           bossEscaped = true;
+           showEndScreen()
+
+           setInterval(() => {
+            this.level.endboss[0].x = 5000;
+           }, 1000);
+        }
+    }
+
+    /**
      * Checks if the character is dead (out of energy).
      */
     isCharacterDead() {
@@ -273,8 +289,8 @@ class World {
      * Ends the game by setting the game over state, resetting collected bottles, clearing throwable objects and displaying the end screen.
      */
     endGame() {
-        if (!this.gameOver) {
-            this.gameOver = true;
+        if (!gameOver) {
+            gameOver = true;
             this.bottleBar.setCollectedBottles(0);
             this.throwableObjects = [];
             showEndScreen();
