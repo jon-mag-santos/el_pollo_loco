@@ -3,7 +3,7 @@
  * @extends MoveableObject
  */
 
-class Chick extends MoveableObject {
+class Snake extends MoveableObject {
     y = 350;
     height = 80;
     width = 70;
