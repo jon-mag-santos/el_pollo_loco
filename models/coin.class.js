@@ -16,7 +16,7 @@ class Coin extends MoveableObject {
         this.loadImages(this.IMAGES_COINS);
         this.loadImage('img/8_coin/coin_1.png');
         this.x = x + 500;
-        this.y = y;
+        this.y = y * Math.random();
         this.width = 100;
         this.height = 100;
         this.offset = {
