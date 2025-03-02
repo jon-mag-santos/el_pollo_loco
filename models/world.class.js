@@ -10,6 +10,7 @@ class World {
     bottleBar = new BottleBar();
     endbossHealthbar = new EndbossHealthbar();
     statusBar = new Statusbar();
+    gameOver = false;
     throwableObjects = [];
     level = level1;
     canvas;
@@ -289,8 +290,8 @@ class World {
      * Ends the game by setting the game over state, resetting collected bottles, clearing throwable objects and displaying the end screen.
      */
     endGame() {
-        if (!gameOver) {
-            gameOver = true;
+        if (!this.gameOver) {
+            this.gameOver = true;
             this.bottleBar.setCollectedBottles(0);
             this.throwableObjects = [];
             showEndScreen();

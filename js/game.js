@@ -1,7 +1,6 @@
 let canvas;
 let world;
 let gameActive = true;
-let gameOver = false;
 let bossEscaped = false;
 let keyboard = new Keyboard();
 let intervals = [];
