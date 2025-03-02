@@ -20,3 +20,4 @@ To run the game locally, follow these steps:
 - Press the spacebar to jump.
 - Press the 'D' key to throw the collected salsa bottles.
 
+IDEALIZED BY JONAS MAGALHAES DOS SANTOS
