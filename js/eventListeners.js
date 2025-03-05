@@ -5,26 +5,24 @@
 window.addEventListener("keydown", (event) => {
     if (!gameActive) return;
 
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-    if (event.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-
-    if (event.keyCode == 38) {
+    if (event.code == 'ArrowUp')
         keyboard.UP = true;
-    }
-    if (event.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
 
-    if (event.keyCode == 32) {
+    if (event.code == 'ArrowDown')
+        keyboard.DOWN = true;
+
+    if (event.code == 'ArrowLeft')
+        keyboard.LEFT = true;
+
+    if (event.code == 'ArrowRight')
+        keyboard.RIGHT = true;
+
+    if (event.code == 'Space')
         keyboard.SPACE = true;
-    }
-    if (event.keyCode == 68) {
+
+    if (event.code == 'KeyD')
         keyboard.D = true;
-    }
+    
 });
 
 /**
@@ -34,26 +32,24 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("keyup", (event) => {
     if (!gameActive) return;
 
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-    if (event.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (event.keyCode == 38) {
+    if (event.code == 'ArrowUp')
         keyboard.UP = false;
-    }
-    if (event.keyCode == 40) {
+    
+    if (event.code == 'ArrowDown')
         keyboard.DOWN = false;
-    }
 
-    if (event.keyCode == 32) {
+    if (event.code == 'ArrowLeft')
+        keyboard.LEFT = false;
+
+    if (event.code == 'ArrowRight')
+        keyboard.RIGHT = false;
+
+    if (event.code == 'Space')
         keyboard.SPACE = false;
-    }
-    if (event.keyCode == 68) {
+
+    if (event.code == 'KeyD')
         keyboard.D = false;
-    }
+
 });
 
 /**
