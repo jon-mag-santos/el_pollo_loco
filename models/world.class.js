@@ -64,7 +64,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && enemy.energy > 0) {
                 if (this.character.isAboveGround() && this.character.speedY < 0) {
-                    this.handleCollisionAboveGround(enemy);
+                    this.isCollisionAboveGround(enemy);
                 } else if (this.character.energy > 0) {
                     this.handleCollision();
                 }
@@ -223,7 +223,7 @@ class World {
     }
 
     /**
-     * Handles collisions between the character and enemies or end boss, reducing character's energy and updating the status bar.
+     * Check collisions between the character and enemies or end boss, reducing character's energy and updating the status bar.
      */
     handleCollision() {
         this.character.hit();
@@ -231,10 +231,10 @@ class World {
     }
 
     /**
-     * Handles the collision between the character and an enemy above the ground.
+     * Check the collision between the character and an enemy above the ground.
      * @param {Enemy} enemy - The enemy with which the character collided.
      */
-    handleCollisionAboveGround(enemy) {
+    isCollisionAboveGround(enemy) {
         enemy.energy--;
         this.character.jump();
         if (enemy.energy === 0) {
@@ -337,7 +337,7 @@ class World {
     }
 
     /**
-     * Draws the user interface (UI) elements such as the status bar, bottle bar, coin bar, and endboss health bar.
+     * Draws the status bar, bottle bar, coin bar, and endboss health bar.
      */
     drawUI() {
         this.addToMap(this.statusBar);
@@ -359,7 +359,7 @@ class World {
     }
 
     /**
-     * Draws various game objects including enemies, coins, endboss, bottles, clouds, and throwable objects.
+     * Draws game objects including enemies, coins, endboss, bottles, clouds, and throwable objects.
      */
     drawGameObjects() {
         this.ctx.translate(this.camera_x, 0);
