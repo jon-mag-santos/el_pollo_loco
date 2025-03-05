@@ -73,15 +73,6 @@ class Chick extends MoveableObject {
     playDeathAnimation() {
         this.stopIntervals();
         this.playAnimation(this.IMAGES_DEAD);
-        this.playSoundOnDeath();
-    }
-
-    /**
-    * Plays a sound effect when the chicken dies.
-    * Adjusts the volume and plays the sound effect.
-    */
-    playSoundOnDeath() {
-        this.death_sound.volume = 0.4;
         this.death_sound.play();
     }
 }
