@@ -43,7 +43,7 @@ class Snake extends MoveableObject {
 
 
     /**
-    * Initiates intervals for chicken movement and animation.
+    * Initiates intervals for snake movement and animation.
     */
     animate() {
         this.movementInterval = setInterval(() => {
@@ -61,7 +61,7 @@ class Snake extends MoveableObject {
 
 
     /**
-    * Stops the chickens movement and animation intervals.
+    * Stops the snakes movement and animation intervals.
     */
     stopIntervals() {
         clearInterval(this.movementInterval);
@@ -70,7 +70,7 @@ class Snake extends MoveableObject {
 
 
     /**
-    * Initiates the death animation for the chicken.
+    * Initiates the death animation for the snake.
     * Stops movement and plays the death animation and sound.
     */
     playDeathAnimation() {

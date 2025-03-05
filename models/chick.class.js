@@ -40,7 +40,7 @@ class Chick extends MoveableObject {
 
 
     /**
-    * Initiates intervals for chicken movement and animation.
+    * Initiates intervals for small chicken movement and animation.
     */
     animate() {
         this.movementInterval = setInterval(() => {
@@ -58,7 +58,7 @@ class Chick extends MoveableObject {
 
 
     /**
-    * Stops the chickens movement and animation intervals.
+    * Stops the small chickens movement and animation intervals.
     */
     stopIntervals() {
         clearInterval(this.movementInterval);
@@ -67,7 +67,7 @@ class Chick extends MoveableObject {
 
 
     /**
-    * Initiates the death animation for the chicken.
+    * Initiates the death animation for the small chicken.
     * Stops movement and plays the death animation and sound.
     */
     playDeathAnimation() {
