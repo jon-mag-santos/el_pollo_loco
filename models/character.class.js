@@ -104,43 +104,43 @@ class Character extends MoveableObject {
      */
     animate() {
         intervals.push(setInterval(() => {
-            this.animateCharacter();
+            this.animatePepe();
         }, 1000 / 60));
 
         intervals.push(setInterval(() => {
-            this.animateCharacterState();
+            this.animatePepeState();
         }, 100));
     }
 
 
     /**
-    * Animates the character's basic movements.
+    * Pepe's basic movements.
     */
-    animateCharacter() {
-        this.handleIdleTimer();
-        this.handleWalking();
-        this.handleJumping();
-        this.handleCamera();
+    animatePepe() {
+        this.checkIdleTimer();
+        this.pepeWalking();
+        this.pepeJumping();
+        this.positionCamera();
     }
 
 
     /**
-    * Handles state transitions based on the character's current state.
+    * It manages state changes depending on the current state of Pepe
     */
-    animateCharacterState() {
+    animatePepeState() {
         if (this.isDead() && !this.world.gameOver) {
-            this.handleDeadState();
+            this.checkDeath();
         } else if (this.isHurt() && !this.world.gameOver) {
-            this.handleHurtState();
+            this.checkHurting();
         } else if (this.isAboveGround()) {
-            this.handleJumpingState();
+            this.checkingJumping();
         } else {
             if (this.idleTimer > this.longIdle) {
-                this.handleLongIdleState();
+                this.checkingLongIdle();
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.handleWalkingState();
+                this.checkingWalking();
             } else {
-                this.handleIdleState();
+                this.checkingIdle();
             }
         }
     }
@@ -149,7 +149,7 @@ class Character extends MoveableObject {
     /**
      * Updates the idle timer based on user input.
      */
-    handleIdleTimer() {
+    checkIdleTimer() {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
             this.idleTimer += 1000 / 120;
         } else {
@@ -159,9 +159,9 @@ class Character extends MoveableObject {
 
 
     /**
-     * Handles character movement (walking).
+     * Pepe movement (walking).
      */
-    handleWalking() {
+    pepeWalking() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
             this.otherDirection = false;
@@ -176,10 +176,10 @@ class Character extends MoveableObject {
 
 
     /**
-    * Handles character jumping.
+    * Pepe jumping.
     */
-    handleJumping() {
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+    pepeJumping() {
+        if ((this.world.keyboard.SPACE || this.world.keyboard.UP) && !this.isAboveGround()) {
             this.jump();
             this.idleTimer = 0;
         }
@@ -187,59 +187,59 @@ class Character extends MoveableObject {
 
 
     /**
-    * Handles the camera position based on character's x-coordinate.
+    * Camera position based on character's x-coordinate.
     */
-    handleCamera() {
+    positionCamera() {
         this.world.camera_x = -this.x + 100;
     }
 
 
     /**
-    * Handles character's state when dead.
+    * Check if character's state when dead.
     */
-    handleDeadState() {
+    checkDeath() {
         this.playAnimation(this.IMAGES_DEAD);
         this.world.endGame();
     }
 
 
     /**
-    * Handles character's state when hurt.
+    * Check pepe's state when hurt.
     */
-    handleHurtState() {
+    checkHurting() {
         this.playAnimation(this.IMAGES_HURT);
         this.hurt_sound.play();
     }
 
 
     /**
-    * Handles character's state when jumping.
+    * Check Pepe's state when jumping.
     */
-    handleJumpingState() {
+    checkingJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
     }
 
 
     /**
-    * Handles character's state during long idle periods.
+    * Check Pepe's state during long idle periods.
     */
-    handleLongIdleState() {
+    checkingLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
     
     /**
-    * Handles character's state during walking periods.
+    * Check Pepe's state during walking periods.
     */
-    handleWalkingState() {
+    checkingWalking() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
 
     /**
-    * Handles character's state when idle.
+    * Check Pepe's state when idle.
     */
-    handleIdleState() {
+    checkingIdle() {
         this.playAnimation(this.IMAGES_IDLE);
     }
 }
