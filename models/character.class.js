@@ -129,18 +129,18 @@ class Character extends MoveableObject {
     */
     animatePepeState() {
         if (this.isDead() && !this.world.gameOver) {
-            this.checkDeath();
+            this.playDeath();
         } else if (this.isHurt() && !this.world.gameOver) {
-            this.checkHurting();
+            this.isHurting();
         } else if (this.isAboveGround()) {
-            this.checkingJumping();
+            this.isJumping();
         } else {
             if (this.idleTimer > this.longIdle) {
-                this.checkingLongIdle();
+                this.isLongIdle();
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.checkingWalking();
+                this.isWalking();
             } else {
-                this.checkingIdle();
+                this.isIdle();
             }
         }
     }
@@ -197,7 +197,7 @@ class Character extends MoveableObject {
     /**
     * Check if character's state when dead.
     */
-    checkDeath() {
+    playDeath() {
         this.playAnimation(this.IMAGES_DEAD);
         this.world.endGame();
     }
@@ -206,7 +206,7 @@ class Character extends MoveableObject {
     /**
     * Check pepe's state when hurt.
     */
-    checkHurting() {
+    isHurting() {
         this.playAnimation(this.IMAGES_HURT);
         this.hurt_sound.play();
     }
@@ -215,7 +215,7 @@ class Character extends MoveableObject {
     /**
     * Check Pepe's state when jumping.
     */
-    checkingJumping() {
+    isJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
     }
 
@@ -223,7 +223,7 @@ class Character extends MoveableObject {
     /**
     * Check Pepe's state during long idle periods.
     */
-    checkingLongIdle() {
+    isLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
@@ -231,7 +231,7 @@ class Character extends MoveableObject {
     /**
     * Check Pepe's state during walking periods.
     */
-    checkingWalking() {
+    isWalking() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
@@ -239,7 +239,7 @@ class Character extends MoveableObject {
     /**
     * Check Pepe's state when idle.
     */
-    checkingIdle() {
+    isIdle() {
         this.playAnimation(this.IMAGES_IDLE);
     }
 }
