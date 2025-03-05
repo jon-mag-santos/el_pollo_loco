@@ -38,7 +38,7 @@ class EndbossHealthbar extends DrawableObject {
     setPercentage(bossEnergy) {
         this.bossEnergy = bossEnergy;
         let path;
-        if (this.bossEnergy === 120) {
+        if (this.bossEnergy === 100) {
             path = this.IMAGES_BOSS_HEALTH_FULL[0];
         } else {
             let percentage = (this.bossEnergy / 100) * 100;
