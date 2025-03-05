@@ -135,12 +135,18 @@ class Character extends MoveableObject {
         } else if (this.isAboveGround()) {
             this.isJumping();
         } else {
-            if (this.idleTimer > this.longIdle) {
-                this.isLongIdle();
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.isWalking();
-            } else {
-                this.isIdle();
+            if (!throwingBottle) { // Pepe does not idle, if he throws bottles!
+                if (this.idleTimer > this.longIdle) {
+                    this.isLongIdle();
+                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.isWalking();
+                } else {
+                    this.isIdle();
+                }
+            }else {
+                this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+                this.isIdle();   
+                this.idleTimer = 0; 
             }
         }
     }
@@ -227,7 +233,7 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
-    
+
     /**
     * Check Pepe's state during walking periods.
     */
