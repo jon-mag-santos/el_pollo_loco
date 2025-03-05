@@ -9,7 +9,7 @@ class Character extends MoveableObject {
     width = 100;
     speed = 8;
     idleTimer = 0;
-    IDLE_THRESHOLD = 2000;
+    longIdle = 2000;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -135,7 +135,7 @@ class Character extends MoveableObject {
         } else if (this.isAboveGround()) {
             this.handleJumpingState();
         } else {
-            if (this.idleTimer > this.IDLE_THRESHOLD) {
+            if (this.idleTimer > this.longIdle) {
                 this.handleLongIdleState();
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.handleWalkingState();
