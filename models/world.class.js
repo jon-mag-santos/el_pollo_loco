@@ -280,9 +280,9 @@ class World {
     }
 
     /**
-     * Checks if the character is dead (out of energy).
+     * Checks if Pepe is dead (out of energy).
      */
-    isCharacterDead() {
+    isPepeDead() {
         return this.character && this.character.energy <= 0;
     }
 

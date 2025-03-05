@@ -90,7 +90,7 @@ function showEndScreen() {
     const mobileButtonContainer = document.querySelector('.mobile-button-container');
     if (world.isEndbossDefeated()) {
         showGameWonScreen(endScreen, mobileButtonContainer);
-    } else if (world.isCharacterDead() || bossEscaped) {
+    } else if (world.isPepeDead() || bossEscaped) {
         showGameLostScreen(endScreen, mobileButtonContainer);
     }
     endScreen.style.display = 'flex';
