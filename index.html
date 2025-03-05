@@ -46,10 +46,10 @@
     <div id="canvas-container" class="canvas-container">
         <div id="startScreen" class="start-screen" style="display:flex">
             <div id="menu" class="menu">
-                <button class="button-99" onclick="init()">Play</button>
-                <button class="button-99" onclick="openControls()">Controls</button>
-                <button class="button-99" onclick="openStory()">Story</button>
-                <button class="button-99" onclick="openSettings()">Settings</button>
+                <button class="button-control" onclick="init()">Play</button>
+                <button class="button-control" onclick="openControls()">Controls</button>
+                <button class="button-control" onclick="openStory()">Story</button>
+                <button class="button-control" onclick="openSettings()">Settings</button>
             </div>
         </div>
         <div id="ig-menu" class="ingame-menu">
@@ -57,22 +57,22 @@
         </div>
         <div id="settingsScreen" class="settings-screen" style="display:none">
             <div class="button-container">
-                <button class="button-99" onclick="closeSettings()">Back</button>
+                <button class="button-control" onclick="closeSettings()">Back</button>
             </div>
             <div class="fs-centered">
                 <div class="screen-title">
                     <h2>Settings</h2>
                 </div>
                 <div id="settings" class="settings">
-                    <button class="button-99 fullscreen-toggle" onclick="toggleFullScreen()">Fullscreen On</button>
-                    <button id="music-toggle-button" class="button-99" onclick="toggleSoundAndImage()">Sound
+                    <button class="button-control fullscreen-toggle" onclick="toggleFullScreen()">Fullscreen On</button>
+                    <button id="music-toggle-button" class="button-control" onclick="toggleSoundAndImage()">Sound
                         On</button>
                 </div>
             </div>
         </div>
         <div id="controlsScreen" class="controls-screen">
             <div class="button-container">
-                <button class="button-99" onclick="closeControls()">Back</button>
+                <button class="button-control" onclick="closeControls()">Back</button>
             </div>
             <div class="fs-centered">
                 <div class="screen-title">
@@ -108,7 +108,7 @@
         </div>
         <div id="storyScreen" class="story-container" style="display:none">
             <div class="button-container">
-                <button class="button-99" onclick="closeStory()">Back</button>
+                <button class="button-control" onclick="closeStory()">Back</button>
             </div>
             <div class="fs-centered">
                 <div class="screen-title">
@@ -125,7 +125,7 @@
             </div>
         </div>
         <div id="endScreen" class="end-screen" style="display:none">
-            <button class="button-99" onclick="returnToMenu()">Back to Menu</button>
+            <button class="button-control" onclick="returnToMenu()">Back to Menu</button>
         </div>
         <div id="content" class="content" style="display:none">
             <canvas width="720" height="480" id="canvas"></canvas>
