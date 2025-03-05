@@ -84,7 +84,7 @@ class DrawableObject {
      * @param {number} percentage - The percentage value (0-100) used to determine the image index.
      * @returns {number} - The index of the image to use.
      */
-    resolveImagesIndex(percentage) {
+    findIndexPerc(percentage) {
         if (percentage >= 100) {
             return 5;
         } else if (percentage >= 80) {
