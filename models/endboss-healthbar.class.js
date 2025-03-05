@@ -15,7 +15,7 @@ class EndbossHealthbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png',
     ];
 
-    bossEnergy = 120;
+    bossEnergy = 100;
 
     constructor() {
         super();
