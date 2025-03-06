@@ -295,6 +295,6 @@ function toggleMobileButtonContainer() {
  * Toggle the in-game menu.
  */
 function toggleIngameMenu() {
-    const ingameMenu = document.getElementById('ig-menu');
-    ingameMenu.style.display = 'flex';
+    const inGameMenu = document.getElementById('ig-menu');
+    inGameMenu.style.display = 'flex';
 }
