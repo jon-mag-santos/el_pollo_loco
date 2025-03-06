@@ -1,7 +1,7 @@
 # El Pollo Loco - Jump&Run Game
 
 ## Description
-Game built with HTML, CSS, and JavaScript. The game features a character navigating through a level, collecting bottles and coins while battling enemies.
+Game built with HTML, CSS, and JavaScript that will make more than just children's hearts happy. The game features a character navigating through a level, collecting bottles and coins while battling enemies.
 
 ## Features
 - Interactive gameplay with keyboard controls.
