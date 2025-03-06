@@ -92,9 +92,9 @@ function mobileButtonTouch() {
     });
 
     throwButton.addEventListener("touchstart", (event) => {
+        throwingBottle = true; 
         event.preventDefault();
         keyboard.D = true;
-        throwingBottle = true;
     });
 
     throwButton.addEventListener("touchend", (event) => {
