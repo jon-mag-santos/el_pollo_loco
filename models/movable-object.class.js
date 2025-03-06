@@ -31,7 +31,7 @@ class MoveableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            if(this instanceof Character && this.y > 150){
+            if(this instanceof Character && this.y > 150){ // Keeping Pepe above the ground
                 this.y = 150;
             }
             return this.y < 150;  
