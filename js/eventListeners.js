@@ -109,5 +109,5 @@ document.addEventListener("msfullscreenchange", onFullscreenChange);
 window.addEventListener('DOMContentLoaded', () => {
     toggleRotateScreen();
 });
-window.addEventListener('orientationchange', toggleRotateScreen, toggleMobileButtonContainer, toggleIngameMenu);
-window.addEventListener('resize', toggleRotateScreen, toggleMobileButtonContainer, toggleIngameMenu);
+window.addEventListener('orientationchange', toggleRotateScreen, toggleMobileButtonContainer, toggleInGameMenu);
+window.addEventListener('resize', toggleRotateScreen, toggleMobileButtonContainer, toggleInGameMenu);
