@@ -19,7 +19,7 @@ function init() {
     hideScreens();
     toggleRotateScreen();
     mobileButtonTouch();
-    toggleIngameMenu();
+    toggleInGameMenu();
     toggleMobileButtonContainer();
     muteSounds();
 }
@@ -294,7 +294,7 @@ function toggleMobileButtonContainer() {
 /**
  * Toggle the in-game menu.
  */
-function toggleIngameMenu() {
+function toggleInGameMenu() {
     const inGameMenu = document.getElementById('ig-menu');
     inGameMenu.style.display = 'flex';
 }
