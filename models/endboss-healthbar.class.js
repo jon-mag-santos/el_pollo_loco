@@ -9,10 +9,10 @@ class EndbossHealthbar extends DrawableObject {
     IMAGES_BOSS_HEALTH = [
         'img/7_statusbars/2_statusbar_endboss/blue/0.png',
         'img/7_statusbars/2_statusbar_endboss/blue/20.png',
-        'iimg/7_statusbars/2_statusbar_endboss/blue/40.png',
-        'iimg/7_statusbars/2_statusbar_endboss/blue/60.png',
-        'iimg/7_statusbars/2_statusbar_endboss/blue/80.png',
-        'iimg/7_statusbars/2_statusbar_endboss/blue/100.png',
+        'img/7_statusbars/2_statusbar_endboss/blue/40.png',
+        'img/7_statusbars/2_statusbar_endboss/blue/60.png',
+        'img/7_statusbars/2_statusbar_endboss/blue/80.png',
+        'img/7_statusbars/2_statusbar_endboss/blue/100.png',
     ];
 
     bossEnergy = 100;
