@@ -86,13 +86,14 @@ function hideScreens() {
  * Show the end game screen.
  */
 function showEndScreen() {
-    gameActive = false;
     const endScreen = document.getElementById('endScreen');
     const mobileButtonContainer = document.querySelector('.mobile-button-container');
     if (world.isEndbossDefeated()) {
         showGameWonScreen(endScreen, mobileButtonContainer);
+        gameActive = false;
     } else if (world.isPepeDead() || bossEscaped) {
         showGameLostScreen(endScreen, mobileButtonContainer);
+         gameActive = false;
     }
     endScreen.style.display = 'flex';
     stopBackgroundMusic();
