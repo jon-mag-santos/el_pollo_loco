@@ -306,8 +306,8 @@ class World {
         this.clearCanvas();
         this.drawBackground();
         this.drawMainCharacter();
-        this.drawUI();
         this.drawGameObjects();
+        this.drawUI();
         requestAnimationFrameId = requestAnimationFrame(() => this.draw());
     }
 
