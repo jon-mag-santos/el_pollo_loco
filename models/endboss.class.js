@@ -150,7 +150,7 @@ class Endboss extends MoveableObject {
      * Lower energy results in increased speed variation.
      */
     updateSpeed() {
-        if (this.energy < 60) {
+        if (this.energy < 60 || bossEscaping) {
             this.speed = 24 + Math.random() * 1.2;
         } else {
             this.speed;

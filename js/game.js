@@ -2,6 +2,7 @@ let canvas;
 let world;
 let gameActive = true;
 let bossEscaped = false;
+let bossEscaping = false;
 let throwingBottle = false;
 let keyboard = new Keyboard();
 let intervals = [];
