@@ -196,7 +196,13 @@ class Character extends MoveableObject {
     * Camera position based on character's x-coordinate.
     */
     positionCamera() {
-        this.world.camera_x = -this.x + 100;
+        if (this.world.level.endboss[0].x > this.x) {
+            this.world.camera_x = -this.x + 100;
+        } else {
+            this.world.camera_x = -this.world.level.endboss[0].x ;
+        }
+            
+        
     }
 
 
