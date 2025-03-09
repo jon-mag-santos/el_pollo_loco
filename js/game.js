@@ -90,12 +90,11 @@ function showEndScreen() {
     const mobileButtonContainer = document.querySelector('.mobile-button-container');
     if (world.isEndbossDefeated()) {
         showGameWonScreen(endScreen, mobileButtonContainer);
-        gameActive = false;
     } else if (world.isPepeDead() || bossEscaped) {
-        showGameLostScreen(endScreen, mobileButtonContainer);
-         gameActive = false;
+        showGameLostScreen(endScreen, mobileButtonContainer);   
     }
     endScreen.style.display = 'flex';
+    gameActive = false;
     stopBackgroundMusic();
     stopAllIntervals();
 }
