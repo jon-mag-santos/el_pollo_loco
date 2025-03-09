@@ -11,7 +11,7 @@ window.addEventListener("keydown", (event) => {
     if (event.code == 'ArrowDown')
         keyboard.DOWN = true;
 
-    if (event.code == 'ArrowLeft')
+    if (event.code == 'ArrowLeft') 
         keyboard.LEFT = true;
 
     if (event.code == 'ArrowRight')
@@ -42,7 +42,7 @@ window.addEventListener("keyup", (event) => {
 
     if (event.code == 'ArrowLeft')
         keyboard.LEFT = false;
-
+        
     if (event.code == 'ArrowRight')
         keyboard.RIGHT = false;
 

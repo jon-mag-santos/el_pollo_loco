@@ -27,7 +27,7 @@ class ThrowableObject extends MoveableObject {
 
     ];
 
-    constructor(x, y) {
+    constructor(x, y, otherDirection) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_BOTTLE_ROTATION);
         this.loadImages(this.IMAGES_BOTTLE_SPLASH);
@@ -36,7 +36,7 @@ class ThrowableObject extends MoveableObject {
         this.height = 80;
         this.width = 65;
         this.throwInterval = null;
-        this.throw();
+        this.throw(otherDirection);
         this.animate();
         this.offset = {
             top: 10,
@@ -50,12 +50,29 @@ class ThrowableObject extends MoveableObject {
     /**
      * Throws the object with a specific trajectory and initiates animation.
      */
-    throw() {
+    throw(otherDirection) {
+        if (!otherDirection) {
+            this.speedY = 30;
+            this.speedX = 30;
+            this.applyGravity();
+            this.throwInterval = setInterval(() => {
+                this.x += 25;
+            }, 60);
+            this.playThrowSound();
+        } else
+            this.throwBack();
+    }
+
+    /**
+     * Throws the object back with a specific trajectory and initiates animation.
+     */
+    throwBack() {
+        this.x -= 100
         this.speedY = 30;
-        this.speedX = 30;
+        this.speedX = -30;
         this.applyGravity();
         this.throwInterval = setInterval(() => {
-            this.x += 25;
+            this.x -= 25;
         }, 60);
         this.playThrowSound();
     }

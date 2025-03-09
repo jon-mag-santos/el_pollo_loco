@@ -169,8 +169,8 @@ class World {
      * Checks if the character can throw a bottle and adds a throwable object to the game.
      */
     checkThrowObjects() {
-        if (this.keyboard.D && this.canThrowBottle && this.bottleBar.collectedBottles > 0 && !this.character.otherDirection) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        if (this.keyboard.D && this.canThrowBottle && this.bottleBar.collectedBottles > 0) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObjects.push(bottle);
             this.bottleBar.setCollectedBottles(this.bottleBar.collectedBottles - 1);
             this.canThrowBottle = false;
