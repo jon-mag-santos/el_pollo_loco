@@ -105,7 +105,8 @@ function toggleSoundAndImage() {
 function muteSounds() {
     if (backgroundMusic) {
         backgroundMusic.muted = isGameMuted;
-    }
+    }else
+        backgroundMusic.play();
     muteChickenSounds();
     muteCharacterSounds();
     muteEndbossSounds();
@@ -117,7 +118,7 @@ function muteSounds() {
 function muteChickenSounds() {
     if (world && world.level && world.level.enemies) {
         world.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Chicken) {
+            if (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Snake) {
                 enemy.death_sound.muted = isGameMuted;
             }
         });
