@@ -26,6 +26,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.character.energy = 100; //Assuring that the new game does not break after lost games
         this.draw();
         this.setWorld();
         this.run();
