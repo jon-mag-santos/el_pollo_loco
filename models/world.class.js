@@ -290,7 +290,7 @@ class World {
      * Ends the game by setting the game over state, resetting collected bottles, clearing throwable objects and displaying the end screen.
      */
     endGame() {
-        if (!this.gameOver) {
+        if (!this.gameOver && this.isPepeDead()) {
             this.gameOver = true;
             this.bottleBar.setCollectedBottles(0);
             this.throwableObjects = [];
