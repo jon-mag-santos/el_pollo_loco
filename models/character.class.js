@@ -196,7 +196,7 @@ class Character extends MoveableObject {
     * Camera position based on character's x-coordinate & endboss' x-coordinate when this is escaping.
     */
     positionCamera() {
-        if (this.world.level.endboss[0].x > this.x) {
+        if (this.world.level.endboss[0].x > this.x - 100) {
             this.world.camera_x = -this.x + 100;
             bossEscaping = false;
         } else {
