@@ -1,5 +1,5 @@
 /**
- * Global variable for detection of mobile devices.
+ * Global variable for detection of mobile devices based on window dimension.
  */
 const isMobileDevice = window.innerWidth <= 1368;
 
