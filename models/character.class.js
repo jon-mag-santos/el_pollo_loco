@@ -119,38 +119,10 @@ class Character extends MoveableObject {
         this.checkIdleTimer();
         this.pepeWalking();
         this.pepeJumping();
-        this.positionCamera();
+        this.positionCameraX();
     }
 
-
-    /**
-    * Function to manage the state changes depending on the current state of Pepe
-    */
-    animatePepeState() {
-        if (this.isDead() && !this.world.gameOver) {
-            this.playDeath();
-        } else if (this.isHurt() && !this.world.gameOver) {
-            this.isHurting();
-        } else if (this.isAboveGround()) {
-            this.isJumping();
-        } else {
-            if (!throwingBottle) { // Pepe does not idle, if he throws bottles!
-                if (this.idleTimer > this.longIdle) {
-                    this.isLongIdle();
-                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.isWalking();
-                } else {
-                    this.isIdle();
-                }
-            }else {
-                this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
-                this.isIdle();   
-                this.idleTimer = 0; 
-            }
-        }
-    }
-
-
+    
     /**
      * Function to update the idle timer based on user input.
      */
@@ -190,11 +162,10 @@ class Character extends MoveableObject {
         }
     }
 
-
     /**
     * Function camera position based on character's x-coordinate & endboss' x-coordinate
     */
-    positionCamera() {
+    positionCameraX() {
         if (this.world.level.endboss[0].x > this.x - 100) {
             this.world.camera_x = -this.x + 100;
             bossEscaping = false;
@@ -203,6 +174,34 @@ class Character extends MoveableObject {
             bossEscaping = true;
         }
     }
+
+    /**
+    * Function to manage the state changes depending on the current state of Pepe
+    */
+    animatePepeState() {
+        if (this.isDead() && !this.world.gameOver) {
+            this.playDeath();
+        } else if (this.isHurt() && !this.world.gameOver) {
+            this.isHurting();
+        } else if (this.isAboveGround()) {
+            this.isJumping();
+        } else {
+            if (!throwingBottle) { // Pepe does not idle, if he throws bottles!
+                if (this.idleTimer > this.longIdle) {
+                    this.isLongIdle();
+                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.isWalking();
+                } else {
+                    this.isIdle();
+                }
+            }else {
+                this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+                this.isIdle();   
+                this.idleTimer = 0; 
+            }
+        }
+    }
+
 
 
     /**
