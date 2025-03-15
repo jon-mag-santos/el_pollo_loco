@@ -6,14 +6,13 @@ let gameWon = new Audio('audio/game_won.mp3');
 let yesSound = new Audio('audio/yes.mp3');
 let gameLost = new Audio('audio/game_lost.mp3');
 let audioMuted = false;
-let gameMusicMuted = false;
 
 /**
  * Function to set volume and to play the game music.
  */
 function playGameMusic() {
     gameMusic.volume = 0.1;
-    gameMusic.muted = gameMusicMuted;
+    gameMusic.muted = audioMuted;
     gameMusic.play();
 }
 
@@ -57,11 +56,10 @@ function toggleSound() {
  * Function to update the mute status of the game music and images.
  */
 function updateAudioStatus() {
-    gameMusicMuted = !gameMusicMuted;
-    gameMusic.muted = gameMusicMuted;
+    gameMusic.muted = audioMuted;
     let musicToggleButton = document.getElementById('musicToggleBtn');
     let soundIcon = document.getElementById('soundIcon');
-    if (gameMusicMuted) {
+    if (audioMuted) {
         musicToggleButton.innerText = 'Sound Off';
         soundIcon.src = './img/12_icons/SOUND_OFF_icon.png';
     } else {
@@ -77,10 +75,7 @@ function updateAudioStatus() {
  * Function to mute or unmute all audio elements 
  */
 function muteAudioElements() {
-    if (gameMusic) {
-        gameMusic.muted = audioMuted;
-    } else
-        gameMusic.play();
+    gameMusic.muted = audioMuted;
     if (world) {
         muteEnemiesSounds();
         mutePepeSounds();

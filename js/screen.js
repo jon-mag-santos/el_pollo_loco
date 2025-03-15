@@ -45,18 +45,6 @@ function resetCanvasWidthHeight(canvas) {
 }
 
 /**
- * Function to update canvas width and height based on fullscreen mode.
- */
-function updateCanvasWidthHeight() {
-    let canvas = document.getElementById('canvas');
-    if (document.fullscreenElement) {
-        setCanvasWidthHeight(canvas, '100vw', '100vh');
-    } else {
-        resetCanvasWidthHeight(canvas);
-    }
-}
-
-/**
  * Function to request fullscreen mode.
  * @param {HTMLElement} element - The element to make fullscreen.
  */
