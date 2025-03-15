@@ -3,8 +3,7 @@
  * @param {KeyboardEvent} event - The keyboard event object.
  */
 window.addEventListener("keydown", (event) => {
-    if (!gameActive) 
-        return;
+    if (!gameActive) return;
 
     if (event.code == 'ArrowUp')
         keyboard.UP = true;
@@ -33,8 +32,7 @@ window.addEventListener("keydown", (event) => {
  * @param {KeyboardEvent} event - The keyboard event object.
  */
 window.addEventListener("keyup", (event) => {
-    if (!gameActive) 
-        return;
+    if (!gameActive) return;
 
     if (event.code == 'ArrowUp')
         keyboard.UP = false;
