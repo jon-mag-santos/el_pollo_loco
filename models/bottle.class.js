@@ -4,6 +4,7 @@
  */
 
 class Bottle extends MoveableObject {
+    y = 375;
     width = 60;
     height = 60;
     IMAGES_BOTTLE = [
@@ -22,6 +23,5 @@ class Bottle extends MoveableObject {
         super();
         this.loadImage(this.IMAGES_BOTTLE[Math.round(Math.random())]);
         this.x = x + 450;
-        this.y = y;
     }
 }

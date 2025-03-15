@@ -1,3 +1,6 @@
+const enemyStartX = 1000;
+const bottleStartX = 0;
+
 /**
  * Function to initialize the game level with  enemies, clouds, background objects, coins, bottles, and an endboss.
  */
@@ -56,38 +59,38 @@ function initGameLevel() {
         ],
         // Chickens array
         [
-            new Chicken(1000, 275),
-            new Chicken(1250, 275),
-            new Chick(1450, 275),
-            new Chicken(1700, 275),
-            new Snake(2050, 275),
-            new Chick(2400, 275),
-            new Chicken(2700, 275),
-            new Chicken(2900, 275),
-            new Chick(3100, 275),
-            new Snake(3400, 275),
-            new Chicken(3900, 275),
-            new Chicken(4100, 275)
+            new Chicken(1000),
+            new Chicken(1250),
+            new Chick(1450),
+            new Chicken(1700),
+            new Snake(2050),
+            new Chick(2400),
+            new Chicken(2700),
+            new Chicken(2900),
+            new Chick(3100),
+            new Snake(3400),
+            new Chicken(3900),
+            new Chicken(4100)
         ],
         // Bottles array
         [
-            new Bottle(0, 375),
-            new Bottle(100, 375),
-            new Bottle(650, 375),
-            new Bottle(950, 375),
-            new Bottle(1200, 375),
-            new Bottle(1300, 375),
-            new Bottle(1450, 375),
-            new Bottle(1650, 375),
-            new Bottle(1750, 375),
-            new Bottle(2050, 375),
-            new Bottle(2350, 375),
-            new Bottle(2550, 375),
-            new Bottle(2950, 375),
-            new Bottle(3250, 375),
-            new Bottle(3550, 375),
-            new Bottle(3700, 375),
-            new Bottle(3950, 375)
+            new Bottle(0),
+            new Bottle(100),
+            new Bottle(650),
+            new Bottle(950),
+            new Bottle(1200),
+            new Bottle(1300),
+            new Bottle(1450),
+            new Bottle(1650),
+            new Bottle(1750),
+            new Bottle(2050),
+            new Bottle(2350),
+            new Bottle(2550),
+            new Bottle(2950),
+            new Bottle(3250),
+            new Bottle(3550),
+            new Bottle(3700),
+            new Bottle(3950)
         ],
         // Coins array
         [
