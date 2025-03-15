@@ -31,9 +31,9 @@ canvas {
 }
 
 .canvas-container {
+    position: relative;
     height: 480px;
     width: 720px;
-    position: relative;
 }
 
 .game-title {
@@ -71,6 +71,7 @@ canvas {
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    letter-spacing: 2px;
 }
 
 .menu-title h2 {
@@ -139,8 +140,7 @@ canvas {
 }
 
 
-.ctrls,
-.story-text {
+.ctrls {
     display: flex;
     justify-content: center;
     margin-left: 100px;
@@ -148,10 +148,15 @@ canvas {
 }
 
 .story-text {
+    display: flex;
+    justify-content: center;
+    margin-left: 80px;
+    margin-right: 80px;
     text-align: justify;
     font-size: 26px;
     font-weight: 700;
     hyphens: auto;
+    letter-spacing: 2px;
 }
 
 .ctrls-container {
@@ -193,6 +198,7 @@ canvas {
     border-radius: 10px;
     border: 0px;
     font-weight: 700;
+    letter-spacing: 2px;
     box-shadow: 0px 0px 14px -7px #76f019;
     background-size: 200% auto;
     background-image: linear-gradient(45deg, #2fff36 0%, #19f03d 51%, #4bff2f 100%);
