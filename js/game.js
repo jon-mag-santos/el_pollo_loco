@@ -8,10 +8,6 @@ let keyboard = new Keyboard();
 let intervals = [];
 
 /**
- * Global variable to control if Pepe is throwing or trying to throw bottles
- */
-let throwingBottle = false;
-/**
  * Global variable to control if the end boss invade the village by crossing the game beggining
  * It represents to lose the game
  */
@@ -20,6 +16,10 @@ let bossEscaped = false;
  * Global variable to control if the end boss is leaving Pepe behind
  */
 let bossEscaping = false;
+/**
+ * Global variable to control if Pepe is throwing or trying to throw bottles
+ */
+let throwingBottle = false;
 
 /**
  * Function to initialize the game.
