@@ -1,5 +1,5 @@
 /**
- * Class representing a chicken character.
+ * Class representing a chicken enemy
  * @extends MoveableObject
  */
 
