@@ -23,7 +23,6 @@ To run the game locally, take these steps:
 ## Storytelling
 
 Pepe, a brave villager from Mexico, lives in a tranquil village that is suddenlyfaced with a danger posed by a group of wild chickens and snakes.
-Pepe, renowned for his courage and quickness, fearlessly takes on the task of safeguarding his village. 
 With determination and a touch of valor, he confronts the feathered adversaries in an effort to restore peace and harmony to his beloved home. 
 Pepe must stop the BIG boss chicken from attacking "su pueblo" and defeat it.
 
