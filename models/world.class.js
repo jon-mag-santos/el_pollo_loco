@@ -12,7 +12,6 @@ class World {
     bottleBar = new BottleBar();
     endbossHealthbar = new EndbossHealthbar();
     statusBar = new Statusbar();
-    gameOver = false;
     throwableObjects = [];
     level = level1;
     canvas;
@@ -415,7 +414,7 @@ class World {
      * Function to end the game.
      */
     gameEnd() {
-        if (this.gameOver && this.isPepeDead()) {
+        if (gameOver && this.isPepeDead()) {
             this.bottleBar.setCollectedBottles(0);
             this.throwableObjects = [];
             showGameOverScreen();

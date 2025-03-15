@@ -4,6 +4,7 @@
 let canvas;
 let world;
 let gameActive = true;
+let gameOver = false;
 let keyboard = new Keyboard();
 let intervals = [];
 
@@ -49,6 +50,7 @@ function restartGame() {
  * Function to reset the game.
  */
 function resetGame() {
+    gameOver = false;
     world = null;
     keyboard = new Keyboard();
     intervals = [];
@@ -111,7 +113,7 @@ function showGameOverScreen() {
     const mobileBtnContainer = document.querySelector('.mob-btn-container');
     if (world.isEndbossDefeated()) {
         showWonScreen(gameOverScreen, mobileBtnContainer);
-    } else if ((world.isPepeDead() && world.gameOver) || bossEscaped) {
+    } else if ((world.isPepeDead() && gameOver) || bossEscaped) {
         showLostScreen(gameOverScreen, mobileBtnContainer);
     }
     gameOverScreen.style.display = 'flex';

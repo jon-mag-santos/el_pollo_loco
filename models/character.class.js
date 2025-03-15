@@ -179,9 +179,9 @@ class Character extends MoveableObject {
     * Function to manage the state changes depending on the current state of Pepe
     */
     animatePepeState() {
-        if (this.isDead() && this.world.gameOver) {
+        if (this.isDead() && gameOver) {
             this.playDeath();
-        } else if (this.isHurt() && !this.world.gameOver) {
+        } else if (this.isHurt() && !gameOver) {
             this.isHurting();
         } else if (this.isAboveGround()) {
             this.isJumping();
