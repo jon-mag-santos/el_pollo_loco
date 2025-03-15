@@ -110,6 +110,9 @@ class MoveableObject extends DrawableObject {
      * @returns {boolean} 
      */
     isDead() {
+        if (this instanceof Character && this.energy <= 0) {
+            this.world.gameOver = true;
+        }
         return this.energy <= 0;
     }
 

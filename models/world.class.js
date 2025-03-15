@@ -415,8 +415,7 @@ class World {
      * Function to end the game.
      */
     gameEnd() {
-        if (!this.gameOver && this.isPepeDead()) {
-            this.gameOver = true;
+        if (this.gameOver && this.isPepeDead()) {
             this.bottleBar.setCollectedBottles(0);
             this.throwableObjects = [];
             showGameOverScreen();

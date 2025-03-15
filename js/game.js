@@ -111,7 +111,7 @@ function showGameOverScreen() {
     const mobileBtnContainer = document.querySelector('.mob-btn-container');
     if (world.isEndbossDefeated()) {
         showWonScreen(gameOverScreen, mobileBtnContainer);
-    } else if (world.isPepeDead() || bossEscaped) {
+    } else if ((world.isPepeDead() && world.gameOver) || bossEscaped) {
         showLostScreen(gameOverScreen, mobileBtnContainer);
     }
     gameOverScreen.style.display = 'flex';
@@ -134,7 +134,7 @@ function showWonScreen(gameOverScreen, mobileBtnContainer) {
  */
 function showLostScreen(gameOverScreen, mobileBtnContainer) {
     gameLostSound();
-    gameOverScreen.style.backgroundImage = "url('img/9_intro_outro_screens/start/game_over/you lost.png')";
+    gameOverScreen.style.backgroundImage = "url('img/9_intro_outro_screens/start/game_over/oh no you lost!.png')";
     mobileBtnContainer.style.display = 'none';
 }
 
