@@ -1,6 +1,3 @@
-const enemyStartX = 1000;
-const bottleStartX = 0;
-
 /**
  * Function to initialize the game level with  enemies, clouds, background objects, coins, bottles, and an endboss.
  */
@@ -57,20 +54,20 @@ function initGameLevel() {
             new Cloud(),
             new Cloud()
         ],
-        // Chickens array
+        // Enemies array
         [
-            new Chicken(1000),
-            new Chicken(1250),
-            new Chick(1450),
-            new Chicken(1700),
-            new Snake(2050),
-            new Chick(2400),
-            new Chicken(2700),
-            new Chicken(2900),
-            new Chick(3100),
-            new Snake(3400),
-            new Chicken(3900),
-            new Chicken(4100)
+            new Chick(),
+            new Chick(),
+            new Chick(),
+            new Chick(),
+            new Snake(),
+            new Snake(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken()
         ],
         // Bottles array
         [

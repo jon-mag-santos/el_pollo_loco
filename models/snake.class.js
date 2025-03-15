@@ -4,6 +4,7 @@
  */
 
 class Snake extends MoveableObject {
+    x = 500 + Math.floor(Math.random() * 3600);
     y = 350;
     height = 80;
     width = 70;
@@ -31,11 +32,10 @@ class Snake extends MoveableObject {
         left: 5
     };
 
-    constructor(x) {
+    constructor() {
         super().loadImage('img/3_enemie_snake/2_attack/1_a.png');
         this.loadImages(this.IMAGES_ATTACKING);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = x;
         this.movementInterval = null;
         this.animationInterval = null;
         this.animate();
