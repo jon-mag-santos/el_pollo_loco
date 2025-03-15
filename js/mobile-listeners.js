@@ -41,8 +41,8 @@ function mobileBtnTouchEvents() {
     });
 
     bottleButton.addEventListener("touchend", (event) => {
-        throwingBottle = false;
         keyboard.D = false;
+        throwingBottle = false;
     });
 }
 
