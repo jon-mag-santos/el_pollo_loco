@@ -1,5 +1,5 @@
 /**
- * Class representing a snake character
+ * Class representing a snake enemy
  * @extends MoveableObject
  */
 
