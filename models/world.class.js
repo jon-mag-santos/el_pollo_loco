@@ -12,5 +12,11 @@ class World {
         this.enemies.forEach(enemy => {
             ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
         });
+
+        //draw will always executed
+        let self = this
+        requestAnimationFrame(function() {
+            self.draw();
+        });
     }
 }
