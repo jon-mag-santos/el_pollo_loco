@@ -8,9 +8,9 @@ class World {
     
     draw() {
         ctx = canvas.getContext("2d");
-        ctx.drawImage(this.character.img, this.character.x, this.character.y, 100, 200);
+        ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
         this.enemies.forEach(enemy => {
-            ctx.drawImage(enemy.img, enemy.x, enemy.y, 100, 200);
+            ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
         });
     }
 }
