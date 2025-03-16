@@ -1,9 +1,9 @@
 class World {
     character = new Character();
     enemies = [
-        new Chicken(200),
-        new Chicken(300),
-        new Chicken(400)
+        new Chicken(),
+        new Chicken(),
+        new Chicken()
     ];
     
     draw() {
