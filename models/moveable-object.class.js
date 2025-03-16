@@ -3,8 +3,9 @@ class MoveableObject {
     y = 200;
     img;
 
-    constructor(img){
-        this.img = img;
+    loadImage(path){
+        this.img = new Image();
+        this.img.src = path;
     }
     
     moveRight() {
