@@ -6,6 +6,13 @@ class Character extends MoveableObject {
     world;
     longIdle= false;
     idleStart = false;
+    afterJump = false;
+    offset = {
+        top: 120,
+        bottom: 15,
+        left: 40,
+        right: 40
+    }
  
 
     IMAGES_IDLE = [
@@ -94,11 +101,12 @@ class Character extends MoveableObject {
             }
 
             if(this.world.keyboard.UP || this.world.keyboard.SPACE){
-                this.isJumping();
+                this.afterJump = this.isJumping();
             }
             this.world.cam_x = -this. x + 100;
         }, 1000/60);
-        setInterval(() => {
+        
+        this.animationInterval = setInterval(() => {
             if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
                 this.playMovement(this.IMAGES_WALKING);
             }else if(this.world.keyboard.UP || this.world.keyboard.SPACE){
@@ -158,5 +166,10 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
+
+        while(this.isAboveGround()){
+            return true;
+        }
+        return false;
     }
 }

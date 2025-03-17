@@ -5,6 +5,7 @@ class World {
     character = new Character();
     level = level1;
     cam_x = -100;
+    collisionIntevals = null;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -12,6 +13,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.run();
     }
 
     draw() {
@@ -44,6 +46,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -71,5 +74,47 @@ class World {
 
     setWorld() {
         this.character.world = this;
+    }
+
+    run() {
+        this.collisionIntevals = setInterval(() => {
+            this.checkCollisionsWithEnemies();
+            this.checkCollisionsWithEndboss();
+        }, 1000/60);
+        
+    }
+
+    checkCollisionsWithEnemies() {
+        this.level.enemies.forEach(enemy => {
+            if(enemy.isColliding(this.character)){
+                if(this.isCollisionFromAbove(enemy)) {
+                        this.character.jump();
+                        this.enemyDeath(this.level.enemies.indexOf(enemy), enemy);
+                }
+            }
+        });
+    }
+
+    isCollisionFromAbove(){
+        return this.character.afterJump;
+    }
+
+    enemyDeath(index, enemy){
+        enemy.loadImage(enemy.IMG_DEAD);
+        enemy.animationIntervals = [];
+        setTimeout(() => {
+            if (index > -1)
+                this.level.enemies.splice(index, 1);
+        }, 200);
+        
+    }
+
+    checkCollisionsWithEndboss() {
+        let endBoss = this.level.endboss[0];
+        if(endBoss.isColliding(this.character)){
+            console.log("collision with boss")
+        } else {
+            endBoss.animationIntervals = [];
+        }  
     }
 }

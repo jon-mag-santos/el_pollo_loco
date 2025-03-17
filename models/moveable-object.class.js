@@ -2,10 +2,12 @@ class MoveableObject extends DrawableObject {
     x = 50;
     y = 200;
     img;
+    energy=1;
     speed;
     speedY = 0;
     acceleration = 5;
     otherDirection = false;
+    animationIntervals = [];
 
     applyGravity() {
         setInterval(() => {
@@ -23,11 +25,14 @@ class MoveableObject extends DrawableObject {
         return this.y < 180;
     }
 
-    playMovement(arr) {
-        let i = this.currentImage % arr.length;
-        let path = arr[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+    playMovement(arr, interval) {
+        const movement = setInterval(() => {
+            let i = this.currentImage % arr.length;
+            let path = arr[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        }, interval);
+        this.animationIntervals.push(movement);
     }
 
     moveRight() {
@@ -36,6 +41,17 @@ class MoveableObject extends DrawableObject {
 
     moveLeft() {
         return Math.random();
+    }
+
+    isColliding(mo){
+        return this.x + this.width -this.offset.right > mo.x + mo.offset.left &&
+            this.y +this.height - this.offset.bottom > mo.y + mo.offset.top && 
+            this.x + this.offset.left < mo.x  + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height -mo.offset.bottom
+    }
+
+    resetAnimation() {
+        this.animationIntervals = [];
     }
 
 }
