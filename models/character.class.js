@@ -7,6 +7,7 @@ class Character extends MoveableObject {
     longIdle= false;
     idleStart = false;
     afterJump = false;
+    energy = 100;
     offset = {
         top: 120,
         bottom: 15,
@@ -105,9 +106,13 @@ class Character extends MoveableObject {
             }
             this.world.cam_x = -this. x + 100;
         }, 1000/60);
-        
+
         this.animationInterval = setInterval(() => {
-            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
+            if(this.isDead()){
+                this.playMovement(this.IMAGES_DEAD);
+            }else if(this.isHurt()) {
+                this.playMovement(this.IMAGES_HURT);
+            }else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
                 this.playMovement(this.IMAGES_WALKING);
             }else if(this.world.keyboard.UP || this.world.keyboard.SPACE){
                 this.playMovement(this.IMAGES_JUMPING);

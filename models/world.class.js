@@ -88,8 +88,12 @@ class World {
         this.level.enemies.forEach(enemy => {
             if(enemy.isColliding(this.character)){
                 if(this.isCollisionFromAbove(enemy)) {
-                        this.character.jump();
-                        this.enemyDeath(this.level.enemies.indexOf(enemy), enemy);
+                    this.character.jump();
+                    this.enemyDeath(this.level.enemies.indexOf(enemy), enemy);
+                }else {
+                    console.log("collision with enemy")
+                    this.character.hit();
+                    console.log(this.character.energy);
                 }
             }
         });
@@ -113,8 +117,16 @@ class World {
         let endBoss = this.level.endboss[0];
         if(endBoss.isColliding(this.character)){
             console.log("collision with boss")
-        } else {
-            endBoss.animationIntervals = [];
+            //this.character.hit();
+            console.log(this.character.energy);
+            if(!endBoss.isAttacking) {
+                endBoss.animationIntervals = null;
+                endBoss.isAttacking = true;
+                endBoss.isWalking();
+            }
+            
         }  
     }
+
+    
 }

@@ -2,13 +2,15 @@ class Endboss extends MoveableObject {
     y = 60;
     width = 400;
     height = 390;
+    speed = 3;
+    isAttacking = false;
+    animationIntervals = null;
     offset = {
         top: 0,
         bottom: 0,
         left: 50,
         right: 70
     }
-    animationIntervalEndBoss = null;
 
     IMAGES_WALKING = [
       "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -60,13 +62,39 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 400 ;
+        this.x = 1400 ;
 
         this.animate();
     }
 
     animate() {
-        this.playMovement(this.IMAGES_ALERT, 220);
+        //this.animationIntervals = this.playMovement(this.IMAGES_WALKING, 10, false);
+        this.animationIntervals =  this.playMovement(this.IMAGES_ALERT, 2);
+    
     }
+
+    isWalking() {
+        clearInterval(this.animationIntervals);
+        const intervalTime = 1000 / 6;  // Calculate the interval time for 60 FPS (16.67ms)
+        let lastTime = 0; // To store the time of the last frame
+        const imgs = this.IMAGES_WALKING;  // Images to be used for animation
+
+        const animate = (time) => {
+            const deltaTime = time - lastTime; // Time difference between frames
+            if (deltaTime >= intervalTime) {  // Check if it's time for the next frame
+                let i = this.currentImage % imgs.length;  // Get the current image index
+                let path = imgs[i];  // Get the image path at the current index
+                this.img = this.imageCache[path];  // Set the current image from the cache
+                this.currentImage++;  // Move to the next image
+                lastTime = time;  // Update the last frame time
+            }
+            this.moveLeft();
+            // Continue the animation loop by calling requestAnimationFrame again
+            requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
+    }
+
 
 }
