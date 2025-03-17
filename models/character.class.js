@@ -3,7 +3,7 @@ class Character extends MoveableObject {
     y = 187;
     width = 150;
     height = 250;
-    keyboard;
+    world;
     longIdle= false;
     idleStart = false;
  
@@ -87,12 +87,17 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (this.keyboard.RIGHT || this.keyboard.LEFT) {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.isWalking(this.world.keyboard.RIGHT);
+            }
+            this.world.cam_x = -this. x + 100;
+        }, 1000/60);
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playMovement(this.IMAGES_WALKING);
-                this.isWalking(this.keyboard.RIGHT);
             }else
                 this.playMovement(this.IMAGES_IDLE, true);
-        }, 200);  
+        }, 100);  
     }
 
     playMovement(arr, idle){
@@ -122,11 +127,11 @@ class Character extends MoveableObject {
     }
 
     moveRight() {
-        this.x += 30;
+        this.x += 10;
     }
 
     moveLeft() {
-        this.x -= 30;
+        this.x -= 10;
     }
 
     isWalking(right) {

@@ -24,20 +24,24 @@ class World {
         new BackgroundObject("img/5_background/layers/1_first_layer/1.png")
     ]
 
+    cam_x = -100;
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
-        this.setKeyboard();
+        this.setWorld();
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.cam_x, 0);
         this.addObjsToMap(this.backgroundObjects);
         this.addObjsToMap(this.clouds);
         this.addToMap(this.character);
         this.addObjsToMap(this.enemies);
+        this.ctx.translate(-this.cam_x, 0);
 
         //draw will always executed
         let self = this
@@ -84,7 +88,7 @@ class World {
             this.character.otherDirection = false;
     }
 
-    setKeyboard() {
-        this.character.keyboard = this.keyboard;
+    setWorld() {
+        this.character.world = this;
     }
 }
