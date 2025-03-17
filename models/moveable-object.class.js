@@ -3,6 +3,7 @@ class MoveableObject extends DrawableObject {
     y = 200;
     img;
     speed;
+    otherDirection = false;
     
     moveRight() {
         console.log("moving right");

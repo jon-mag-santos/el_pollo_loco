@@ -89,7 +89,7 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.keyboard.RIGHT || this.keyboard.LEFT) {
                 this.playMovement(this.IMAGES_WALKING);
-                this.isWalking(this.keyboard.RIGHT); 
+                this.isWalking(this.keyboard.RIGHT);
             }else
                 this.playMovement(this.IMAGES_IDLE, true);
         }, 200);  

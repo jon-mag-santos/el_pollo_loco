@@ -43,6 +43,7 @@ class World {
         let self = this
         requestAnimationFrame(function () {
             self.draw();
+            self.checkOtherDirection();
         });
         
     }
@@ -54,7 +55,33 @@ class World {
     }
 
     addToMap(mo) {
+        if(mo.otherDirection){
+            this.flipImage(mo);  
+        }
         mo.draw(this.ctx);
+
+        if(mo.otherDirection) {
+           this.flipImageBack(mo);
+        }
+    }
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0)
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * - 1;
+    }    
+
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
+    }
+
+    checkOtherDirection() {
+        if (this.keyboard.LEFT) {
+            this.character.otherDirection = true;
+        }else
+            this.character.otherDirection = false;
     }
 
     setKeyboard() {
