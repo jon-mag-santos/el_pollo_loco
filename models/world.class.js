@@ -18,10 +18,34 @@ class World {
     ];
 
     backgroundObjects = [
-        new BackgroundObject("img/5_background/layers/air.png"),
-        new BackgroundObject("img/5_background/layers/3_third_layer/1.png"),
-        new BackgroundObject("img/5_background/layers/2_second_layer/1.png"),
-        new BackgroundObject("img/5_background/layers/1_first_layer/1.png")
+        new BackgroundObject("img/5_background/layers/air.png", -719),
+        new BackgroundObject("img/5_background/layers/3_third_layer/2.png", -719),
+        new BackgroundObject("img/5_background/layers/2_second_layer/2.png", -719),
+        new BackgroundObject("img/5_background/layers/1_first_layer/2.png", -719),
+        new BackgroundObject("img/5_background/layers/air.png", 0),
+        new BackgroundObject("img/5_background/layers/3_third_layer/1.png", 0),
+        new BackgroundObject("img/5_background/layers/2_second_layer/1.png", 0),
+        new BackgroundObject("img/5_background/layers/1_first_layer/1.png", 0),
+        new BackgroundObject("img/5_background/layers/air.png", 719),
+        new BackgroundObject("img/5_background/layers/3_third_layer/2.png", 719),
+        new BackgroundObject("img/5_background/layers/2_second_layer/2.png", 719),
+        new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 719),
+        new BackgroundObject("img/5_background/layers/air.png", 719 * 2),
+        new BackgroundObject("img/5_background/layers/3_third_layer/1.png", 719 * 2),
+        new BackgroundObject("img/5_background/layers/2_second_layer/1.png", 719 * 2),
+        new BackgroundObject("img/5_background/layers/1_first_layer/1.png", 719 * 2),
+        new BackgroundObject("img/5_background/layers/air.png", 719 * 3),
+        new BackgroundObject("img/5_background/layers/3_third_layer/2.png", 719 * 3),
+        new BackgroundObject("img/5_background/layers/2_second_layer/2.png", 719 * 3),
+        new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 719 * 3),
+        new BackgroundObject("img/5_background/layers/air.png", 719 * 4),
+        new BackgroundObject("img/5_background/layers/3_third_layer/1.png", 719 * 4),
+        new BackgroundObject("img/5_background/layers/2_second_layer/1.png", 719 * 4),
+        new BackgroundObject("img/5_background/layers/1_first_layer/1.png", 719 * 4),
+        new BackgroundObject("img/5_background/layers/air.png", 719 * 5),
+        new BackgroundObject("img/5_background/layers/3_third_layer/2.png", 719 * 5),
+        new BackgroundObject("img/5_background/layers/2_second_layer/2.png", 719 * 5),
+        new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 719 * 5),
     ]
 
     cam_x = -100;
@@ -49,23 +73,23 @@ class World {
             self.draw();
             self.checkOtherDirection();
         });
-        
+
     }
 
     addObjsToMap(objs) {
-        objs.forEach((o)=> {
+        objs.forEach((o) => {
             this.addToMap(o);
         });
     }
 
     addToMap(mo) {
-        if(mo.otherDirection){
-            this.flipImage(mo);  
+        if (mo.otherDirection) {
+            this.flipImage(mo);
         }
         mo.draw(this.ctx);
 
-        if(mo.otherDirection) {
-           this.flipImageBack(mo);
+        if (mo.otherDirection) {
+            this.flipImageBack(mo);
         }
     }
 
@@ -74,7 +98,7 @@ class World {
         this.ctx.translate(mo.width, 0)
         this.ctx.scale(-1, 1);
         mo.x = mo.x * - 1;
-    }    
+    }
 
     flipImageBack(mo) {
         mo.x = mo.x * -1;
@@ -84,7 +108,7 @@ class World {
     checkOtherDirection() {
         if (this.keyboard.LEFT) {
             this.character.otherDirection = true;
-        }else
+        } else
             this.character.otherDirection = false;
     }
 
