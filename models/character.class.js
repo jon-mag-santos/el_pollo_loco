@@ -87,7 +87,8 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
+                || this.world.keyboard.LEFT && this.x > 0) {
                 this.isWalking(this.world.keyboard.RIGHT);
             }
             this.world.cam_x = -this. x + 100;
