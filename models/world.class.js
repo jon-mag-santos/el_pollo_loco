@@ -21,6 +21,7 @@ class World {
         this.addObjsToMap(this.level.clouds);
         this.addToMap(this.character);
         this.addObjsToMap(this.level.enemies);
+        this.addObjsToMap(this.level.endboss);
         this.ctx.translate(-this.cam_x, 0);
 
         //draw will always executed

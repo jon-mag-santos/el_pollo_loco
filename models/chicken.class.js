@@ -23,12 +23,5 @@ class Chicken extends MoveableObject {
         }, 200);
         
     }
-
-    playMovement(arr){
-        let i = this.currentImage % arr.length;
-        let path = arr[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
-    }
     
 }
