@@ -80,18 +80,18 @@ class World {
         this.collisionIntevals = setInterval(() => {
             this.checkCollisionsWithEnemies();
             this.checkCollisionsWithEndboss();
-        }, 1000/60);
-        
+        }, 1000 / 60);
+
     }
 
     checkCollisionsWithEnemies() {
         this.level.enemies.forEach(enemy => {
-            if(enemy.isColliding(this.character)){
-                if(this.isCollisionFromAbove(enemy)) {
+            if (enemy.isColliding(this.character)) {
+                if (this.isCollisionFromAbove(enemy)) {
                     this.character.afterJump = false;
                     this.enemyDeath(this.level.enemies.indexOf(enemy), enemy);
                     this.character.jump();
-                }else {
+                } else {
                     console.log("collision with enemy")
                     //this.character.hit();
                     console.log(this.character.energy);
@@ -100,38 +100,43 @@ class World {
         });
     }
 
-    isCollisionFromAbove(enemy){
+    isCollisionFromAbove(enemy) {
         let enemyHeadX = enemy.x - enemy.offset.left
-        let rightFootX = this.character.x + this.character.width -this.character.offset.right;
+        let rightFootX = this.character.x + this.character.width - this.character.offset.right;
         let leftFootX = this.character.x + this.character.offset.left
-        return this.character.afterJump && !(enemyHeadX > (rightFootX|| leftFootX));
+        return this.character.afterJump && !(enemyHeadX > (rightFootX || leftFootX));
     }
 
-    enemyDeath(index, enemy){
+    enemyDeath(index, enemy) {
         enemy.stopAnimation();
         enemy.loadImage(enemy.IMG_DEAD);
         setTimeout(() => {
             if (index > -1)
                 this.level.enemies.splice(index, 1);
         }, 200);
-        
+
     }
 
 
     checkCollisionsWithEndboss() {
         let endBoss = this.level.endboss[0];
-        if(endBoss.isColliding(this.character)){
+        if (endBoss.isColliding(this.character)) {
             console.log("collision with boss")
             //this.character.hit();
             console.log(this.character.energy);
-            if(!endBoss.isAttacking) {
-                endBoss.stopAnimation();
-                endBoss.isAttacking = true;
-                endBoss.isWalking();
-            }
-            
-        }  
+            endBoss.isAttacking = true;
+            endBoss.stopAnimation();
+            endBoss.isWalking();
+        } else if(endBoss.isAttacking && this.isCharacterTooFar(endBoss)) {
+            endBoss.stopWalking();
+            endBoss.loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
+        }else if(endBoss.isAttacking) {
+            endBoss.isWalking();
+        }
     }
 
-    
+    isCharacterTooFar(endBoss){
+        return this.character.x + 500 < endBoss.x;
+    }
+
 }

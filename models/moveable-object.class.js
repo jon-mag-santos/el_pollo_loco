@@ -2,7 +2,7 @@ class MoveableObject extends DrawableObject {
     x = 50;
     y = 200;
     img;
-    energy=1;
+    energy = 1;
     speed;
     speedY = 0;
     acceleration = 5;
@@ -12,7 +12,7 @@ class MoveableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround()|| this.speedY > 0) {
+            if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -41,7 +41,31 @@ class MoveableObject extends DrawableObject {
         }, intervalTime);
         return intervalId;
     }
- 
+
+    playAnimation(arr, fps) {
+        const intervalTime = (fps) ? fps : 1000 / 6;  // Calculate the interval time for 60 FPS (16.67ms)
+        let currentImage = 0; // To store the current image index
+        const imgs = arr;  // Images to be used for animation
+
+        // Start the animation using setInterval
+        const intervalId = setInterval(() => {
+            let i = currentImage % imgs.length;  // Get the current image index
+            let path = imgs[i];  // Get the image path at the current index
+            this.img = this.imageCache[path];  // Set the current image from the cache
+            currentImage++;  // Move to the next image
+            this.moveLeft();
+
+            // Optionally, stop the animation after a certain time
+            // If you want to stop it after a specific condition, use `clearInterval` elsewhere.
+        }, intervalTime);
+
+        return intervalId; // Return the intervalId so we can cancel the animation later
+    }
+
+    cancelAnimation(intervalId) {
+        clearInterval(intervalId); // Stop the animation using clearInterval
+    }
+
 
     moveRight() {
         this.x += this.speed;
@@ -51,11 +75,11 @@ class MoveableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
-    isColliding(mo){
-        return this.x + this.width -this.offset.right > mo.x + mo.offset.left &&
-            this.y +this.height - this.offset.bottom > mo.y + mo.offset.top && 
-            this.x + this.offset.left < mo.x  + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height -mo.offset.bottom
+    isColliding(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
 
     stopAnimation() {
@@ -65,7 +89,7 @@ class MoveableObject extends DrawableObject {
 
     hit() {
         this.energy -= 5;
-        if(this.energy <= 0){
+        if (this.energy <= 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
