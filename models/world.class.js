@@ -3,9 +3,13 @@ class World {
     canvas;
     keyboard;
     character = new Character();
+    statusBar = new StatusBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
+    endBossBar = new EndbossBar();
     level = level1;
     cam_x = -100;
-    collisionIntevals = null;
+    runInterval = null;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -19,11 +23,11 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.cam_x, 0);
-        this.addObjsToMap(this.level.backgroundObjects);
-        this.addObjsToMap(this.level.clouds);
-        this.addToMap(this.character);
-        this.addObjsToMap(this.level.enemies);
-        this.addObjsToMap(this.level.endboss);
+        this.drawBasicObjs();
+        this.ctx.translate(-this.cam_x, 0);
+        this.drawFixedObjs();
+        this.ctx.translate(this.cam_x, 0);
+        this.drawEnemies();
         this.ctx.translate(-this.cam_x, 0);
 
         //draw will always executed
@@ -33,6 +37,30 @@ class World {
             self.checkOtherDirection();
         });
 
+    }
+
+    drawBasicObjs() {
+        this.addObjsToMap(this.level.backgroundObjects);
+        this.addObjsToMap(this.level.clouds);
+        this.addToMap(this.character);
+    }
+
+    drawFixedObjs() {
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
+        if (!this.isCharacterTooFar(this.level.endboss[0])){
+            this.addToMap(this.endBossBar);
+        }
+    }
+
+    isCharacterTooFar(endBoss) {
+        return this.character.x + 590 < endBoss.x;
+    }
+
+    drawEnemies() {
+        this.addObjsToMap(this.level.enemies);
+        this.addObjsToMap(this.level.endboss);
     }
 
     addObjsToMap(objs) {
@@ -77,7 +105,7 @@ class World {
     }
 
     run() {
-        this.collisionIntevals = setInterval(() => {
+        this.runInterval = setInterval(() => {
             this.checkCollisionsWithEnemies();
             this.checkCollisionsWithEndboss();
         }, 1000 / 60);
@@ -127,16 +155,12 @@ class World {
             endBoss.isAttacking = true;
             endBoss.stopAnimation();
             endBoss.isWalking();
-        } else if(endBoss.isAttacking && this.isCharacterTooFar(endBoss)) {
+        } else if (endBoss.isAttacking && this.isCharacterTooFar(endBoss)) {
             endBoss.stopWalking();
             endBoss.loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
-        }else if(endBoss.isAttacking) {
+        } else if (endBoss.isAttacking) {
             endBoss.isWalking();
         }
-    }
-
-    isCharacterTooFar(endBoss){
-        return this.character.x + 500 < endBoss.x;
     }
 
 }
