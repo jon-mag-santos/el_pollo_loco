@@ -88,30 +88,35 @@ class World {
         this.level.enemies.forEach(enemy => {
             if(enemy.isColliding(this.character)){
                 if(this.isCollisionFromAbove(enemy)) {
-                    this.character.jump();
+                    this.character.afterJump = false;
                     this.enemyDeath(this.level.enemies.indexOf(enemy), enemy);
+                    this.character.jump();
                 }else {
                     console.log("collision with enemy")
-                    this.character.hit();
+                    //this.character.hit();
                     console.log(this.character.energy);
                 }
             }
         });
     }
 
-    isCollisionFromAbove(){
-        return this.character.afterJump;
+    isCollisionFromAbove(enemy){
+        let enemyHeadX = enemy.x - enemy.offset.left
+        let rightFootX = this.character.x + this.character.width -this.character.offset.right;
+        let leftFootX = this.character.x + this.character.offset.left
+        return this.character.afterJump && !(enemyHeadX > (rightFootX|| leftFootX));
     }
 
     enemyDeath(index, enemy){
+        enemy.stopAnimation();
         enemy.loadImage(enemy.IMG_DEAD);
-        enemy.animationIntervals = [];
         setTimeout(() => {
             if (index > -1)
                 this.level.enemies.splice(index, 1);
         }, 200);
         
     }
+
 
     checkCollisionsWithEndboss() {
         let endBoss = this.level.endboss[0];
@@ -120,7 +125,7 @@ class World {
             //this.character.hit();
             console.log(this.character.energy);
             if(!endBoss.isAttacking) {
-                endBoss.animationIntervals = null;
+                endBoss.stopAnimation();
                 endBoss.isAttacking = true;
                 endBoss.isWalking();
             }

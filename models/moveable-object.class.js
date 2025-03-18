@@ -58,8 +58,9 @@ class MoveableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height -mo.offset.bottom
     }
 
-    resetAnimation(frames) {
-        clearInterval(frames);
+    stopAnimation() {
+        clearInterval(this.animationIntervals);
+        this.animationIntervals = null;
     }
 
     hit() {
