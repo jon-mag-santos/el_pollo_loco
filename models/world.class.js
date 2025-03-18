@@ -7,6 +7,8 @@ class World {
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
     endBossBar = new EndbossBar();
+    throwableObjects = [];
+    isThrowing = false;
     level = level1;
     cam_x = -100;
     runInterval = null;
@@ -43,6 +45,7 @@ class World {
         this.addObjsToMap(this.level.backgroundObjects);
         this.addObjsToMap(this.level.clouds);
         this.addToMap(this.character);
+        this.addObjsToMap(this.throwableObjects);
     }
 
     drawFixedObjs() {
@@ -62,6 +65,7 @@ class World {
         this.addObjsToMap(this.level.enemies);
         this.addObjsToMap(this.level.endboss);
     }
+
 
     addObjsToMap(objs) {
         objs.forEach((o) => {
@@ -94,9 +98,10 @@ class World {
     }
 
     checkOtherDirection() {
-        if (this.keyboard.LEFT) {
+        if (this.keyboard.LEFT) 
             this.character.otherDirection = true;
-        } else
+
+        if (this.keyboard.RIGHT)
             this.character.otherDirection = false;
     }
 
@@ -108,6 +113,8 @@ class World {
         this.runInterval = setInterval(() => {
             this.checkCollisionsWithEnemies();
             this.checkCollisionsWithEndboss();
+            this.checkThrowObjects();
+            this.checkBottleSplashed();
         }, 1000 / 60);
 
     }
@@ -163,4 +170,28 @@ class World {
         }
     }
 
+    checkThrowObjects() {
+        if(this.keyboard.D && !this.isThrowing) {
+            let x = (!this.character.otherDirection) ? this.character.x + this.character.width - this.character.offset.right - 40 : this.character.x + this.character.offset.left;
+            let y = this.character.y + this.character.offset.top;
+            let bottle = new ThrowableObject(x, y, this.character.otherDirection);
+            this.throwableObjects.push(bottle);
+            this.isThrowing = true;
+            setTimeout(() => {
+                this.isThrowing = false;
+            }, 500);
+        }
+    }
+
+    checkBottleSplashed() {
+        this.throwableObjects.forEach(bottle => {
+            if (bottle.isSplashed){
+                const index = this.throwableObjects.indexOf(bottle);
+                setTimeout(() => {
+                    bottle.isSplashed = false
+                    this.throwableObjects.splice(index, 1);
+                }, 100);
+            }
+        });
+    }
 }

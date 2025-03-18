@@ -12,13 +12,26 @@ class MoveableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
+            if (!(this instanceof ThrowableObject)) {
+                if (this.isAboveGround() || this.speedY > 0) {
+                    this.y -= this.speedY;
+                    this.speedY -= this.acceleration;
+                }
+                if (this.y > 180)
+                    this.y = 180
+            } else {
+                if (!this.isSplashed) {
+                    this.y -= this.speedY;
+                    this.speedY -= this.acceleration;
+                    if(this.y >= 375)
+                        this.isSplashed = true;
+                }else {
+                    this.y = 375;
+                }
             }
 
-            if (this.y > 180)
-                this.y = 180
+            if(this.isSplashed)
+                console.log("isSplashed");
         }, 1000 / 25);
     }
 
