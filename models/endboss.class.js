@@ -2,7 +2,7 @@ class Endboss extends MoveableObject {
     y = 60;
     width = 400;
     height = 390;
-    speed = 5;
+    speed = 15;
     isAttacking = false;
     walkAnimation = null;
     offset = {
