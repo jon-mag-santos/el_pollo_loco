@@ -12,7 +12,7 @@ class Character extends MoveableObject {
         top: 120,
         bottom: 15,
         left: 40,
-        right: 40
+        right: 50
     }
  
 
@@ -83,7 +83,7 @@ class Character extends MoveableObject {
      ];
 
     constructor() {
-        super().loadImage("./img/2_character_pepe/3_jump/J-39.png");
+        super().loadImage("./img/2_character_pepe/3_jump/J-37.png");
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);
@@ -116,8 +116,9 @@ class Character extends MoveableObject {
                 this.playMovement(this.IMAGES_WALKING);
             }else if(this.world.keyboard.UP || this.world.keyboard.SPACE){
                 this.playMovement(this.IMAGES_JUMPING);
-            }else
+            }else{
                 this.playMovement(this.IMAGES_IDLE, true);
+            }
         }, 150);  
     }
 
@@ -125,12 +126,12 @@ class Character extends MoveableObject {
         arr = this.isLongIdle(this.currentImage, arr, idle);
         let i = this.currentImage % arr.length;
         let path = arr[i];
-        this.img = this.imageCache[path];
+        this.img = (this.afterJump && this.isAboveGround()) ? this.imageCache[this.IMAGES_JUMPING[6]] : this.imageCache[path];
         this.currentImage++;
     }
 
     isLongIdle(currentImage, arr, idle) {
-        if(!idle) {
+        if(!idle || this.afterJump || this.isAboveGround()) {
             this.longIdle = false;
             this.idleStart = false;
             return arr;

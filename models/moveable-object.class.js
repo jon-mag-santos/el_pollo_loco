@@ -43,7 +43,7 @@ class MoveableObject extends DrawableObject {
     }
 
     playAnimation(arr, fps) {
-        const intervalTime = (fps) ? fps : 1000 / 6;  // Calculate the interval time for 60 FPS (16.67ms)
+        const intervalTime = (fps) ? fps : 1000 / 10;  // Calculate the interval time for 60 FPS (16.67ms)
         let currentImage = 0; // To store the current image index
         const imgs = arr;  // Images to be used for animation
 
