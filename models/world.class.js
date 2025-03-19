@@ -226,7 +226,6 @@ class World {
                     const index =  enemies.indexOf(enemy);
                     enemy.deathAnimation = true;
                     this.enemyDeath(index, enemy);
-                    console.log("enemies after Death", enemies);
                     break;
                 }  
             }
