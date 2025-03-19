@@ -3,6 +3,7 @@ class ThrowableObject extends MoveableObject {
     height = 80;
     speed = 40;
     isSplashed = false;
+    hasCollided = false;
     offset = {
         top: 10,
         right: 10,
@@ -33,16 +34,14 @@ class ThrowableObject extends MoveableObject {
         this.loadImages(this.IMAGES_SPLASH);
         this.x = x;
         this.y = y;
-        this.throwInterval = null;
         this.throw(otherDirection);
         this.animate();
     }
 
     throw(otherDirection) {
         this.speedY = 30;
-        this.speedX = (otherDirection) ? 30 : -30;
         this.applyGravity();
-        this.throwInterval = setInterval(() => {
+        setInterval(() => {
             if(!this.isSplashed) {
                 if(otherDirection){
                     this.moveLeft();

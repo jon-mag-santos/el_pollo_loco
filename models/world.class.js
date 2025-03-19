@@ -52,7 +52,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
-        if (!this.isCharacterTooFar(this.level.endboss[0])){
+        if (!this.isCharacterTooFar(this.level.endboss[0])) {
             this.addToMap(this.endBossBar);
         }
     }
@@ -98,7 +98,7 @@ class World {
     }
 
     checkOtherDirection() {
-        if (this.keyboard.LEFT) 
+        if (this.keyboard.LEFT)
             this.character.otherDirection = true;
 
         if (this.keyboard.RIGHT)
@@ -114,24 +114,27 @@ class World {
             this.checkCollisionsWithEnemies();
             this.checkCollisionsWithEndboss();
             this.checkThrowObjects();
+            this.checkBottleCollided();
             this.checkBottleSplashed();
+            this.checkDeathsAfterCollision();
         }, 1000 / 60);
 
     }
 
     checkCollisionsWithEnemies() {
         this.level.enemies.forEach(enemy => {
-            if (enemy.isColliding(this.character)) {
+            if (enemy.isColliding(this.character) && !enemy.isDead()) {
                 if (this.isCollisionFromAbove(enemy)) {
                     this.character.afterJump = false;
-                    this.enemyDeath(this.level.enemies.indexOf(enemy), enemy);
+                    enemy.hit();
                     this.character.jump();
                 } else {
                     console.log("collision with enemy")
                     //this.character.hit();
                     console.log(this.character.energy);
                 }
-            }
+            }else
+               return false;
         });
     }
 
@@ -145,11 +148,13 @@ class World {
     enemyDeath(index, enemy) {
         enemy.stopAnimation();
         enemy.loadImage(enemy.IMG_DEAD);
-        setTimeout(() => {
-            if (index > -1)
-                this.level.enemies.splice(index, 1);
-        }, 200);
-
+        
+            setTimeout(() => {
+                if (index > -1) {
+                    this.level.enemies.splice(index, 1);
+                }   
+            },300 );
+        
     }
 
 
@@ -159,20 +164,12 @@ class World {
             console.log("collision with boss")
             //this.character.hit();
             console.log(this.character.energy);
-            endBoss.isAttacking = true;
-            endBoss.stopAnimation();
-            endBoss.isWalking();
-        } else if (endBoss.isAttacking && this.isCharacterTooFar(endBoss)) {
-            endBoss.stopWalking();
-            endBoss.loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
-        } else if (endBoss.isAttacking) {
-            endBoss.isWalking();
         }
     }
 
     checkThrowObjects() {
-        if(this.keyboard.D && !this.isThrowing) {
-            let x = (!this.character.otherDirection) ? this.character.x + this.character.width - this.character.offset.right - 40 : this.character.x + this.character.offset.left;
+        if (this.keyboard.D && !this.isThrowing) {
+            let x = (!this.character.otherDirection) ? this.character.x + this.character.width - this.character.offset.right - 40 : this.character.x + this.character.offset.left - 40;
             let y = this.character.y + this.character.offset.top;
             let bottle = new ThrowableObject(x, y, this.character.otherDirection);
             this.throwableObjects.push(bottle);
@@ -183,15 +180,56 @@ class World {
         }
     }
 
+    checkBottleCollided() {
+        let endBoss = this.level.endboss[0];
+        let enemies = this.level.enemies;
+        this.throwableObjects.forEach(bottle =>{
+            if(!bottle.isSplashed) {
+                if (endBoss.isColliding(bottle) && !bottle.hasCollided){
+                    endBoss.hit();
+                    bottle.isSplashed = true;
+                    bottle.hasCollided = true;
+                }else{
+                    enemies.forEach(enemy => {
+                        if (enemy.isColliding(bottle) && !enemy.isDead() && !bottle.hasCollided){
+                            enemy.hit();
+                            bottle.isSplashed = true;
+                            bottle.hasCollided = true;
+                        }
+                    });
+                }
+            }
+        }); 
+    }
+
     checkBottleSplashed() {
         this.throwableObjects.forEach(bottle => {
-            if (bottle.isSplashed){
+            if (bottle.isSplashed) {
                 const index = this.throwableObjects.indexOf(bottle);
                 setTimeout(() => {
-                    bottle.isSplashed = false
                     this.throwableObjects.splice(index, 1);
-                }, 100);
+                }, 60);
             }
         });
+    }
+
+    checkDeathsAfterCollision() {
+        let endBoss = this.level.endboss[0];
+        let enemies = this.level.enemies;
+        if(this.character.isDead()) {
+            console.log("Pepe is dead")
+        }else if(endBoss.isDead()) {
+            console.log("End Boss is dead")
+        }else {
+            for (const enemy of enemies) {
+                if (enemy.isDead() && !enemy.deathAnimation) {
+                    const index =  enemies.indexOf(enemy);
+                    enemy.deathAnimation = true;
+                    this.enemyDeath(index, enemy);
+                    console.log("enemies after Death", enemies);
+                    break;
+                }  
+            }
+        }
     }
 }

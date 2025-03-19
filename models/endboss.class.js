@@ -4,7 +4,9 @@ class Endboss extends MoveableObject {
     height = 390;
     speed = 15;
     isAttacking = false;
+    energy = 100;
     walkAnimation = null;
+    hurtAnimation = null;
     offset = {
         top: 0,
         bottom: 0,
@@ -68,21 +70,49 @@ class Endboss extends MoveableObject {
     }
 
     animate() {
-        //this.animationIntervals = this.playMovement(this.IMAGES_WALKING, 10, false);
-        this.animationIntervals = this.playMovement(this.IMAGES_ALERT, 2);
+        setInterval(() => {
+            if(this.isDead()){
+                this.speed = 0;
+            }else if(this.isHurt()) {
+            console.log("End Boss is hurt", this.energy);
+                this.isHurting();
+            }
+        }, 150);
+        this.animationIntervals = this.playAnimation(this.IMAGES_ALERT, 500);
 
     }
 
     isWalking() {
-        if (!this.walkAnimation) {  // Only start walking if it's not already walking
-            this.walkAnimation = this.playAnimation(this.IMAGES_WALKING);
+        if (!this.walkAnimation || this.hurtAnimation) {  // Only start walking if it's not already walking
+            if (this.animationInterval)
+                this.stopAnimation();
+            this.walkAnimation = this.playAnimation(this.IMAGES_WALKING, false, true);
         }
     }
 
     stopWalking() {
         if (this.walkAnimation) {
             this.cancelAnimation(this.walkAnimation); // Stop the animation if it's running
-            this.walkAnimation = null; // Reset walkAnimation to allow restarting the animation later
         }
+    }
+
+    isHurting() {
+        if(!this.hurtAnimation) {
+            if (this.animationIntervals)
+                this.stopAnimation();
+            this.stopWalking();
+            this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300, false);
+            setTimeout(() => {
+                this.cancelAnimation(this.hurtAnimation);
+                this.isWalking();
+            }, 500);
+        }
+    }
+
+    playMovement(arr){
+        let i = this.currentImage % arr.length;
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
     }
 }

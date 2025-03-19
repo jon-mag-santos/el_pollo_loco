@@ -8,6 +8,7 @@ class MoveableObject extends DrawableObject {
     acceleration = 5;
     otherDirection = false;
     animationIntervals = null;
+    deathAnimation = false;
     lastHit = 0;
 
     applyGravity() {
@@ -23,15 +24,12 @@ class MoveableObject extends DrawableObject {
                 if (!this.isSplashed) {
                     this.y -= this.speedY;
                     this.speedY -= this.acceleration;
-                    if(this.y >= 375)
+                    if(this.y >= 375){
                         this.isSplashed = true;
-                }else {
-                    this.y = 375;
+                        this.y = 375;
+                    }
                 }
             }
-
-            if(this.isSplashed)
-                console.log("isSplashed");
         }, 1000 / 25);
     }
 
@@ -55,7 +53,7 @@ class MoveableObject extends DrawableObject {
         return intervalId;
     }
 
-    playAnimation(arr, fps) {
+    playAnimation(arr, fps, moveLeft) {
         const intervalTime = (fps) ? fps : 1000 / 10;  // Calculate the interval time for 60 FPS (16.67ms)
         let currentImage = 0; // To store the current image index
         const imgs = arr;  // Images to be used for animation
@@ -65,8 +63,10 @@ class MoveableObject extends DrawableObject {
             let i = currentImage % imgs.length;  // Get the current image index
             let path = imgs[i];  // Get the image path at the current index
             this.img = this.imageCache[path];  // Set the current image from the cache
-            currentImage++;  // Move to the next image
-            this.moveLeft();
+            currentImage++;
+            if(moveLeft)
+            // Move to the next image
+                 this.moveLeft();
 
             // Optionally, stop the animation after a certain time
             // If you want to stop it after a specific condition, use `clearInterval` elsewhere.
@@ -77,6 +77,7 @@ class MoveableObject extends DrawableObject {
 
     cancelAnimation(intervalId) {
         clearInterval(intervalId); // Stop the animation using clearInterval
+        intervalId = null;
     }
 
 
@@ -116,6 +117,6 @@ class MoveableObject extends DrawableObject {
     }
 
     isDead() {
-        return this.energy == 0;
+        return this.energy <= 0;
     }
 }

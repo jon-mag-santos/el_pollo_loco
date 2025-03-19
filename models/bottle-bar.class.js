@@ -3,6 +3,7 @@ class BottleBar extends StatusBar{
     height = 60;
     x = 10;
     y= 90;
+    
     IMAGES = [
         "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png", 
         "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
