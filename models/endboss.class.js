@@ -10,7 +10,7 @@ class Endboss extends MoveableObject {
     offset = {
         top: 0,
         bottom: 0,
-        left: 50,
+        left: 80,
         right: 70
     };
 
@@ -73,9 +73,13 @@ class Endboss extends MoveableObject {
         setInterval(() => {
             if(this.isDead()){
                 this.speed = 0;
-            }else if(this.isHurt()) {
+            }else if(this.isHurt() && this.newHit()) {
             console.log("End Boss is hurt", this.energy);
+                this.isAttacking = false;
+                this.lastHit = this.energy;
                 this.isHurting();
+            }else if(this.isAttacking && !this.walkAnimation) {
+                this.isWalking();
             }
         }, 150);
         this.animationIntervals = this.playAnimation(this.IMAGES_ALERT, 500);
@@ -83,9 +87,7 @@ class Endboss extends MoveableObject {
     }
 
     isWalking() {
-        if (!this.walkAnimation || this.hurtAnimation) {  // Only start walking if it's not already walking
-            if (this.animationInterval)
-                this.stopAnimation();
+        if (!this.walkAnimation && !this.animationIntervals) {  // Only start walking if it's not already walking
             this.walkAnimation = this.playAnimation(this.IMAGES_WALKING, false, true);
         }
     }
@@ -97,16 +99,33 @@ class Endboss extends MoveableObject {
     }
 
     isHurting() {
-        if(!this.hurtAnimation) {
+        if(!this.hurtAnimation && !this.isAttacking) {
             if (this.animationIntervals)
                 this.stopAnimation();
             this.stopWalking();
             this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300, false);
+            this.animationIntervals = true;
+            this.isAttacking = true;
             setTimeout(() => {
                 this.cancelAnimation(this.hurtAnimation);
+                this.animationIntervals = null;
+                this.hurtAnimation = null;
+                setTimeout(() => {
+                    this.isWalking();
+                }, 200);
+            }, 600);
+        }else if(this.isAttacking) {
+            this.cancelAnimation(this.hurtAnimation);
+            this.animationIntervals = null;
+            this.hurtAnimation = null;
+            setTimeout(() => {
                 this.isWalking();
-            }, 500);
+            }, 200);
         }
+    }
+
+    newHit() {
+        return this.energy != this.lastHit;
     }
 
     playMovement(arr){

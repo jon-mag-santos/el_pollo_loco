@@ -102,11 +102,20 @@ class MoveableObject extends DrawableObject {
     }
 
     hit() {
+        this.hurtSound();
         this.energy -= 5;
         if (this.energy <= 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+        }
+    }
+
+    hurtSound(){
+        if(this instanceof Character) {
+            playSound(HURT_AUDIO);
+        }else if(this instanceof Chicken) {
+            playSound(CHICKEN_HURT_AUDIO);
         }
     }
 

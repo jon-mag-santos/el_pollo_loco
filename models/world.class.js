@@ -153,7 +153,7 @@ class World {
                 if (index > -1) {
                     this.level.enemies.splice(index, 1);
                 }   
-            },300 );
+            },200 );
         
     }
 
@@ -208,7 +208,7 @@ class World {
                 const index = this.throwableObjects.indexOf(bottle);
                 setTimeout(() => {
                     this.throwableObjects.splice(index, 1);
-                }, 60);
+                }, 90);
             }
         });
     }
