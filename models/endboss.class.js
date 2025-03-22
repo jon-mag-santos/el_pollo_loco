@@ -13,7 +13,7 @@ class Endboss extends MoveableObject {
         left: 80,
         right: 70
     };
-
+    world;
     IMAGES_WALKING = [
         "img/4_enemie_boss_chicken/1_walk/G1.png",
         "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -55,8 +55,6 @@ class Endboss extends MoveableObject {
         "img/4_enemie_boss_chicken/5_dead/G26.png"
     ];
 
-
-
     constructor() {
         super().loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
         this.loadImages(this.IMAGES_WALKING);
@@ -65,7 +63,6 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 1400;
-
         this.animate();
     }
 
@@ -74,7 +71,7 @@ class Endboss extends MoveableObject {
             if(this.isDead()){
                 this.speed = 0;
             }else if(this.isHurt() && this.newHit()) {
-            console.log("End Boss is hurt", this.energy);
+                this.world.endBossBar.setPercentage(this.energy);
                 this.isAttacking = false;
                 this.lastHit = this.energy;
                 this.isHurting();
@@ -90,7 +87,7 @@ class Endboss extends MoveableObject {
         }
     }
 
-    hurtPause() {
+    collisionPause() {
         this.speed = 0;
     }
 
@@ -103,7 +100,7 @@ class Endboss extends MoveableObject {
             if (this.animationIntervals)
                 this.stopAnimation();
             if (this.walkAnimation) {
-                this.hurtPause();
+                this.collisionPause();
             }
             this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300, false);
             setTimeout(() => {

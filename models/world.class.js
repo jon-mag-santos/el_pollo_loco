@@ -2,7 +2,7 @@ class World {
     ctx;
     canvas;
     keyboard;
-    character = new Character();
+    character = new Character(this);
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
@@ -106,7 +106,7 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this;
+        this.level.endboss[0].world = this;
     }
 
     run() {
@@ -129,9 +129,8 @@ class World {
                     enemy.hit();
                     this.character.jump();
                 } else {
-                    //console.log("collision with enemy")
-                    //this.character.hit();
-                    //console.log(this.character.energy);
+                    this.takingHit(this.character);
+                    this.statusBar.setPercentage(this.character.energy);
                 }
             }else
                return false;
@@ -157,13 +156,28 @@ class World {
         
     }
 
-
     checkCollisionsWithEndboss() {
         let endBoss = this.level.endboss[0];
         if (endBoss.isColliding(this.character)) {
-            console.log("collision with boss")
-            //this.character.hit();
-            console.log(this.character.energy);
+            this.takingHit(this.character);
+            this.statusBar.setPercentage(this.character.energy);
+            endBoss.collisionPause();
+            setTimeout(() => {
+                endBoss.restoreSpeed();
+            }, 500);
+        }
+    }
+
+    takingHit(character) {
+        if (!character.takingHit) {
+            character.hit();
+            console.log("energy", character.energy)
+            character.takingHit = true;
+        }else {
+            let timePassed = new Date().getTime() - character.lastHit;
+            timePassed = timePassed / 1000;
+            if (timePassed > 1)
+                character.takingHit = false;
         }
     }
 
@@ -217,7 +231,7 @@ class World {
         let endBoss = this.level.endboss[0];
         let enemies = this.level.enemies;
         if(this.character.isDead()) {
-            console.log("Pepe is dead")
+            //console.log("Pepe is dead")
         }else if(endBoss.isDead()) {
             console.log("End Boss is dead")
         }else {

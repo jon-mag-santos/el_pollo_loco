@@ -7,6 +7,8 @@ class Character extends MoveableObject {
     longIdle= false;
     idleStart = false;
     afterJump = false;
+    throwingBottle = false;
+    takingHit = 0;
     energy = 100;
     offset = {
         top: 120,
@@ -82,7 +84,7 @@ class Character extends MoveableObject {
          "../img/2_character_pepe/5_dead/D-57.png"
      ];
 
-    constructor() {
+    constructor(world) {
         super().loadImage("./img/2_character_pepe/3_jump/J-37.png");
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
@@ -90,6 +92,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.world = world;
         this.applyGravity();
         this.animate();
     }
@@ -104,7 +107,7 @@ class Character extends MoveableObject {
             if(this.world.keyboard.UP || this.world.keyboard.SPACE){
                 this.afterJump = this.isJumping();
             }
-            this.world.cam_x = -this. x + 100;
+            this.positionCameraX();
         }, 1000/60);
 
         this.animationInterval = setInterval(() => {
@@ -131,11 +134,11 @@ class Character extends MoveableObject {
     }
 
     isLongIdle(currentImage, arr, idle) {
-        if(!idle || this.afterJump || this.isAboveGround()) {
+        if(!idle || this.afterJump || this.isAboveGround() || this.world.isThrowing) {
             this.longIdle = false;
             this.idleStart = false;
             return arr;
-        } else if(currentImage % 10 > 0 && this.idleStart == false){
+        } else if(currentImage % 10 > 0 && !this.idleStart){
             this.currentImage = 0;
             this.idleStart = true;
         }
@@ -172,10 +175,18 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
-
         while(this.isAboveGround()){
             return true;
         }
         return false;
     }
+
+    positionCameraX() {
+        if (this.world.level.endboss[0].x > this.x - 100) {
+            this.world.cam_x = -this.x + 100;
+        } else {
+            this.world.cam_x = -this.x + 500;
+        }
+    }
+
 }
