@@ -129,9 +129,9 @@ class World {
                     enemy.hit();
                     this.character.jump();
                 } else {
-                    console.log("collision with enemy")
+                    //console.log("collision with enemy")
                     //this.character.hit();
-                    console.log(this.character.energy);
+                    //console.log(this.character.energy);
                 }
             }else
                return false;

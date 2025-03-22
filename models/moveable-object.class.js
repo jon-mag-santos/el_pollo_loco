@@ -77,7 +77,7 @@ class MoveableObject extends DrawableObject {
 
     cancelAnimation(intervalId) {
         clearInterval(intervalId); // Stop the animation using clearInterval
-        intervalId = null;
+        return null;
     }
 
 

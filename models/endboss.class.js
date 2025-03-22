@@ -78,8 +78,6 @@ class Endboss extends MoveableObject {
                 this.isAttacking = false;
                 this.lastHit = this.energy;
                 this.isHurting();
-            }else if(this.isAttacking && !this.walkAnimation) {
-                this.isWalking();
             }
         }, 150);
         this.animationIntervals = this.playAnimation(this.IMAGES_ALERT, 500);
@@ -87,51 +85,38 @@ class Endboss extends MoveableObject {
     }
 
     isWalking() {
-        if (!this.walkAnimation && !this.animationIntervals) {  // Only start walking if it's not already walking
+        if (!this.walkAnimation) {  // Only start walking if it's not already walking
             this.walkAnimation = this.playAnimation(this.IMAGES_WALKING, false, true);
         }
     }
 
-    stopWalking() {
-        if (this.walkAnimation) {
-            this.cancelAnimation(this.walkAnimation); // Stop the animation if it's running
-        }
+    hurtPause() {
+        this.speed = 0;
+    }
+
+    restoreSpeed(){
+        this.speed = 15;
     }
 
     isHurting() {
-        if(!this.hurtAnimation && !this.isAttacking) {
+        if(!this.hurtAnimation) {
             if (this.animationIntervals)
                 this.stopAnimation();
-            this.stopWalking();
+            if (this.walkAnimation) {
+                this.hurtPause();
+            }
             this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300, false);
-            this.animationIntervals = true;
-            this.isAttacking = true;
             setTimeout(() => {
-                this.cancelAnimation(this.hurtAnimation);
-                this.animationIntervals = null;
-                this.hurtAnimation = null;
-                setTimeout(() => {
+                this.hurtAnimation = this.cancelAnimation(this.hurtAnimation);
+                if(!this.walkAnimation) {
                     this.isWalking();
-                }, 200);
+                }else
+                    this.restoreSpeed();
             }, 600);
-        }else if(this.isAttacking) {
-            this.cancelAnimation(this.hurtAnimation);
-            this.animationIntervals = null;
-            this.hurtAnimation = null;
-            setTimeout(() => {
-                this.isWalking();
-            }, 200);
         }
     }
 
     newHit() {
         return this.energy != this.lastHit;
-    }
-
-    playMovement(arr){
-        let i = this.currentImage % arr.length;
-        let path = arr[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
     }
 }
