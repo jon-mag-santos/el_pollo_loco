@@ -3,7 +3,7 @@ class Endboss extends MoveableObject {
     y = 60;
     width = 400;
     height = 390;
-    speed = 0;//15;
+    speed = 15;
     energy = 100;
     walkAnimation = null;
     hurtAnimation = null;
@@ -131,11 +131,11 @@ class Endboss extends MoveableObject {
         return this.energy != this.lastHit;
     }
 
-    cancelAllAnimations(exception = null) {
+    cancelAllAnimations() {
         this.stopAnimation();
-        this.hurtAnimation = (exception == this.hurtAnimation ) ? this.hurtAnimation : this.cancelAnimation(this.hurtAnimation);
-        this.walkAnimation = (exception == this.walkAnimation ) ? this.walkAnimation : this.cancelAnimation(this.walkAnimation);
-        this.attackAnimation = (exception == this.attackAnimation ) ? this.attackAnimation : this.cancelAnimation(this.attackAnimation);
+        this.hurtAnimation = this.cancelAnimation(this.hurtAnimation);
+        this.walkAnimation = this.cancelAnimation(this.walkAnimation);
+        this.attackAnimation = this.cancelAnimation(this.attackAnimation);
     }
 
     endBossDead() {
