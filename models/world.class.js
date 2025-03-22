@@ -32,7 +32,6 @@ class World {
         this.drawEnemies();
         this.ctx.translate(-this.cam_x, 0);
 
-        //draw will always executed
         let self = this
         requestAnimationFrame(function () {
             self.draw();
@@ -98,10 +97,10 @@ class World {
     }
 
     checkOtherDirection() {
-        if (this.keyboard.LEFT)
+        if (this.keyboard.LEFT && !this.character.isDead())
             this.character.otherDirection = true;
 
-        if (this.keyboard.RIGHT)
+        if (this.keyboard.RIGHT && !this.character.isDead())
             this.character.otherDirection = false;
     }
 
@@ -147,13 +146,11 @@ class World {
     enemyDeath(index, enemy) {
         enemy.stopAnimation();
         enemy.loadImage(enemy.IMG_DEAD);
-        
-            setTimeout(() => {
-                if (index > -1) {
-                    this.level.enemies.splice(index, 1);
-                }   
-            },200 );
-        
+        setTimeout(() => {
+            if (index > -1) {
+                this.level.enemies.splice(index, 1);
+            }   
+        },200 );   
     }
 
     checkCollisionsWithEndboss() {
@@ -162,9 +159,20 @@ class World {
             this.takingHit(this.character);
             this.statusBar.setPercentage(this.character.energy);
             endBoss.collisionPause();
+            this.isAttacking(endBoss);
             setTimeout(() => {
                 endBoss.restoreSpeed();
             }, 500);
+        }
+    }
+
+    isAttacking(endBoss) {
+        if(!endBoss.attackAnimation) {
+            endBoss.cancelAllAnimations();
+            endBoss.attackAnimation = endBoss.playAnimation(endBoss.IMAGES_ATTACK, 350);
+            setTimeout(() => {
+                endBoss.attackAnimation = endBoss.cancelAnimation(endBoss.attackAnimation);
+            }, 1400);
         }
     }
 
@@ -228,21 +236,14 @@ class World {
     }
 
     checkDeathsAfterCollision() {
-        let endBoss = this.level.endboss[0];
         let enemies = this.level.enemies;
-        if(this.character.isDead()) {
-            //console.log("Pepe is dead")
-        }else if(endBoss.isDead()) {
-            console.log("End Boss is dead")
-        }else {
-            for (const enemy of enemies) {
-                if (enemy.isDead() && !enemy.deathAnimation) {
-                    const index =  enemies.indexOf(enemy);
-                    enemy.deathAnimation = true;
-                    this.enemyDeath(index, enemy);
-                    break;
-                }  
-            }
+        for (const enemy of enemies) {
+            if (enemy.isDead() && !enemy.deathAnimation) {
+                const index =  enemies.indexOf(enemy);
+                enemy.deathAnimation = true;
+                this.enemyDeath(index, enemy);
+                break;
+            }  
         }
     }
 }

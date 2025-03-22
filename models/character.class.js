@@ -1,15 +1,16 @@
 class Character extends MoveableObject {
     x = 20;
-    y = 10;//187;
+    y = 10;
     width = 150;
     height = 250;
+    speed = 10;
     world;
     longIdle= false;
     idleStart = false;
     afterJump = false;
     throwingBottle = false;
     takingHit = 0;
-    energy = 100;
+    energy = 10;
     offset = {
         top: 120,
         bottom: 15,
@@ -99,12 +100,13 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
+            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
                 || this.world.keyboard.LEFT && this.x > 0) {
                 this.isWalking(this.world.keyboard.RIGHT);
             }
 
             if(this.world.keyboard.UP || this.world.keyboard.SPACE){
+                playSound(JUMP_AUDIO);
                 this.afterJump = this.isJumping();
             }
             this.positionCameraX();
@@ -112,20 +114,25 @@ class Character extends MoveableObject {
 
         this.animationInterval = setInterval(() => {
             if(this.isDead()){
-                this.playMovement(this.IMAGES_DEAD);
+                if(this.speed != 0){
+                    this.playAnimation(this.IMAGES_DEAD);
+                    setTimeout(() => {
+                        this.speed = 0;
+                    }, 350);
+                }
             }else if(this.isHurt()) {
-                this.playMovement(this.IMAGES_HURT);
+                this.playAnimation(this.IMAGES_HURT);
             }else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
-                this.playMovement(this.IMAGES_WALKING);
+                this.playAnimation(this.IMAGES_WALKING);
             }else if(this.world.keyboard.UP || this.world.keyboard.SPACE){
-                this.playMovement(this.IMAGES_JUMPING);
+                this.playAnimation(this.IMAGES_JUMPING);
             }else{
-                this.playMovement(this.IMAGES_IDLE, true);
+                this.playAnimation(this.IMAGES_IDLE, true);
             }
         }, 150);  
     }
 
-    playMovement(arr, idle){
+    playAnimation(arr, idle){
         arr = this.isLongIdle(this.currentImage, arr, idle);
         let i = this.currentImage % arr.length;
         let path = arr[i];
@@ -151,14 +158,6 @@ class Character extends MoveableObject {
         }      
     }
 
-    moveRight() {
-        this.x += 10;
-    }
-
-    moveLeft() {
-        this.x -= 10;
-    }
-
     isWalking(right) {
         if (right) {
             this.moveRight();
@@ -182,7 +181,7 @@ class Character extends MoveableObject {
     }
 
     positionCameraX() {
-        if (this.world.level.endboss[0].x > this.x - 100) {
+        if (this.world.level.endboss[0].x > this.x - 350) {
             this.world.cam_x = -this.x + 100;
         } else {
             this.world.cam_x = -this.x + 500;

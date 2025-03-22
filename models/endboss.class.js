@@ -3,10 +3,11 @@ class Endboss extends MoveableObject {
     width = 400;
     height = 390;
     speed = 15;
-    isAttacking = false;
     energy = 100;
     walkAnimation = null;
     hurtAnimation = null;
+    attackAnimation = null;
+    bossIntro = false;
     offset = {
         top: 0,
         bottom: 0,
@@ -70,11 +71,22 @@ class Endboss extends MoveableObject {
         setInterval(() => {
             if(this.isDead()){
                 this.speed = 0;
+                playSound(BOSS_DEAD_AUDIO, true, 1000);
+                this.cancelAllAnimations();
+                this.endBossDead();
             }else if(this.isHurt() && this.newHit()) {
                 this.world.endBossBar.setPercentage(this.energy);
-                this.isAttacking = false;
                 this.lastHit = this.energy;
                 this.isHurting();
+            }else if(!this.world.isCharacterTooFar(this) && !this.bossIntro) {
+                playSound(BOSS_INTRO_AUDIO);
+                setTimeout(() => {
+                    this.bossIntro = true;
+                }, 1500);
+            }else if(!this.world.isCharacterTooFar(this) && this.bossIntro) {
+                this.isWalking();
+            }else if(this.isColliding(this.world.character)) {
+                this.isAttacking();
             }
         }, 150);
         this.animationIntervals = this.playAnimation(this.IMAGES_ALERT, 500);
@@ -82,7 +94,9 @@ class Endboss extends MoveableObject {
     }
 
     isWalking() {
-        if (!this.walkAnimation) {  // Only start walking if it's not already walking
+        if(this.animationIntervals)
+            this.stopAnimation();
+        if (!this.walkAnimation) {
             this.walkAnimation = this.playAnimation(this.IMAGES_WALKING, false, true);
         }
     }
@@ -102,7 +116,7 @@ class Endboss extends MoveableObject {
             if (this.walkAnimation) {
                 this.collisionPause();
             }
-            this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300, false);
+            this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300);
             setTimeout(() => {
                 this.hurtAnimation = this.cancelAnimation(this.hurtAnimation);
                 if(!this.walkAnimation) {
@@ -115,5 +129,22 @@ class Endboss extends MoveableObject {
 
     newHit() {
         return this.energy != this.lastHit;
+    }
+
+    cancelAllAnimations(exception = null) {
+        this.stopAnimation();
+        this.hurtAnimation = (exception == this.hurtAnimation ) ? this.hurtAnimation : this.cancelAnimation(this.hurtAnimation);
+        this.walkAnimation = (exception == this.walkAnimation ) ? this.walkAnimation : this.cancelAnimation(this.walkAnimation);
+        this.attackAnimation = (exception == this.attackAnimation ) ? this.attackAnimation : this.cancelAnimation(this.attackAnimation);
+    }
+
+    endBossDead() {
+        if (!this.deathAnimation) {
+            this.deathAnimation = this.playAnimation(this.IMAGES_DEAD, 300);
+            setTimeout(() => {
+                this.cancelAnimation(this.deathAnimation);
+                this.loadImage("img/4_enemie_boss_chicken/5_dead/G26.png");
+            }, 600);
+        }
     }
 }

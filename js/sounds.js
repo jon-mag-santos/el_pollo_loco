@@ -11,7 +11,16 @@ const GAME_AUDIO = new Audio("./audio/game.mp3");
 const HURT_AUDIO = new Audio("./audio/hurt.mp3"); 
 const JUMP_AUDIO = new Audio("./audio/jump.mp3"); 
 const WALK_AUDIO = new Audio("./audio/walk.mp3");
+let audioPaused = false;
 
-function playSound(audio) {
-    audio.play();
+function playSound(audio, timeout = false, time = 0) {
+    if(timeout && !audioPaused) {
+        audio.play();
+        setTimeout(() => {
+            audio.pause();
+            audioPaused = true;
+        }, time);
+    }else if(!timeout) {
+        audio.play();
+    }
 }

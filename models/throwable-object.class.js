@@ -55,11 +55,11 @@ class ThrowableObject extends MoveableObject {
     }
 
     animate() {
-        this.animationIntervals = this.playMovement(this.IMAGES_ROTATION, 20);
+        this.animationIntervals = this.playAnimation(this.IMAGES_ROTATION, 50);
     }
 
     animateSplash() {
         this.stopAnimation();
-        this.animationIntervals = this.playMovement(this.IMAGES_SPLASH, 40);
+        this.animationIntervals = this.playAnimation(this.IMAGES_SPLASH, 25);
     }
 }

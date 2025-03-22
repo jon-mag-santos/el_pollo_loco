@@ -8,7 +8,7 @@ class MoveableObject extends DrawableObject {
     acceleration = 5;
     otherDirection = false;
     animationIntervals = null;
-    deathAnimation = false;
+    deathAnimation = null;
     lastHit = 0;
 
     applyGravity() {
@@ -37,49 +37,30 @@ class MoveableObject extends DrawableObject {
         return this.y < 180;
     }
 
-    playMovement(arr, fps, moveLeft) {
-        const intervalTime = 1000 / fps; // Calculate the interval time for example 60 FPS (16.67ms)
+    playAnimation(arr, fps, moveLeft = false) {
+        const intervalTime = (fps) ? fps : 1000 / 10; 
         const imgs = arr;
-        // Start the interval loop
         const intervalId = setInterval(() => {
             let i = this.currentImage % imgs.length;
-            let path = imgs[i];
+            let path = imgs[i]; 
             this.img = this.imageCache[path];
             this.currentImage++;
-            if (moveLeft) {
-                this.moveLeft();
-            }
+            if(moveLeft)
+                 this.moveLeft();
         }, intervalTime);
+        
         return intervalId;
     }
 
-    playAnimation(arr, fps, moveLeft) {
-        const intervalTime = (fps) ? fps : 1000 / 10;  // Calculate the interval time for 60 FPS (16.67ms)
-        let currentImage = 0; // To store the current image index
-        const imgs = arr;  // Images to be used for animation
-
-        // Start the animation using setInterval
-        const intervalId = setInterval(() => {
-            let i = currentImage % imgs.length;  // Get the current image index
-            let path = imgs[i];  // Get the image path at the current index
-            this.img = this.imageCache[path];  // Set the current image from the cache
-            currentImage++;
-            if(moveLeft)
-            // Move to the next image
-                 this.moveLeft();
-
-            // Optionally, stop the animation after a certain time
-            // If you want to stop it after a specific condition, use `clearInterval` elsewhere.
-        }, intervalTime);
-
-        return intervalId; // Return the intervalId so we can cancel the animation later
-    }
-
     cancelAnimation(intervalId) {
-        clearInterval(intervalId); // Stop the animation using clearInterval
+        clearInterval(intervalId);
         return null;
     }
 
+    stopAnimation() {
+        clearInterval(this.animationIntervals);
+        this.animationIntervals = null;
+    }
 
     moveRight() {
         this.x += this.speed;
@@ -94,11 +75,6 @@ class MoveableObject extends DrawableObject {
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
-    }
-
-    stopAnimation() {
-        clearInterval(this.animationIntervals);
-        this.animationIntervals = null;
     }
 
     hit() {
@@ -120,8 +96,8 @@ class MoveableObject extends DrawableObject {
     }
 
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHit; // difference in ms
-        timePassed = timePassed / 1000; //difference in sec
+        let timePassed = new Date().getTime() - this.lastHit;
+        timePassed = timePassed / 1000;
         return timePassed < 1;
     }
 
