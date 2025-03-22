@@ -6,6 +6,7 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    bottle_collected = 0;
     endBossBar = new EndbossBar();
     throwableObjects = [];
     isThrowing = false;
@@ -30,6 +31,7 @@ class World {
         this.drawFixedObjs();
         this.ctx.translate(this.cam_x, 0);
         this.drawEnemies();
+        this.drawCollectableObjs();
         this.ctx.translate(-this.cam_x, 0);
 
         let self = this
@@ -54,6 +56,10 @@ class World {
         if (!this.isCharacterTooFar(this.level.endboss[0])) {
             this.addToMap(this.endBossBar);
         }
+    }
+
+    drawCollectableObjs() {
+        this.addObjsToMap(this.level.bottles);
     }
 
     isCharacterTooFar(endBoss) {
@@ -116,6 +122,7 @@ class World {
             this.checkBottleCollided();
             this.checkBottleSplashed();
             this.checkDeathsAfterCollision();
+            this.collectingBottle();
         }, 1000 / 60);
 
     }
@@ -179,7 +186,6 @@ class World {
     takingHit(character) {
         if (!character.takingHit) {
             character.hit();
-            console.log("energy", character.energy)
             character.takingHit = true;
         }else {
             let timePassed = new Date().getTime() - character.lastHit;
@@ -190,12 +196,16 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && !this.isThrowing) {
+        if (this.keyboard.D && !this.isThrowing && this.bottle_collected > 0) {
             let x = (!this.character.otherDirection) ? this.character.x + this.character.width - this.character.offset.right - 40 : this.character.x + this.character.offset.left - 40;
             let y = this.character.y + this.character.offset.top;
             let bottle = new ThrowableObject(x, y, this.character.otherDirection);
             this.throwableObjects.push(bottle);
             this.isThrowing = true;
+            playSound(BOTTLE_THROW_AUDIO);
+            this.bottle_collected--;
+            let percentage = (this.bottle_collected*10 > 100) ? 100 : this.bottle_collected*10;
+            this.bottleBar.setPercentage(percentage);
             setTimeout(() => {
                 this.isThrowing = false;
             }, 500);
@@ -211,12 +221,14 @@ class World {
                     endBoss.hit();
                     bottle.isSplashed = true;
                     bottle.hasCollided = true;
+                    playSound(BOTTLE_SPLASH_AUDIO);
                 }else{
                     enemies.forEach(enemy => {
                         if (enemy.isColliding(bottle) && !enemy.isDead() && !bottle.hasCollided){
                             enemy.hit();
                             bottle.isSplashed = true;
                             bottle.hasCollided = true;
+                            playSound(BOTTLE_SPLASH_AUDIO);
                         }
                     });
                 }
@@ -245,5 +257,26 @@ class World {
                 break;
             }  
         }
+    }
+
+    collectingBottle() { 
+        this.level.bottles.forEach((bottle)=>{
+            if(this.character.isColliding(bottle)) {
+                playSound(BOTTLE_COLLECT_AUDIO);
+                this.bottleCollected(bottle);
+            }
+        })
+    }
+
+    bottleCollected(bottle) {
+        this.level.bottles.forEach((item, index) => {
+            if (item === bottle) {
+                this.level.bottles.splice(index, 1);
+                this.bottle_collected++;
+                console.log(this.bottle_collected);
+                let percentage = (this.bottle_collected*10 < 100) ? this.bottle_collected*10 : 100;
+                this.bottleBar.setPercentage(percentage);
+            }
+        });
     }
 }

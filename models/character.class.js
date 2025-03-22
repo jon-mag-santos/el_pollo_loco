@@ -12,7 +12,7 @@ class Character extends MoveableObject {
     takingHit = 0;
     energy = 100;
     offset = {
-        top: 120,
+        top: 110,
         bottom: 15,
         left: 40,
         right: 50
@@ -174,7 +174,7 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
-        while(this.isAboveGround()){
+        while(this.isAboveGround() && this.speedY < 10 ){
             return true;
         }
         return false;

@@ -3,16 +3,16 @@ class Endboss extends MoveableObject {
     y = 60;
     width = 400;
     height = 390;
-    speed = 15;
+    speed = 0;//15;
     energy = 100;
     walkAnimation = null;
     hurtAnimation = null;
     attackAnimation = null;
     bossIntro = false;
     offset = {
-        top: 0,
-        bottom: 0,
-        left: 80,
+        top: 20,
+        bottom: 20,
+        left: 50,
         right: 70
     };
     world;
@@ -83,7 +83,7 @@ class Endboss extends MoveableObject {
                 setTimeout(() => {
                     this.bossIntro = true;
                 }, 1500);
-            }else if(!this.world.isCharacterTooFar(this) && this.bossIntro) {
+            }else if(this.bossIntro) {
                 this.isWalking();
             }else if(this.isColliding(this.world.character)) {
                 this.isAttacking();

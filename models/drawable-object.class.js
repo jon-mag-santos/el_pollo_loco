@@ -27,7 +27,8 @@ class DrawableObject {
     drawFrame(ctx) {
         if (this instanceof Character ||
             this instanceof Chicken ||
-            this instanceof Endboss
+            this instanceof Endboss ||
+            this instanceof Bottle
         ) {
         ctx.beginPath();
         ctx.lineWidth = "5";
@@ -35,15 +36,16 @@ class DrawableObject {
         ctx.rect( this.x, this.y, this.width,this.height);
         ctx.stroke();
         ctx.fillStyle = "red";
-        if (this instanceof Chicken) {
-            ctx.fillRect(this.x - this.offset.left, this.y + this.offset.top,5,5);
-        }
         if (this instanceof Character)
             ctx.fillStyle = "green";
         ctx.fillRect(this.x + this.width -this.offset.right, this.y +this.height - this.offset.bottom, 5, 5);
+        ctx.fillRect(this.x + this.width -this.offset.right, this.y + this.offset.top, 5, 5);
         if (this instanceof Character)
             ctx.fillStyle = "yellow";
         ctx.fillRect(this.x + this.offset.left, this.y +this.height - this.offset.bottom, 5, 5);
+        ctx.fillRect(this.x + this.offset.left, this.y + this.offset.top,5,5);
+    
+           
         }
     }
 }

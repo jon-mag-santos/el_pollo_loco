@@ -15,5 +15,5 @@ function hideStartScreen() {
 }
 
 function playGameMusic() {
-    playSound(GAME_AUDIO);
+    playSound(GAME_AUDIO, false, 0, true, 0.1);
 }

@@ -13,14 +13,19 @@ const JUMP_AUDIO = new Audio("./audio/jump.mp3");
 const WALK_AUDIO = new Audio("./audio/walk.mp3");
 let audioPaused = false;
 
-function playSound(audio, timeout = false, time = 0) {
+function playSound(audio, timeout = false, time = 0, loop = false, volume = null) {
+    if(volume)
+        audio.volume = volume;
     if(timeout && !audioPaused) {
         audio.play();
         setTimeout(() => {
             audio.pause();
             audioPaused = true;
         }, time);
-    }else if(!timeout) {
+    }else if(loop) {
+        audio.loop = true;
+        audio.play();
+    }else if(!timeout && !loop) {
         audio.play();
     }
 }
