@@ -10,7 +10,7 @@ class Character extends MoveableObject {
     afterJump = false;
     throwingBottle = false;
     takingHit = 0;
-    energy = 10;
+    energy = 100;
     offset = {
         top: 120,
         bottom: 15,
