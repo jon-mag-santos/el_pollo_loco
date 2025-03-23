@@ -73,9 +73,10 @@ class Endboss extends MoveableObject {
                 this.speed = 0;
                 playSound(BOSS_DEAD_AUDIO, true, 1000);
                 this.cancelAllAnimations();
+                this.updateStatusBar();
                 this.endBossDead();
             }else if(this.isHurt() && this.newHit()) {
-                this.world.endBossBar.setPercentage(this.energy);
+                this.updateStatusBar();
                 this.lastHit = this.energy;
                 this.isHurting();
             }else if(!this.world.isCharacterTooFar(this) && !this.bossIntro) {
@@ -146,5 +147,10 @@ class Endboss extends MoveableObject {
                 this.loadImage("img/4_enemie_boss_chicken/5_dead/G26.png");
             }, 600);
         }
+    }
+
+    updateStatusBar() {
+        let percentage = (this.energy > 0 && this.energy < 30) ? 30 : this.energy;
+        this.world.endBossBar.setPercentage(percentage);
     }
 }

@@ -89,8 +89,10 @@ class MoveableObject extends DrawableObject {
 
     hurtSound(){
         if(this instanceof Character) {
-            playSound(HURT_AUDIO);
-        }else if(this instanceof Chicken) {
+            if (!this.isDead())
+                playSound(HURT_AUDIO);
+        }
+        if(this instanceof Chicken || this instanceof Endboss) {
             playSound(CHICKEN_HURT_AUDIO);
         }
     }

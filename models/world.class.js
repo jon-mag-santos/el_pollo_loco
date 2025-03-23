@@ -5,11 +5,12 @@ class World {
     character = new Character(this);
     statusBar = new StatusBar();
     coinBar = new CoinBar();
+    coin_collected = 0;
     bottleBar = new BottleBar();
     bottle_collected = 0;
     endBossBar = new EndbossBar();
     throwableObjects = [];
-    isThrowing = false;
+    lastBottleThrown = 0;
     level = level1;
     cam_x = -100;
     runInterval = null;
@@ -60,6 +61,7 @@ class World {
 
     drawCollectableObjs() {
         this.addObjsToMap(this.level.bottles);
+        this.addObjsToMap(this.level.coins);
     }
 
     isCharacterTooFar(endBoss) {
@@ -123,6 +125,7 @@ class World {
             this.checkBottleSplashed();
             this.checkDeathsAfterCollision();
             this.collectingBottle();
+            this.collectingCoin();
         }, 1000 / 60);
 
     }
@@ -136,7 +139,7 @@ class World {
                     this.character.jump();
                 } else {
                     this.takingHit(this.character);
-                    this.statusBar.setPercentage(this.character.energy);
+                    this.character.updateStatusBar();
                 }
             }else
                return false;
@@ -164,7 +167,7 @@ class World {
         let endBoss = this.level.endboss[0];
         if (endBoss.isColliding(this.character)) {
             this.takingHit(this.character);
-            this.statusBar.setPercentage(this.character.energy);
+            this.character.updateStatusBar();
             endBoss.collisionPause();
             this.isAttacking(endBoss);
             setTimeout(() => {
@@ -196,20 +199,25 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && !this.isThrowing && this.bottle_collected > 0) {
+        if (this.keyboard.D && this.canThrowObject()) {
             let x = (!this.character.otherDirection) ? this.character.x + this.character.width - this.character.offset.right - 40 : this.character.x + this.character.offset.left - 40;
             let y = this.character.y + this.character.offset.top;
             let bottle = new ThrowableObject(x, y, this.character.otherDirection);
             this.throwableObjects.push(bottle);
-            this.isThrowing = true;
+            this.lastBottleThrown = new Date().getTime();
             playSound(BOTTLE_THROW_AUDIO);
             this.bottle_collected--;
-            let percentage = (this.bottle_collected*10 > 100) ? 100 : this.bottle_collected*10;
+            let percentage = (this.bottle_collected > 20) ? 100 : 
+                            (this.bottle_collected * 10 / 2 > 30 ) ? this.bottle_collected * 10 / 2 : 
+                            (this.bottle_collected > 0) ? 30 : 0;
             this.bottleBar.setPercentage(percentage);
-            setTimeout(() => {
-                this.isThrowing = false;
-            }, 500);
         }
+    }
+
+    canThrowObject() {
+        let timePassed = new Date().getTime() - this.lastBottleThrown;
+        timePassed /= 1000;
+        return timePassed > 1 && this.bottle_collected > 0;
     }
 
     checkBottleCollided() {
@@ -239,6 +247,7 @@ class World {
     checkBottleSplashed() {
         this.throwableObjects.forEach(bottle => {
             if (bottle.isSplashed) {
+                playSound(BOTTLE_SPLASH_AUDIO);
                 const index = this.throwableObjects.indexOf(bottle);
                 setTimeout(() => {
                     this.throwableObjects.splice(index, 1);
@@ -273,9 +282,32 @@ class World {
             if (item === bottle) {
                 this.level.bottles.splice(index, 1);
                 this.bottle_collected++;
-                console.log(this.bottle_collected);
-                let percentage = (this.bottle_collected*10 < 100) ? this.bottle_collected*10 : 100;
+                let percentage = (this.bottle_collected > 0 && this.bottle_collected < 6) ? 30 : 
+                                    (this.bottle_collected * 10 / 2 < 100) ? this.bottle_collected * 10 / 2 : 
+                                    (this.bottle_collected < 23) ? 90 : 100;
                 this.bottleBar.setPercentage(percentage);
+            }
+        });
+    }
+
+    collectingCoin() { 
+        this.level.coins.forEach((coin)=>{
+            if(this.character.isColliding(coin)) {
+                playSound(COIN_AUDIO);
+                this.coinCollected(coin);
+            }
+        })
+    }
+
+    coinCollected(coin) {
+        this.level.coins.forEach((item, index) => {
+            if (item === coin) {
+                this.level.coins.splice(index, 1);
+                this.coin_collected++;
+                let percentage = (this.coin_collected > 0 && this.coin_collected < 6) ? 30 :
+                                    (this.coin_collected * 10 / 2 < 100) ? this.coin_collected*10 / 2 : 
+                                    (this.coin_collected < 20) ? 90 : 100;
+                this.coinBar.setPercentage(percentage);
             }
         });
     }

@@ -12,7 +12,7 @@ class Character extends MoveableObject {
     takingHit = 0;
     energy = 100;
     offset = {
-        top: 110,
+        top: 100,
         bottom: 15,
         left: 40,
         right: 50
@@ -188,4 +188,8 @@ class Character extends MoveableObject {
         }
     }
 
+    updateStatusBar() {
+        let percentage = (this.energy > 0 && this.energy < 30) ? 30 : this.energy;
+        this.world.statusBar.setPercentage(percentage);
+    }
 }
