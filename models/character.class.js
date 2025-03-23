@@ -112,7 +112,7 @@ class Character extends MoveableObject {
             this.positionCameraX();
         }, 1000/60);
 
-        this.animationInterval = setInterval(() => {
+        this.animationIntervals = setInterval(() => {
             if(this.isDead()){
                 if(this.speed != 0){
                     this.playAnimation(this.IMAGES_DEAD);

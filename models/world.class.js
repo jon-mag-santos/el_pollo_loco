@@ -104,10 +104,10 @@ class World {
     }
 
     checkOtherDirection() {
-        if (this.keyboard.LEFT && !this.character.isDead())
+        if (this.keyboard.LEFT && !this.character.speed == 0)
             this.character.otherDirection = true;
 
-        if (this.keyboard.RIGHT && !this.character.isDead())
+        if (this.keyboard.RIGHT && !this.character.speed == 0)
             this.character.otherDirection = false;
     }
 
@@ -170,7 +170,8 @@ class World {
             endBoss.collisionPause();
             this.isAttacking(endBoss);
             setTimeout(() => {
-                endBoss.restoreSpeed();
+                if (!this.character.isDead())
+                    endBoss.restoreSpeed();
             }, 500);
         }
     }
@@ -257,14 +258,43 @@ class World {
 
     checkDeathsAfterCollision() {
         let enemies = this.level.enemies;
-        for (const enemy of enemies) {
-            if (enemy.isDead() && !enemy.deathAnimation) {
-                const index =  enemies.indexOf(enemy);
-                enemy.deathAnimation = true;
-                this.enemyDeath(index, enemy);
-                break;
-            }  
+        if(this.level.endboss[0].isDead()) {
+            playSound(BOSS_DEAD_AUDIO, true, 1000);
+            this.gameOver();
+        }else if(this.character.isDead()) {
+            this.gameOver(false);
+        }else if(enemies.length > 0) {
+            for (const enemy of enemies) {
+                if (enemy.isDead() && !enemy.deathAnimation) {
+                    const index =  enemies.indexOf(enemy);
+                    enemy.deathAnimation = true;
+                    this.enemyDeath(index, enemy);
+                    break;
+                }  
+            }
         }
+    }
+
+    gameOver(win = true) {
+        this.character.speed = 0;
+        this.character.stopAnimation();
+        this.level.endboss[0].speed = 0;
+        this.level.clouds.forEach(cloud => {
+            cloud.speed = 0;
+        });
+        clearInterval(this.runInterval);
+        this.runInterval = null;
+        this.gameOverCelebration(win);
+        showGameOver(win);
+    }
+
+    gameOverCelebration(win) {
+        if (win) {
+            this.character.loadImage("img/2_character_pepe/3_jump/J-35.png");
+            playSound(GAME_WON_AUDIO, true, 1000);
+            playSound(YES_AUDIO, true, 1000);
+        }else
+            playSound(GAME_LOST_AUDIO, true, 4000);
     }
 
     collectingBottle() { 

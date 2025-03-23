@@ -11,16 +11,16 @@ const GAME_AUDIO = new Audio("./audio/game.mp3");
 const HURT_AUDIO = new Audio("./audio/hurt.mp3"); 
 const JUMP_AUDIO = new Audio("./audio/jump.mp3"); 
 const WALK_AUDIO = new Audio("./audio/walk.mp3");
-let audioPaused = false;
+const YES_AUDIO = new Audio("./audio/yes.mp3");
+
 
 function playSound(audio, timeout = false, time = 0, loop = false, volume = null) {
     if(volume)
         audio.volume = volume;
-    if(timeout && !audioPaused) {
+    if(timeout) {
         audio.play();
         setTimeout(() => {
-            audio.pause();
-            audioPaused = true;
+            pauseSound(audio);
         }, time);
     }else if(loop) {
         audio.loop = true;
@@ -28,4 +28,8 @@ function playSound(audio, timeout = false, time = 0, loop = false, volume = null
     }else if(!timeout && !loop) {
         audio.play();
     }
+}
+
+function pauseSound(audio){
+    audio.pause();
 }

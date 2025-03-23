@@ -71,7 +71,6 @@ class Endboss extends MoveableObject {
         setInterval(() => {
             if(this.isDead()){
                 this.speed = 0;
-                playSound(BOSS_DEAD_AUDIO, true, 1000);
                 this.cancelAllAnimations();
                 this.updateStatusBar();
                 this.endBossDead();

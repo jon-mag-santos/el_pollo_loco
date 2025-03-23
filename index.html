@@ -33,8 +33,14 @@
     <div class="game-container">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="startScreen" class="start-screen">
-            <div id="divBtn" class="div-btn">
-                <button class="btn-start-screen" onclick="init()">Play</button>
+            <div id="divBtnStart" class="div-btn-start">
+                <button class="btn-screen" onclick="init()">Play</button>
+            </div>
+        </div>
+        <div id="gameOverScreen" class="game-over-screen">
+            <div id="divBtnGameOver" class="div-btn-g-over">
+                <button class="btn-screen" onclick="init(true)">Play again</button>
+                <button class="btn-screen" onclick="returnToStart()">Back to start</button>
             </div>
         </div>
     </div>

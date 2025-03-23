@@ -27,14 +27,38 @@ canvas {
     z-index: 1;
 }
 
-.div-btn {
+.game-over-screen {
+    display: none;
+    background-image: url("img/9_intro_outro_screens/game_over/game over!.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 720px;
+    height: 480px;
+    z-index: 1;
+}
+
+.div-btn-start, .div-btn-g-over {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 100%; 
+}
+
+.div-btn-start {
     margin-top: 30px;
 }
 
-.btn-start-screen {
+.div-btn-g-over {
+    flex-wrap: wrap;
+    align-content: flex-end;
+    height: 100%;
+    gap: 75px;
+}
+
+.div-btn-g-over button {
+    margin-bottom: 30px;
+}
+
+.btn-screen {
 	box-shadow: 0px 1px 0px 0px #fff6af;
 	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
 	background-color:#ffec64;
