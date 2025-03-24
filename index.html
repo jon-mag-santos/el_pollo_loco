@@ -45,6 +45,7 @@
         <div id="startScreen" class="start-screen">
             <div id="divBtnStart" class="div-btn-start">
                 <button class="btn-screen" onclick="init()">Play</button>
+                <button class="btn-screen" onclick="showInstructions()">Instructions</button>
             </div>
         </div>
         <div id="gameOverScreen" class="game-over-screen">
@@ -52,6 +53,54 @@
                 <button class="btn-screen" onclick="init(true)">Play again</button>
                 <button class="btn-screen" onclick="returnToStart()">Back to start</button>
             </div>
+        </div>
+        <div id="instructionScreen" class="instruction-screen">
+            <div class="btn-container">
+                <button class="btn-screen" onclick="closeInstructions()">Back</button>
+            </div>
+            <div class="instruction-content">
+                <div class="instruction-title">
+                    <h2>Instructions</h2>
+                    <img src="./img/10_additional_icons/joystick.png">
+                </div>
+                <div class="instructions">
+                    <div class="instructions-container">
+                        <div class="container jc-center">
+                            <img src="./img/10_additional_icons/arrow-left.png" alt="Left Icon">
+                            <img src="./img/10_additional_icons/arrow-right.png" alt="Right Icon">
+                        </div>
+                        <div class="container jc-center">
+                            <img src="./img/10_additional_icons/space.png" alt="Space Icon">
+                            <img src="./img/10_additional_icons/up-arrow.png" alt="Up Icon">
+                        </div>
+                        <div class="container jc-center">
+                            D
+                        </div>
+                    </div>
+                    <div class="instructions-container">
+                        <div class="container mt">
+                            <span>Press <b>LEFT</b> or <b>RIGHT</b> to move left or right</span>
+                        </div>
+                        <div class="container mt">
+                            <span>Press <b>SPACE</b> or <b>UP</b> to jump</span>
+                        </div>
+                        <div class="container mt">
+                            <span>Press <b>D</b> to throw bottles at enemies</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="divInstructions">
+        <div class="container">
+            <span>Press <b>LEFT</b> or <b>RIGHT</b> to move left or right</span>
+        </div>
+        <div class="container">
+            <span>Press <b>SPACE</b> or <b>UP</b> to jump</span>
+        </div>
+        <div class="container">
+            <span>Press <b>D</b> to throw bottles at enemies</span>
         </div>
     </div>
 </body>

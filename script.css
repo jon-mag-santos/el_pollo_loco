@@ -1,3 +1,12 @@
+@font-face {
+    font-family: "zabras";
+    src: url("./fonts/zabras.ttf") format("truetype");
+}
+
+* {
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -5,6 +14,29 @@ body {
     justify-content: center;
     margin: 0;
     min-height: 100vh;
+    background-image: url("./img/9_intro_outro_screens/start_bg/background.png");
+    background-size: cover;
+    background-position: top;
+}
+
+h1 {
+    font-size: 112px;
+}
+
+.divInstructions {
+    font-size: 60px;
+    display: flex;
+}
+
+h1, 
+.divInstructions {
+    letter-spacing: 5px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.95);
+    color: #D9F2F1;
+}
+
+.divInstructions .container {
+    text-align: center;
 }
 
 .game-container {
@@ -60,6 +92,7 @@ canvas {
 
 .div-btn-start {
     margin-top: 65px;
+    gap: 50px;
 }
 
 .div-btn-g-over {
@@ -118,9 +151,83 @@ canvas {
     -webkit-user-select: none;
 }
 
+.instruction-screen {
+    position: absolute;
+    display: none;
+    width: 720px;
+    height: 480px;
+    z-index: 3;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+}
+
+.btn-container {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    left: 20px;
+    top: 20px;
+}
+
+.instruction-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+
+.instruction-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    letter-spacing: 2px;
+    gap: 10px;
+}
+
+.instruction-title img {
+    width: 55px;
+}
+
+.instructions {
+    display: flex;
+    justify-content: center;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.instructions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    height: max-content;
+    padding: 20px;
+}
+
+.container img {
+    width: 40px;
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.mt {
+    margin-top: 12px;
+}
+
 :fullscreen .game-container,
 :fullscreen .start-screen,
-:fullscreen .game-over-screen {
+:fullscreen .game-over-screen,
+:fullscreen .instruction-screen {
     width: 100vw;
     height: 100vh;
 }
@@ -145,4 +252,29 @@ canvas {
 
 :fullscreen .div-btn-g-over button {
     margin-bottom: 80px;
+}
+
+:fullscreen .instruction-title {
+    font-size: 50px;
+}
+
+:fullscreen .instruction-title img {
+    width: 95px;
+}
+
+:fullscreen .btn-container {
+    left: 60px;
+    top: 50px;
+}
+
+:fullscreen .container img {
+    width: 120px;
+}
+
+:fullscreen .instructions-container {
+    font-size: 40px;
+}
+
+:fullscreen .mt {
+    margin-top: 48px;
 }

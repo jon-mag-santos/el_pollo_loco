@@ -108,4 +108,12 @@ function adjustBtnsControl(gap = "0px") {
     let divBtnControl = document.getElementById("divBtnControl");
     const hasClass = divBtnControl.classList.contains("game-running");
     divBtnControl.style.gap = (hasClass) ? gap : "0px";
-} 
+}
+
+function showInstructions() {
+    document.getElementById("instructionScreen").style.display = "block";
+}
+
+function closeInstructions() {
+    document.getElementById("instructionScreen").style.display = "none";
+}
