@@ -12,12 +12,12 @@ const HURT_AUDIO = new Audio("./audio/hurt.mp3");
 const JUMP_AUDIO = new Audio("./audio/jump.mp3"); 
 const WALK_AUDIO = new Audio("./audio/walk.mp3");
 const YES_AUDIO = new Audio("./audio/yes.mp3");
-
+let soundMuted = false;
 
 function playSound(audio, timeout = false, time = 0, loop = false, volume = null) {
     if(volume)
         audio.volume = volume;
-    if(timeout) {
+    if(timeout && !soundMuted) {
         audio.play();
         setTimeout(() => {
             pauseSound(audio);
@@ -25,11 +25,27 @@ function playSound(audio, timeout = false, time = 0, loop = false, volume = null
     }else if(loop) {
         audio.loop = true;
         audio.play();
-    }else if(!timeout && !loop) {
+    }else if(!timeout && !loop && !soundMuted) {
         audio.play();
     }
 }
 
 function pauseSound(audio){
     audio.pause();
+}
+
+function toggleSound() {
+    soundMuted = !soundMuted;
+    GAME_AUDIO.muted = soundMuted;
+    let soundBtn = document.getElementById("soundBtn");
+    soundBtn.src = (soundMuted) ? "./img/10_additional_icons/sound_off.png" :
+                                    "./img/10_additional_icons/sound_on.png";
+}
+
+function playGameMusic() {
+    playSound(GAME_AUDIO, false, 0, true, 0.2);
+}
+
+function pauseGameMusic() {
+    pauseSound(GAME_AUDIO);
 }

@@ -9,6 +9,7 @@ function init(restart = false) {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
     hideScreens();
+    adjustControls();
     playGameMusic();
 }
 
@@ -17,27 +18,35 @@ function hideScreens() {
     document.getElementById("gameOverScreen").style.display = "none";
 }
 
-function playGameMusic() {
-    playSound(GAME_AUDIO, false, 0, true, 0.1);
-}
-
-function pauseGameMusic() {
-    pauseSound(GAME_AUDIO);
+function adjustControls() {
+    let divBtnControl = document.getElementById("divBtnControl");
+    const hasClass = divBtnControl.classList.contains("game-running");
+    if (!hasClass) {
+        divBtnControl.classList.add("game-running");
+        divBtnControl.style.justifyContent = "center";
+        divBtnControl.style.gap = (document.fullscreenElement) ? "40px" : "20px";
+    }else {
+        divBtnControl.classList.remove("game-running");
+        divBtnControl.style.justifyContent = "space-around";
+        divBtnControl.style.gap = "0px";
+    }
 }
 
 function showGameOver(win = true) {
     pauseGameMusic();
     if (win) {
-        document.getElementById("gameOverScreen").style.display = "flex";
+        document.getElementById("gameOverScreen").style.display = "block";
         document.getElementById("gameOverScreen").style.backgroundImage = "url('img/9_intro_outro_screens/game_over/game over!.png')";
     }else {
-        document.getElementById("gameOverScreen").style.display = "flex";
+        document.getElementById("gameOverScreen").style.display = "block";
         document.getElementById("gameOverScreen").style.backgroundImage = "url('img/9_intro_outro_screens/game_over/oh no you lost!.png')";
     }
 }
 
 function returnToStart() {
-    window.location.reload();
+    resetGame();
+    document.getElementById("startScreen").style.display = "block";
+    document.getElementById("gameOverScreen").style.display = "none";
 }
 
 function resetGame() {
@@ -50,4 +59,53 @@ function resetGame() {
     YES_AUDIO.currentTime = 0;
     BOSS_DEAD_AUDIO.currentTime = 0;
     audioPaused = false;
+    adjustControls();
 }
+
+function fullScreen() {
+    let element = document.getElementById("gameContainer");
+    let fullscreenBtn = document.getElementById("fullscreenBtn");
+    let canvas = document.getElementById("canvas");
+    if(!document.fullscreenElement) {
+        enterFullscreen(element);
+        adjustCanvasSize(canvas, "100vw", "100vh");
+        adjustBtnsControl("40px")
+        fullscreenBtn.src = "./img/10_additional_icons/fullscreen_off.png";
+    }else {
+        exitFullscreen();
+        adjustCanvasSize(canvas, "720px", "480px");
+        adjustBtnsControl("20px")
+        fullscreenBtn.src = "./img/10_additional_icons/fullscreen_on.png";
+    }
+}
+
+function enterFullscreen(element) {
+    if(element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+      element.msRequestFullscreen();
+    } else if(element.webkitRequestFullscreen) {  // iOS Safari
+      element.webkitRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    if(document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if(document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozFullScreen) { 
+        document.mozCancelFullScreen(); 
+    }
+}
+
+function adjustCanvasSize(canvas, width, height) {
+    canvas.style.width = width;
+    canvas.style.height = height;
+}
+
+function adjustBtnsControl(gap = "0px") {
+    let divBtnControl = document.getElementById("divBtnControl");
+    const hasClass = divBtnControl.classList.contains("game-running");
+    divBtnControl.style.gap = (hasClass) ? gap : "0px";
+} 

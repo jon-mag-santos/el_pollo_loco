@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
-    <link rel="icon" href=".\img\6_salsa_bottle\bottle_rotation\1_bottle_rotation.png" type="image/png">
+    <link rel="icon" href="./img/7_statusbars/3_icons/icon_salsa_bottle.png" type="image/png">
     <link rel="stylesheet" href="script.css">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/moveable-object.class.js"></script>
@@ -28,10 +29,19 @@
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
 </head>
+
 <body>
     <h1>El Pollo Loco</h1>
-    <div class="game-container">
-        <canvas id="canvas" width="720" height="480"></canvas>
+    <div id="gameContainer" class="game-container">
+        <div id="content" class="content">
+            <canvas id="canvas" width="720" height="480"></canvas>
+        </div>
+        <div id="divBtnControl" class="div-btn-control">
+            <img id="soundBtn" onclick="toggleSound()" class="btn-control" 
+                src="./img/10_additional_icons/sound_on.png">
+            <img id="fullscreenBtn" onclick="fullScreen()" class="btn-control"
+                src="./img/10_additional_icons/fullscreen_on.png">
+        </div>
         <div id="startScreen" class="start-screen">
             <div id="divBtnStart" class="div-btn-start">
                 <button class="btn-screen" onclick="init()">Play</button>
@@ -45,4 +55,5 @@
         </div>
     </div>
 </body>
+
 </html>
