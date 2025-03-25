@@ -14,8 +14,8 @@ To run the game locally, take these steps:
 2. Launch your web browser and navigate to the 'index.html' file.
 
 ## Controls 
-- Use arrow keys (←, →, ↑, ↓) to move.
-- Use the spacebar to jump.
+- Use arrow keys (← or →) to move.
+- Use the spacebar or arrow key (↑) to jump.
 - Use the 'D' key to fling the collected salsa bottles.
 
 ## Storytelling
