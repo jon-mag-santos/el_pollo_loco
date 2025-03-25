@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html translate="no" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +21,6 @@
     <script src="models/coin-bar.class.js"></script>
     <script src="models/endboss-bar.class.js"></script>
     <script src="models/keyboard.class.js"></script>
-    <script src="js/event-listeners.js"></script>
     <script src="js/sounds.js"></script>
     <script src="models/world.class.js"></script>
     <script src="models/level.class.js"></script>
@@ -39,8 +37,20 @@
         <div id="divBtnControl" class="div-btn-control">
             <img id="soundBtn" onclick="toggleSound()" class="btn-control" 
                 src="./img/10_additional_icons/sound_on.png">
-            <img id="fullscreenBtn" onclick="fullScreen()" class="btn-control"
+            <img id="fullscreenBtn" onclick="fullScreen()" class="btn-control fullscreen-btn"
                 src="./img/10_additional_icons/fullscreen_on.png">
+        </div>
+        <div id="bottomControls" class="div-btn-control bottom-controls out-of-game">
+            <div class="mob-btn-container">
+                <img id="mob-left" class="mob-btn-img" src="./img/10_additional_icons/arrow-left.png" alt="Move Left">
+                <img id="mob-right" class="mob-btn-img" src="./img/10_additional_icons/arrow-right.png" alt="Move Right">
+            </div>
+            <img id="exitBtn" onclick="returnToStart()" class="btn-control" 
+                src="./img/10_additional_icons/exit.png">
+            <div class="mob-btn-container">
+                <img id="mob-bottle" class="mob-btn-img" src="./img/10_additional_icons/bottle.png" alt="Bottle">
+                <img id="mob-jump" class="mob-btn-img" src="./img/10_additional_icons/up-arrow.png" alt="Jump">
+            </div>
         </div>
         <div id="startScreen" class="start-screen">
             <div id="divBtnStart" class="div-btn-start">
@@ -103,6 +113,14 @@
             <span>Press <b>D</b> to throw bottles at enemies</span>
         </div>
     </div>
+    <div id="rotation-container" class="rotation-container">
+        <div class="rotation">
+            Please,
+            <img src="./img/10_additional_icons/rotate.png" alt="Rotate">
+            rotate your device
+        </div>
+    </div>
+    <script src="js/event-listeners.js"></script>
 </body>
 
 </html>

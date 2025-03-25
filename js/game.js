@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+const isMobileDevice = window.innerWidth <= 1368;
 
 function init(restart = false) {
     if(restart)
@@ -11,6 +12,7 @@ function init(restart = false) {
     hideScreens();
     adjustControls();
     playGameMusic();
+    enableMobileBtn();
 }
 
 function hideScreens() {
@@ -50,16 +52,21 @@ function returnToStart() {
 }
 
 function resetGame() {
+    if (world)
+        world.destructor();
     world = null;
     level1 = null;
     keyboard = new Keyboard();
+    canvas = null;
     GAME_AUDIO.currentTime = 0;
     GAME_LOST_AUDIO.currentTime = 0;
     GAME_WON_AUDIO.currentTime = 0;
     YES_AUDIO.currentTime = 0;
     BOSS_DEAD_AUDIO.currentTime = 0;
     audioPaused = false;
+    pauseGameMusic();
     adjustControls();
+    disableMobileBtn();
 }
 
 function fullScreen() {
@@ -68,12 +75,12 @@ function fullScreen() {
     let canvas = document.getElementById("canvas");
     if(!document.fullscreenElement) {
         enterFullscreen(element);
-        adjustCanvasSize(canvas, "100vw", "100vh");
+        adjustCanvasSize(canvas, "100vw !important", "100vh !important");
         adjustBtnsControl("40px")
         fullscreenBtn.src = "./img/10_additional_icons/fullscreen_off.png";
     }else {
         exitFullscreen();
-        adjustCanvasSize(canvas, "720px", "480px");
+        adjustCanvasSize(canvas, "720px !important", "480px !important");
         adjustBtnsControl("20px")
         fullscreenBtn.src = "./img/10_additional_icons/fullscreen_on.png";
     }
@@ -116,4 +123,29 @@ function showInstructions() {
 
 function closeInstructions() {
     document.getElementById("instructionScreen").style.display = "none";
+}
+
+function toggleScreenRotation() {
+    let rotateContainer = document.getElementById("rotation-container");
+    let canvas = document.getElementById("canvas");
+    if (isMobileDevice && window.matchMedia("(orientation: portrait)").matches) {
+        rotateContainer.style.display = "flex";
+        adjustCanvasSize(canvas, "100vw !important", "100vh !important");
+        document.body.style.zoom=1.0;
+    } else {
+        rotateContainer.style.display = "none";
+        adjustCanvasSize(canvas, "720px !important", "480px !important");
+        document.body.style.zoom=1.0;
+    }
+}
+
+function enableMobileBtn() {
+    let bottomControls = document.getElementById("bottomControls");
+    bottomControls.classList.remove("out-of-game");
+    
+}
+
+function disableMobileBtn() {
+    let bottomControls = document.getElementById("bottomControls");
+    bottomControls.classList.add("out-of-game");
 }

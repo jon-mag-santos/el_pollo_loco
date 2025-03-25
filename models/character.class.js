@@ -17,7 +17,7 @@ class Character extends MoveableObject {
         left: 40,
         right: 50
     }
- 
+    runInterval = null;
 
     IMAGES_IDLE = [
         "../img/2_character_pepe/1_idle/idle/I-1.png",
@@ -99,7 +99,7 @@ class Character extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.runInterval = setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
                 || this.world.keyboard.LEFT && this.x > 0) {
                 this.isWalking(this.world.keyboard.RIGHT);
@@ -174,7 +174,7 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
-        while(this.isAboveGround() && this.speedY < 10 ){
+        while(this.isAboveGround() && this.speedY < 15 ){
             return true;
         }
         return false;
@@ -191,5 +191,10 @@ class Character extends MoveableObject {
     updateStatusBar() {
         let percentage = (this.energy > 0 && this.energy < 30) ? 30 : this.energy;
         this.world.statusBar.setPercentage(percentage);
+    }
+
+    destructor() {
+        clearInterval(this.runInterval);
+        clearInterval(this.animationIntervals);
     }
 }

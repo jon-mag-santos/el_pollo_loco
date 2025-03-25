@@ -10,6 +10,7 @@ class Chicken extends MoveableObject {
         left: -1,
         right: 10
     }
+    runInterval = null;
 
     IMAGES_WALKING =[
         "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -27,7 +28,7 @@ class Chicken extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.runInterval = setInterval(() => {
             if(this.isDead()){
                 this.stopAnimation();
                 this.speed = 0;
@@ -38,4 +39,8 @@ class Chicken extends MoveableObject {
 
     }
     
+    destructor() {
+        clearInterval(this.runInterval);
+        clearInterval(this.animationIntervals);
+    }
 }

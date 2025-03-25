@@ -16,6 +16,8 @@ class Endboss extends MoveableObject {
         right: 70
     };
     world;
+    runInterval;
+
     IMAGES_WALKING = [
         "img/4_enemie_boss_chicken/1_walk/G1.png",
         "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -68,7 +70,7 @@ class Endboss extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.runInterval = setInterval(() => {
             if(this.isDead()){
                 this.speed = 0;
                 this.cancelAllAnimations();
@@ -151,5 +153,10 @@ class Endboss extends MoveableObject {
     updateStatusBar() {
         let percentage = (this.energy > 0 && this.energy < 30) ? 30 : this.energy;
         this.world.endBossBar.setPercentage(percentage);
+    }
+
+    destructor() {
+        clearInterval(this.runInterval);
+        clearInterval(this.animationIntervals);
     }
 }

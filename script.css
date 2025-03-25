@@ -20,11 +20,11 @@ body {
 }
 
 h1 {
-    font-size: 112px;
+    font-size: 85px;
 }
 
 .divInstructions {
-    font-size: 60px;
+    font-size: 50px;
     display: flex;
 }
 
@@ -56,12 +56,14 @@ canvas,
     align-items: center;
     justify-content: center;
     position: relative;
-    height: 480px;
     width: 720px;
+    height: 480px;
 }
 
 canvas {
     background-color: black;
+    width: 720px;
+    height: 480px;
 }
 
 .start-screen {
@@ -216,6 +218,53 @@ canvas {
     width: 40px;
 }
 
+.bottom-controls {
+    bottom: 10px;
+}
+
+.mob-btn-container {
+    display: none;
+    gap: 30px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.mob-btn-img {
+    width: 45px;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.rotation-container {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #30363c;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 4;
+}
+
+.rotation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    gap: 50px;
+}
+
+.rotation img {
+    width: 100px;
+}
+
+.out-of-game {
+    display: none;
+}
+
 .jc-center {
     justify-content: center;
 }
@@ -277,4 +326,35 @@ canvas {
 
 :fullscreen .mt {
     margin-top: 48px;
+}
+
+@media (max-width:1368px) {
+    .game-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .game-container,
+    .start-screen,
+    .game-over-screen,
+    .instruction-screen,
+    .content,
+    canvas{
+        height: 100vh;
+        width: 100%;
+    }
+
+    .mob-btn-container {
+        display: flex;
+    }
+
+    .bottom-controls {
+        justify-content: space-between;
+    }
+
+    h1, 
+    .divInstructions,
+    .fullscreen-btn {
+        display: none;
+    }
 }
