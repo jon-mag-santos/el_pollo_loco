@@ -273,6 +273,7 @@ canvas {
     margin-top: 12px;
 }
 
+:fullscreen canvas,
 :fullscreen .game-container,
 :fullscreen .start-screen,
 :fullscreen .game-over-screen,
