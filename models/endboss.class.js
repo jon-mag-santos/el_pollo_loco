@@ -3,6 +3,7 @@ class Endboss extends MoveableObject {
     y = 60;
     width = 400;
     height = 390;
+    booster = 1;
     speed = 15;
     energy = 100;
     walkAnimation = null;
@@ -108,7 +109,8 @@ class Endboss extends MoveableObject {
     }
 
     restoreSpeed(){
-        this.speed = 15;
+        this.booster += 0.25;
+        this.speed = 15 + this.booster;
     }
 
     isHurting() {

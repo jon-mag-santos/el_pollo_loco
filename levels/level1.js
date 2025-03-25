@@ -1,7 +1,19 @@
 let level1;
 function initLevel(){
     level1 = new Level(enemies = [
+        new Snake(),
+        new Chick(),
+        new Chick(),
+        new Chick(),
+        new Snake(),
         new Chicken(),
+        new Chicken(),
+        new Chick(),
+        new Snake(),
+        new Chicken(),
+        new Chicken(),
+        new Snake(),
+        new Chick(),
         new Chicken(),
         new Chicken()
     ],

@@ -44,6 +44,7 @@ class ThrowableObject extends MoveableObject {
         setInterval(() => {
             if(!this.isSplashed) {
                 if(otherDirection){
+                    this.speed = 50;
                     this.moveLeft();
                 } else {
                     this.moveRight();
@@ -61,5 +62,9 @@ class ThrowableObject extends MoveableObject {
     animateSplash() {
         this.stopAnimation();
         this.animationIntervals = this.playAnimation(this.IMAGES_SPLASH, 25);
+    }
+
+    destructor() {
+        clearInterval(this.animationIntervals);
     }
 }

@@ -9,6 +9,7 @@ class Character extends MoveableObject {
     idleStart = false;
     afterJump = false;
     throwingBottle = false;
+    endBossEscaping = false;
     takingHit = 0;
     energy = 100;
     offset = {
@@ -159,6 +160,7 @@ class Character extends MoveableObject {
     }
 
     isWalking(right) {
+        playSound(WALK_AUDIO);
         if (right) {
             this.moveRight();
         }else
@@ -181,10 +183,12 @@ class Character extends MoveableObject {
     }
 
     positionCameraX() {
-        if (this.world.level.endboss[0].x > this.x - 350) {
+        if (this.world.level.endboss[0].x > this.x - 350 && !this.endBossEscaping) {
             this.world.cam_x = -this.x + 100;
         } else {
             this.world.cam_x = -this.x + 500;
+            if(!this.endBossEscaping)
+                this.endBossEscaping = true;
         }
     }
 

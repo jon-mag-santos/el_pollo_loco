@@ -126,6 +126,7 @@ class World {
             this.checkDeathsAfterCollision();
             this.collectingBottle();
             this.collectingCoin();
+            this.checkBossEscaping();
         }, 1000 / 60);
 
     }
@@ -276,13 +277,21 @@ class World {
         }
     }
 
+    checkBossEscaping() {
+        if((this.level.endboss[0].x < -200 && this.character.x >= 100) || (this.character.x - this.level.endboss[0].x > 1000)) {
+            this.gameOver(false);
+        }
+    }
+
     gameOver(win = true) {
         this.character.speed = 0;
         this.character.stopAnimation();
         this.level.endboss[0].speed = 0;
+        this.level.endboss[0].cancelAllAnimations();
         this.level.clouds.forEach(cloud => {
             cloud.speed = 0;
         });
+        this.destroyThrowableObjects();
         clearInterval(this.runInterval);
         this.runInterval = null;
         this.gameOverCelebration(win);
@@ -357,7 +366,7 @@ class World {
         this.bottleBar = null;
         this.bottle_collected = 0;
         this.endBossBar = null;
-        this.throwableObjects = [];
+        this.destroyThrowableObjects();
         this.lastBottleThrown = 0;
         this.destroyLevelEnemies();
         this.level = [];
@@ -369,5 +378,11 @@ class World {
         });
 
         this.level.endboss[0].destructor();
+    }
+
+    destroyThrowableObjects() {
+        this.throwableObjects.forEach(bottle => {
+                bottle.destructor();
+        });
     }
 }

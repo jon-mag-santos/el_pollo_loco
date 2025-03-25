@@ -1,4 +1,4 @@
-class Chicken extends MoveableObject {
+class Chick extends MoveableObject {
     x = 500 + Math.floor(Math.random() * 4500);
     y = 350;
     width = 100;
@@ -6,23 +6,23 @@ class Chicken extends MoveableObject {
     speed = 5;
     energy = 1;
     offset = {
-        top: 5,
-        bottom: 10,
-        left: -1,
-        right: 10
+        top: 10,
+        bottom: 15,
+        left: 15,
+        right: 15
     }
     runInterval = null;
 
     IMAGES_WALKING =[
-        "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
-        "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
-        "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png"
+        "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
+        "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
+        "img/3_enemies_chicken/chicken_small/1_walk/3_w.png"
     ];
 
-    IMG_DEAD = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"]
+    IMG_DEAD = ["img/3_enemies_chicken/chicken_small/2_dead/dead.png"]
 
     constructor() {
-        super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
+        super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
     }
