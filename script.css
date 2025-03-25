@@ -220,10 +220,12 @@ canvas {
 
 .bottom-controls {
     bottom: 10px;
+    width: 100vw;
 }
 
 .mob-btn-container {
     display: none;
+    margin: 0 25px;
     gap: 30px;
     user-select: none;
     -webkit-user-select: none;
@@ -342,7 +344,7 @@ canvas {
     .content,
     canvas{
         height: 100vh;
-        width: 100%;
+        width: 100vw;
     }
 
     .mob-btn-container {
@@ -350,8 +352,7 @@ canvas {
     }
 
     .bottom-controls {
-        justify-content: space-around;
-        gap: 180px;
+        justify-content: space-between;
     }
 
     h1, 
