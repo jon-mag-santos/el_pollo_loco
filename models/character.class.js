@@ -105,11 +105,17 @@ class Character extends MoveableObject {
                 || this.world.keyboard.LEFT && this.x > 0) {
                 this.isWalking(this.world.keyboard.RIGHT);
             }
-
+            
             if(this.world.keyboard.UP || this.world.keyboard.SPACE){
                 playSound(JUMP_AUDIO);
-                this.afterJump = this.isJumping();
+                this.isJumping();
             }
+            
+            if(this.isAboveGround()){
+                this.afterJump = true;
+            }else
+                this.afterJump = false;
+
             this.positionCameraX();
         }, 1000/60);
 
@@ -176,10 +182,6 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
-        while(this.isAboveGround()){
-            return true;
-        }
-        return false;
     }
 
     positionCameraX() {

@@ -171,8 +171,7 @@ class World {
             endBoss.collisionPause();
             this.isAttacking(endBoss);
             setTimeout(() => {
-                if (!this.character.isDead())
-                    endBoss.restoreSpeed();
+                endBoss.restoreSpeed();
             }, 500);
         }
     }
