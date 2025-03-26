@@ -125,6 +125,14 @@ function closeInstructions() {
     document.getElementById("instructionScreen").style.display = "none";
 }
 
+function showImprint() {
+    document.getElementById("imprintScreen").style.display = "block";
+}
+
+function closeImprint() {
+    document.getElementById("imprintScreen").style.display = "none";
+}
+
 function toggleScreenRotation() {
     let rotateContainer = document.getElementById("rotation-container");
     let canvas = document.getElementById("canvas");

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html translate="no" lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>El Pollo Loco</title>
     <link rel="icon" href="./img/7_statusbars/3_icons/icon_salsa_bottle.png" type="image/png">
     <link rel="stylesheet" href="script.css">
@@ -37,18 +39,17 @@
             <canvas id="canvas" width="720" height="480"></canvas>
         </div>
         <div id="divBtnControl" class="div-btn-control">
-            <img id="soundBtn" onclick="toggleSound()" class="btn-control" 
-                src="./img/10_additional_icons/sound_on.png">
+            <img id="soundBtn" onclick="toggleSound()" class="btn-control" src="./img/10_additional_icons/sound_on.png">
             <img id="fullscreenBtn" onclick="fullScreen()" class="btn-control fullscreen-btn"
                 src="./img/10_additional_icons/fullscreen_on.png">
         </div>
         <div id="bottomControls" class="div-btn-control bottom-controls out-of-game">
             <div class="mob-btn-container">
                 <img id="mob-left" class="mob-btn-img" src="./img/10_additional_icons/arrow-left.png" alt="Move Left">
-                <img id="mob-right" class="mob-btn-img" src="./img/10_additional_icons/arrow-right.png" alt="Move Right">
+                <img id="mob-right" class="mob-btn-img" src="./img/10_additional_icons/arrow-right.png"
+                    alt="Move Right">
             </div>
-            <img id="exitBtn" onclick="returnToStart()" class="btn-control" 
-                src="./img/10_additional_icons/exit.png">
+            <img id="exitBtn" onclick="returnToStart()" class="btn-control" src="./img/10_additional_icons/exit.png">
             <div class="mob-btn-container">
                 <img id="mob-bottle" class="mob-btn-img" src="./img/10_additional_icons/bottle.png" alt="Bottle">
                 <img id="mob-jump" class="mob-btn-img" src="./img/10_additional_icons/up-arrow.png" alt="Jump">
@@ -58,6 +59,9 @@
             <div id="divBtnStart" class="div-btn-start">
                 <button class="btn-screen" onclick="init()">Play</button>
                 <button class="btn-screen" onclick="showInstructions()">Instructions</button>
+            </div>
+            <div id="divBtnStartBottom" class="div-btn-start bottom">
+                <button class="btn-screen" onclick="showImprint()">Impressum</button>
             </div>
         </div>
         <div id="gameOverScreen" class="game-over-screen">
@@ -99,6 +103,51 @@
                         <div class="container mt">
                             <span>Press <b>D</b> to throw bottles at enemies</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="imprintScreen" class="imprint-screen">
+            <div class="btn-container">
+                <button class="btn-screen" onclick="closeImprint()">Back</button>
+            </div>
+            <div class="imprint-content">
+                <div class="imprint-title">
+                    <h2>Imprint & Privacy Policy</h2>
+                    <img src="./img/10_additional_icons/insurance.png" alt="Imprint Icon">
+                </div>
+                <div class="imprint">
+                    <div class="imprint-container">
+                        <h3>Imprint according to par. 5 DDG</h3>
+                        <p>
+                            Jonas Magalhaes dos Santos<br>
+                            Hauptstr. 19A<br>
+                            65468 Trebur<br>
+                        </p>
+                        <h4>Contact</h4>
+                        Phone: +49 157 388 77 918<br>
+                        E-Mail:jon.mag.santos@gmail.com
+                        </p>
+                        <h3>Privacy Policy</h3>
+                        <h4>1. General information</h4>
+                        The protection of your personal data is important to me. Your data will be protected
+                        in accordance with legal regulations.
+                        </p>
+                    </div>
+                    <div class="imprint-container">
+                        <h4>2. Responsible Party</h4>
+                        The person responsible for data processing on this website is:<br>
+                        Jonas Magalhaes dos Santos<br>
+                        Hauptstr. 19A<br>
+                        65468 Trebur<br>
+                        E-Mail: jon.mag.santos@gmail.com
+                        </p>
+                        <h4>3. Collection and Storage of Personal Data</h4>
+                         Your data will not be collected or stored when you use this website/game.
+                        </p>
+                        <h4>4. Your Rights</h4>
+                        You have the right to information. Please contact me at the address provided.
+                        </p>
                     </div>
                 </div>
             </div>

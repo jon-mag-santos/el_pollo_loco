@@ -54,8 +54,8 @@ leftButton.addEventListener("touchstart", (event) => {
 });
 
 leftButton.addEventListener("touchend", (event) => {
-    keyboard.LEFT = false;
     event.preventDefault();
+    keyboard.LEFT = false;
 });
 
 rightButton.addEventListener("touchstart", (event) => {
@@ -64,8 +64,8 @@ rightButton.addEventListener("touchstart", (event) => {
 });
 
 rightButton.addEventListener("touchend", (event) => {
-    keyboard.RIGHT = false;
     event.preventDefault();
+    keyboard.RIGHT = false;
 });
 
 jumpButton.addEventListener("touchstart", (event) => {
@@ -74,8 +74,8 @@ jumpButton.addEventListener("touchstart", (event) => {
 });
 
 jumpButton.addEventListener("touchend", (event) => {
-    keyboard.SPACE = false;
     event.preventDefault();
+    keyboard.SPACE = false;
 });
 
 bottleButton.addEventListener("touchstart", (event) => {
@@ -84,8 +84,8 @@ bottleButton.addEventListener("touchstart", (event) => {
 });
 
 bottleButton.addEventListener("touchend", (event) => {
-    keyboard.D = false;
     event.preventDefault();
+    keyboard.D = false;
 });
 
 window.addEventListener('DOMContentLoaded', () => {
