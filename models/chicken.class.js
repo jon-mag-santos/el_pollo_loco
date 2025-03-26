@@ -3,7 +3,7 @@ class Chicken extends MoveableObject {
     y = 350;
     width = 100;
     height = 80;
-    speed = 5;
+    speed = 7 + (Math.random() * 3 + 1);
     energy = 1;
     offset = {
         top: 5,
