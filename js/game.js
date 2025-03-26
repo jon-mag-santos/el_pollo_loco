@@ -128,7 +128,7 @@ function closeInstructions() {
 function toggleScreenRotation() {
     let rotateContainer = document.getElementById("rotation-container");
     let canvas = document.getElementById("canvas");
-    if (isMobileDevice && window.matchMedia("(orientation: portrait)").matches) {
+    if (window.matchMedia("(orientation: portrait)").matches) {
         rotateContainer.style.display = "flex";
         adjustCanvasSize(canvas, "100vw !important", "100vh !important");
         document.body.style.zoom=1.0;

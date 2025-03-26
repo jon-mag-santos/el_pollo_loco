@@ -17,6 +17,7 @@ window.addEventListener("keydown", (event) => {
     if (event.code == 'KeyD')
         keyboard.D = true;
 
+    event.preventDefault();
 });
 
 
@@ -38,6 +39,8 @@ window.addEventListener("keyup", (event) => {
 
     if (event.code == 'KeyD')
         keyboard.D = false;
+
+    event.preventDefault();
 });
 
 const leftButton = document.getElementById("mob-left");
@@ -52,6 +55,7 @@ leftButton.addEventListener("touchstart", (event) => {
 
 leftButton.addEventListener("touchend", (event) => {
     keyboard.LEFT = false;
+    event.preventDefault();
 });
 
 rightButton.addEventListener("touchstart", (event) => {
@@ -61,6 +65,7 @@ rightButton.addEventListener("touchstart", (event) => {
 
 rightButton.addEventListener("touchend", (event) => {
     keyboard.RIGHT = false;
+    event.preventDefault();
 });
 
 jumpButton.addEventListener("touchstart", (event) => {
@@ -70,6 +75,7 @@ jumpButton.addEventListener("touchstart", (event) => {
 
 jumpButton.addEventListener("touchend", (event) => {
     keyboard.SPACE = false;
+    event.preventDefault();
 });
 
 bottleButton.addEventListener("touchstart", (event) => {
@@ -79,6 +85,7 @@ bottleButton.addEventListener("touchstart", (event) => {
 
 bottleButton.addEventListener("touchend", (event) => {
     keyboard.D = false;
+    event.preventDefault();
 });
 
 window.addEventListener('DOMContentLoaded', () => {

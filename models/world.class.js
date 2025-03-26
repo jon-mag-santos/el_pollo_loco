@@ -138,6 +138,7 @@ class World {
                     this.character.afterJump = false;
                     enemy.hit();
                     this.character.jump();
+                    this.character.afterJump = true;
                 } else {
                     this.takingHit(this.character);
                     this.character.updateStatusBar();
@@ -278,20 +279,29 @@ class World {
     }
 
     checkBossEscaping() {
-        if((this.level.endboss[0].x < -200 && this.character.x >= 100) || (this.character.x - this.level.endboss[0].x > 1000)) {
+        if((this.level.endboss[0].x < -200 && this.character.x >= 100) || 
+            (this.character.x - this.level.endboss[0].x > 1000) ||
+            this.allBottlesUsed()) {
             this.gameOver(false);
         }
+    }
+
+    allBottlesUsed() {
+        return this.throwableObjects.length == 0 &&
+                this.bottle_collected == 0 && 
+                this.level.bottles.length == 0;
     }
 
     gameOver(win = true) {
         this.character.speed = 0;
         this.character.stopAnimation();
         this.level.endboss[0].speed = 0;
-        this.level.endboss[0].cancelAllAnimations();
+        if (this.level.endboss[0].walkAnimation && !this.level.endboss[0].isDead())
+            this.level.endboss[0].destructor();
         this.level.clouds.forEach(cloud => {
             cloud.speed = 0;
         });
-        this.destroyThrowableObjects();
+        this.destroyThrowableObject();
         clearInterval(this.runInterval);
         this.runInterval = null;
         this.gameOverCelebration(win);
@@ -321,12 +331,16 @@ class World {
             if (item === bottle) {
                 this.level.bottles.splice(index, 1);
                 this.bottle_collected++;
-                let percentage = (this.bottle_collected > 0 && this.bottle_collected < 6) ? 30 :
-                    (this.bottle_collected * 10 / 2 < 100) ? this.bottle_collected * 10 / 2 :
-                        (this.bottle_collected < 23) ? 90 : 100;
-                this.bottleBar.setPercentage(percentage);
+                this.updateBottleBar();
             }
         });
+    }
+
+    updateBottleBar() {
+        let percentage = (this.bottle_collected > 0 && this.bottle_collected < 6) ? 30 :
+                        (this.bottle_collected * 10 / 2 < 100) ? this.bottle_collected * 10 / 2 :
+                        (this.bottle_collected < 23) ? 90 : 100;
+        this.bottleBar.setPercentage(percentage);
     }
 
     collectingCoin() {
@@ -343,12 +357,16 @@ class World {
             if (item === coin) {
                 this.level.coins.splice(index, 1);
                 this.coin_collected++;
-                let percentage = (this.coin_collected > 0 && this.coin_collected < 6) ? 30 :
-                    (this.coin_collected * 10 / 2 < 100) ? this.coin_collected * 10 / 2 :
-                        (this.coin_collected < 20) ? 90 : 100;
-                this.coinBar.setPercentage(percentage);
+                this. updateCoinBar();
             }
         });
+    }
+
+    updateCoinBar() {
+        let percentage = (this.coin_collected > 0 && this.coin_collected < 6) ? 30 :
+                        (this.coin_collected * 10 / 2 < 100) ? this.coin_collected * 10 / 2 :
+                        (this.coin_collected < 20) ? 90 : 100;
+        this.coinBar.setPercentage(percentage);
     }
 
     destructor() {
@@ -366,7 +384,7 @@ class World {
         this.bottleBar = null;
         this.bottle_collected = 0;
         this.endBossBar = null;
-        this.destroyThrowableObjects();
+        this.destroyThrowableObject();
         this.lastBottleThrown = 0;
         this.destroyLevelEnemies();
         this.level = [];
@@ -380,9 +398,9 @@ class World {
         this.level.endboss[0].destructor();
     }
 
-    destroyThrowableObjects() {
-        this.throwableObjects.forEach(bottle => {
-                bottle.destructor();
-        });
+    destroyThrowableObject() {
+        if(this.throwableObjects[0])
+            this.throwableObjects[0].destructor();
+        this.throwableObjects = [];
     }
 }

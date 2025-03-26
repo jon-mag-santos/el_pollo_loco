@@ -142,7 +142,7 @@ class Character extends MoveableObject {
     }
 
     isLongIdle(currentImage, arr, idle) {
-        if(!idle || this.afterJump || this.isAboveGround() || this.world.isThrowing) {
+        if(!idle || this.afterJump || this.isAboveGround() || !this.world.canThrowObject()) {
             this.longIdle = false;
             this.idleStart = false;
             return arr;
@@ -176,7 +176,7 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
-        while(this.isAboveGround() && this.speedY < 15 ){
+        while(this.y < 150){
             return true;
         }
         return false;

@@ -144,11 +144,11 @@ class Endboss extends MoveableObject {
 
     endBossDead() {
         if (!this.deathAnimation) {
-            this.deathAnimation = this.playAnimation(this.IMAGES_DEAD, 300);
+            this.deathAnimation = this.playAnimation(this.IMAGES_DEAD, 150);
             setTimeout(() => {
                 this.cancelAnimation(this.deathAnimation);
                 this.loadImage("img/4_enemie_boss_chicken/5_dead/G26.png");
-            }, 600);
+            }, 300);
         }
     }
 
@@ -159,6 +159,6 @@ class Endboss extends MoveableObject {
 
     destructor() {
         clearInterval(this.runInterval);
-        clearInterval(this.animationIntervals);
+        this.cancelAllAnimations();
     }
 }
