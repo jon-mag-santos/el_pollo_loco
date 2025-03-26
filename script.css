@@ -275,7 +275,7 @@ canvas {
 }
 
 .mt {
-    margin-top: 12px;
+    margin-top: 14px;
 }
 
 :fullscreen canvas,
@@ -331,7 +331,7 @@ canvas {
 }
 
 :fullscreen .mt {
-    margin-top: 48px;
+    margin-top: 54px;
 }
 
 @media (max-width:1368px) {
