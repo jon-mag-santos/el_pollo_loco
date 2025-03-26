@@ -74,7 +74,6 @@ class World {
         this.addObjsToMap(this.level.endboss);
     }
 
-
     addObjsToMap(objs) {
         objs.forEach((o) => {
             this.addToMap(o);
@@ -284,9 +283,7 @@ class World {
     }
 
     allBottlesUsed() {
-        return this.throwableObjects.length == 0 &&
-                this.bottle_collected == 0 && 
-                this.level.bottles.length == 0;
+        return this.throwableObjects.length == 0 && this.bottle_collected == 0 && this.level.bottles.length == 0;
     }
 
     gameOver(win = true) {
@@ -391,7 +388,6 @@ class World {
         this.level.enemies.forEach(enemy => {
             enemy.destructor();
         });
-
         this.level.endboss[0].destructor();
     }
 

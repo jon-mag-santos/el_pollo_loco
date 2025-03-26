@@ -152,11 +152,11 @@ class Character extends MoveableObject {
             this.longIdle = false;
             this.idleStart = false;
             return arr;
-        } else if(currentImage % 10 > 0 && !this.idleStart){
+        } else if (!this.idleStart && !this.longIdle){
             this.currentImage = 0;
             this.idleStart = true;
         }
-        if (!this.longIdle && currentImage % arr.length == 9 || this.longIdle) {
+        if (this.idleStart && currentImage % 100 == 0 || this.longIdle) {
             this.longIdle = true;
             return this.IMAGES_LONG_IDLE;
         }else {
