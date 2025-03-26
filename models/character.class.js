@@ -176,7 +176,7 @@ class Character extends MoveableObject {
         if (!this.isAboveGround()){
             this.jump();
         }
-        while(this.y < 150){
+        while(this.isAboveGround()){
             return true;
         }
         return false;

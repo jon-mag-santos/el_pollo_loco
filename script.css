@@ -223,7 +223,7 @@ canvas {
 
 .bottom-controls {
     bottom: 10px;
-    width: 100vw;
+    width: 100%;
 }
 
 .mob-btn-container {

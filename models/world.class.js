@@ -138,7 +138,6 @@ class World {
                     this.character.afterJump = false;
                     enemy.hit();
                     this.character.jump();
-                    this.character.afterJump = true;
                 } else {
                     this.takingHit(this.character);
                     this.character.updateStatusBar();
@@ -149,10 +148,9 @@ class World {
     }
 
     isCollisionFromAbove(enemy) {
-        let enemyHeadX = enemy.x - enemy.offset.left
-        let rightFootX = this.character.x + this.character.width - this.character.offset.right;
-        let leftFootX = this.character.x + this.character.offset.left
-        return this.character.afterJump && !(enemyHeadX > (rightFootX || leftFootX));
+        let enemyHead = enemy.y + enemy.height - enemy.offset.top;
+        let characterFoot = this.character.y + this.character.height - this.character.offset.bottom;
+        return this.character.afterJump && (enemyHead > characterFoot);
     }
 
     enemyDeath(index, enemy) {
