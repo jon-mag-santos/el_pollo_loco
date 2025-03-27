@@ -31,7 +31,8 @@ Pepe must stop the BIG boss chicken from attacking "su pueblo" and defeat it.
 <a href="https://www.flaticon.com/authors/ahsanu-nadia" title="Ahsanu Nadia ">Fullscreen, volume & log-out icons created by Ahsanu Nadia - Flaticon</a><br>
 <a href="https://www.flaticon.com/free-icons/joystick" title="joystick icons">Joystick icon created by Good Ware - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/rotate" title="rotate icons">Rotate icon created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/insurance" title="insurance icons">Insurance icons created by Pixel perfect - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/insurance" title="insurance icons">Insurance icon created by Pixel perfect - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/author" title="author icons">Author icon created by heisenberg_jr - Flaticon</a>
 
 ---
 

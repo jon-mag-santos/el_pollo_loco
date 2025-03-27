@@ -38,6 +38,7 @@ class MoveableObject extends DrawableObject {
 
     /**
      * Function to check with object is not on the ground.
+     * @returns {boolean} - The value is true when object is not on the ground.
      */
     isAboveGround() {
         return this.y < 180;
@@ -48,6 +49,7 @@ class MoveableObject extends DrawableObject {
      * @param {Array} arr - The array of images to be animated.
      * @param {number} fps - The frames per second, the interval wished.
      * @param {boolean} moveLeft - The value is true, when the movement to left is wished during animation.
+     * @returns {interval} - The interval of the animation
      */
     playAnimation(arr, fps, moveLeft = false) {
         const intervalTime = (fps) ? fps : 1000 / 10; 
@@ -67,6 +69,7 @@ class MoveableObject extends DrawableObject {
     /**
      * Function to cancel the animation by clearing its interval.
      * @param {interval} intervalId - The animation interval.
+     * @returns {null} - null
      */
     cancelAnimation(intervalId) {
         clearInterval(intervalId);

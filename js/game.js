@@ -179,10 +179,24 @@ function showImprint() {
 }
 
 /**
- * Function to close the screen with the imprint and privacy police,
+ * Function to close the screen with the imprint and privacy police.
  */
 function closeImprint() {
     document.getElementById("imprintScreen").style.display = "none";
+}
+
+/**
+ * Function to show the screen with the story.
+ */
+function showStory() {
+    document.getElementById("storyScreen").style.display = "block";
+}
+
+/**
+ * Function to close the screen with the story.
+ */
+function closeStory() {
+    document.getElementById("storyScreen").style.display = "none";
 }
 
 /**

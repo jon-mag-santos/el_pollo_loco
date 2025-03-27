@@ -158,7 +158,8 @@ canvas {
 }
 
 .instruction-screen,
-.imprint-screen {
+.imprint-screen,
+.story-screen {
     position: absolute;
     display: none;
     width: 720px;
@@ -177,14 +178,16 @@ canvas {
 }
 
 .instruction-content,
-.imprint-content {
+.imprint-content,
+.story-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.instruction-content{
+.instruction-content,
+.story-content{
     height: 80%;
     letter-spacing: 1px;
 }
@@ -194,7 +197,8 @@ canvas {
 }
 
 .instruction-title,
-.imprint-title {
+.imprint-title,
+.story-title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -208,17 +212,20 @@ canvas {
 }
 
 .instruction-title img,
-.imprint-title img {
+.imprint-title img,
+.story-title img {
     width: 55px;
 }
 
 .instructions,
-.imprint {
+.imprint,
+.story {
     display: flex;
     justify-content: center;
 }
 
-.instructions {
+.instructions,
+.story {
     margin-left: 100px;
     margin-right: 100px;
 }
@@ -232,6 +239,14 @@ canvas {
     flex-direction: column;
     font-size: 18px;
     font-weight: 700;
+}
+
+.story-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
 .imprint-container {
@@ -328,7 +343,8 @@ canvas {
 :fullscreen .start-screen,
 :fullscreen .game-over-screen,
 :fullscreen .instruction-screen,
-:fullscreen .imprint-screen {
+:fullscreen .imprint-screen,
+:fullscreen .story-screen {
     width: 100vw;
     height: 100vh;
 }
@@ -359,12 +375,17 @@ canvas {
     font-size: 50px;
 }
 
+:fullscreen .story-title {
+    font-size: 65px;
+}
+
 :fullscreen .imprint-title {
     font-size: 45px;
     margin: 0;
 }
 
-:fullscreen .instruction-title img {
+:fullscreen .instruction-title img,
+:fullscreen .story-title img {
     width: 95px;
 }
 
@@ -381,8 +402,12 @@ canvas {
     width: 120px;
 }
 
-:fullscreen .instructions-container {
+:fullscreen .instructions-container{
     font-size: 40px;
+}
+
+:fullscreen .story-container {
+    font-size: 55px;
 }
 
 :fullscreen .imprint-container {
@@ -408,6 +433,7 @@ canvas {
     .game-over-screen,
     .instruction-screen,
     .imprint-screen,
+    .story-screen,
     .content,
     canvas{
         height: 100vh;

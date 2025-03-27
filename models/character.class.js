@@ -160,6 +160,7 @@ class Character extends MoveableObject {
      * @param {number} currentImage - The current image of the array
      * @param {Array} arr - The array of images to be animated.
      * @param {boolean} idle - The value must be true when the idle animation is wished.
+     * @returns {Array} - The array of images.
      */
     isLongIdle(currentImage, arr, idle) {
         if(!idle || this.afterJump || this.isAboveGround() || !this.world.canThrowObject()) {

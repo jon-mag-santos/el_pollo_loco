@@ -161,7 +161,7 @@ class Endboss extends MoveableObject {
 
     /**
      * Function to check if end boss got a new hit.
-     * @returns {boolean} - The value is true when energy is reduced
+     * @returns {boolean} - The value is true when energy is reduced.
      */
     newHit() {
         return this.energy != this.lastHit;
