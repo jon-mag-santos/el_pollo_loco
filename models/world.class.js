@@ -25,6 +25,9 @@ class World {
         this.run();
     }
 
+    /**
+     * Function to draw the entire game.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.cam_x, 0);
@@ -44,6 +47,9 @@ class World {
 
     }
 
+    /**
+     * Function to draw the backgrounds, clouds, character and throwable objects.
+     */
     drawBasicObjs() {
         this.addObjsToMap(this.level.backgroundObjects);
         this.addObjsToMap(this.level.clouds);
@@ -51,6 +57,9 @@ class World {
         this.addObjsToMap(this.throwableObjects);
     }
 
+    /**
+     * Function to draw fixed objects, the status bars.
+     */
     drawFixedObjs() {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
@@ -60,26 +69,45 @@ class World {
         }
     }
 
+    /**
+     * Function to draw the collectable objects.
+     */
     drawCollectableObjs() {
         this.addObjsToMap(this.level.bottles);
         this.addObjsToMap(this.level.coins);
     }
 
+    /**
+     * Function to check if the character is far from end boss.
+     * @param {MoveableObject} endBoss - The end boss.
+     * @returns {boolean} - The value is false when the character is close to the end boss.
+     */
     isCharacterTooFar(endBoss) {
         return this.character.x + 590 < endBoss.x;
     }
 
+    /**
+     * Function to draw the enemies and end boss.
+     */
     drawEnemies() {
         this.addObjsToMap(this.level.enemies);
         this.addObjsToMap(this.level.endboss);
     }
 
+    /**
+     * Function to add multiple objects to map.
+     * @param {Array} objs - The array of objects.
+     */
     addObjsToMap(objs) {
         objs.forEach((o) => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * Function to add object to map.
+     * @param {DrawableObject} mo - The object.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -91,6 +119,10 @@ class World {
         }
     }
 
+    /**
+     * Function to flip the character.
+     * @param {MoveableObject} mo - The object character.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0)
@@ -98,11 +130,18 @@ class World {
         mo.x = mo.x * - 1;
     }
 
+    /**
+     * Function to flip the character back.
+     * @param {MoveableObject} mo - The object character.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
+    /**
+     * Function to check if the character is moving to the left, the other direction.
+     */
     checkOtherDirection() {
         if (this.keyboard.LEFT && !this.character.speed == 0)
             this.character.otherDirection = true;
@@ -111,10 +150,16 @@ class World {
             this.character.otherDirection = false;
     }
 
+    /**
+     * Function to set the world by end boss.
+     */
     setWorld() {
         this.level.endboss[0].world = this;
     }
 
+    /**
+     * Function to run the game by checking conditions.
+     */
     run() {
         this.runInterval = setInterval(() => {
             this.checkCollisionsWithEnemies();
@@ -130,6 +175,9 @@ class World {
 
     }
 
+    /**
+     * Function to check if enemies are colliding with character.
+     */
     checkCollisionsWithEnemies() {
         this.level.enemies.forEach(enemy => {
             if (enemy.isColliding(this.character) && !enemy.isDead()) {
@@ -138,7 +186,7 @@ class World {
                     enemy.hit();
                     this.character.jump();
                 } else {
-                    this.takingHit(this.character);
+                    this.character.takingHit();
                     this.character.updateStatusBar();
                 }
             } else
@@ -146,12 +194,22 @@ class World {
         });
     }
 
+    /**
+     * Function to check if enemies are colliding from above.
+     * @param {MoveableObject} enemy - The object enemy.
+     * @returns {boolean} - The value is true if character is above enemy head.
+     */
     isCollisionFromAbove(enemy) {
         let enemyHead = enemy.y + enemy.height - enemy.offset.top;
         let characterFoot = this.character.y + this.character.height - this.character.offset.bottom;
         return this.character.afterJump && (enemyHead > characterFoot);
     }
 
+    /**
+     * Function to check if enemies are colliding from above.
+     * @param {number} index - The index of enemy in the array of enemies.
+     * @param {MoveableObject} enemy - The object enemy.
+     */
     enemyDeath(index, enemy) {
         enemy.stopAnimation();
         enemy.loadImage(enemy.IMG_DEAD);
@@ -162,41 +220,25 @@ class World {
         }, 200);
     }
 
+    /**
+     * Function to check if end boss is colliding with character.
+     */
     checkCollisionsWithEndboss() {
         let endBoss = this.level.endboss[0];
         if (endBoss.isColliding(this.character)) {
-            this.takingHit(this.character);
+            this.character.takingHit();
             this.character.updateStatusBar();
             endBoss.collisionPause();
-            this.isAttacking(endBoss);
+            endBoss.isAttacking();
             setTimeout(() => {
                 endBoss.restoreSpeed();
             }, 500);
         }
     }
 
-    isAttacking(endBoss) {
-        if (!endBoss.attackAnimation) {
-            endBoss.cancelAllAnimations();
-            endBoss.attackAnimation = endBoss.playAnimation(endBoss.IMAGES_ATTACK, 350);
-            setTimeout(() => {
-                endBoss.attackAnimation = endBoss.cancelAnimation(endBoss.attackAnimation);
-            }, 1400);
-        }
-    }
-
-    takingHit(character) {
-        if (!character.takingHit) {
-            character.hit();
-            character.takingHit = true;
-        } else {
-            let timePassed = new Date().getTime() - character.lastHit;
-            timePassed = timePassed / 1000;
-            if (timePassed > 1)
-                character.takingHit = false;
-        }
-    }
-
+    /**
+     * Function to throw objects when is possible.
+     */
     checkThrowObjects() {
         if (this.keyboard.D && this.canThrowObject()) {
             let x = (!this.character.otherDirection) ? this.character.x + this.character.width - this.character.offset.right - 40 : this.character.x + this.character.offset.left - 40;
@@ -206,19 +248,33 @@ class World {
             this.lastBottleThrown = new Date().getTime();
             playSound(BOTTLE_THROW_AUDIO);
             this.bottle_collected--;
-            let percentage = (this.bottle_collected > 20) ? 100 :
-                (this.bottle_collected * 10 / 2 > 30) ? this.bottle_collected * 10 / 2 :
-                    (this.bottle_collected > 0) ? 30 : 0;
-            this.bottleBar.setPercentage(percentage);
+            this.downgradeBottleBar();
         }
     }
 
+    /**
+     * Function to downgrade bottle bar.
+     */
+    downgradeBottleBar() {
+        let percentage = (this.bottle_collected > 20) ? 100 :
+                    (this.bottle_collected * 10 / 2 > 30) ? this.bottle_collected * 10 / 2 :
+                    (this.bottle_collected > 0) ? 30 : 0;
+        this.bottleBar.setPercentage(percentage);
+    }
+
+    /**
+     * Function to check if possible throw next bottle.
+     * @returns {boolean} - The value is true when timepassed > 1 and the character still has bottles.
+     */
     canThrowObject() {
         let timePassed = new Date().getTime() - this.lastBottleThrown;
         timePassed /= 1000;
         return timePassed > 1 && this.bottle_collected > 0;
     }
 
+    /**
+     * Function to check if bottle collided.
+     */
     checkBottleCollided() {
         let endBoss = this.level.endboss[0];
         let enemies = this.level.enemies;
@@ -226,16 +282,12 @@ class World {
             if (!bottle.isSplashed) {
                 if (endBoss.isColliding(bottle) && !bottle.hasCollided) {
                     endBoss.hit();
-                    bottle.isSplashed = true;
-                    bottle.hasCollided = true;
-                    playSound(BOTTLE_SPLASH_AUDIO);
+                    this.shatterBottle(bottle);
                 } else {
                     enemies.forEach(enemy => {
                         if (enemy.isColliding(bottle) && !enemy.isDead() && !bottle.hasCollided) {
                             enemy.hit();
-                            bottle.isSplashed = true;
-                            bottle.hasCollided = true;
-                            playSound(BOTTLE_SPLASH_AUDIO);
+                            this.shatterBottle(bottle);
                         }
                     });
                 }
@@ -243,6 +295,19 @@ class World {
         });
     }
 
+    /**
+     * Function to shatter the botlle.
+     * @param {ThrowableObject} bottle - The bottle. 
+     */
+    shatterBottle(bottle) {
+        bottle.isSplashed = true;
+        bottle.hasCollided = true;
+        playSound(BOTTLE_SPLASH_AUDIO);
+    }
+
+    /**
+     * Function to check if the bottle splashed. 
+     */
     checkBottleSplashed() {
         this.throwableObjects.forEach(bottle => {
             if (bottle.isSplashed) {
@@ -255,6 +320,9 @@ class World {
         });
     }
 
+    /**
+     * Function to check deaths after collision. 
+     */
     checkDeathsAfterCollision() {
         let enemies = this.level.enemies;
         if (this.level.endboss[0].isDead()) {
@@ -274,6 +342,9 @@ class World {
         }
     }
 
+    /**
+     * Function to check if the end boss escapes. 
+     */
     checkBossEscaping() {
         if((this.level.endboss[0].x < -200 && this.character.x >= 100) || 
             (this.character.x - this.level.endboss[0].x > 1000) ||
@@ -282,10 +353,19 @@ class World {
         }
     }
 
+    /**
+     * Function to check if all bottles are used.
+     * @param {ThrowableObject} bottle - The bottle. 
+     * @returns {boolean} - The value is true when all bottles are used.
+     */
     allBottlesUsed() {
         return this.throwableObjects.length == 0 && this.bottle_collected == 0 && this.level.bottles.length == 0;
     }
 
+    /**
+     * Function to show the game over screen after stop all animations.
+     * @param {boolean} win - The value is true when end boss is dead.
+     */
     gameOver(win = true) {
         this.character.speed = 0;
         this.character.stopAnimation();
@@ -302,6 +382,10 @@ class World {
         showGameOver(win);
     }
 
+     /**
+     * Function to play game won or game lost audio. In case of a win, the character is set with a winning pose.
+     * @param {boolean} win - The value is true when end boss is dead.
+     */
     gameOverCelebration(win) {
         if (win) {
             this.character.loadImage("img/2_character_pepe/3_jump/J-35.png");
@@ -311,6 +395,9 @@ class World {
             playSound(GAME_LOST_AUDIO, true, 4000);
     }
 
+     /**
+     * Function to check if the character is collecting bottle.
+     */
     collectingBottle() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
@@ -320,6 +407,10 @@ class World {
         })
     }
 
+     /**
+     * Function to check which bottle is collected.
+     * @param {Bottle} bottle - The bottle.
+     */
     bottleCollected(bottle) {
         this.level.bottles.forEach((item, index) => {
             if (item === bottle) {
@@ -330,6 +421,9 @@ class World {
         });
     }
 
+     /**
+     * Function to update bottle bar.
+     */
     updateBottleBar() {
         let percentage = (this.bottle_collected > 0 && this.bottle_collected < 6) ? 30 :
                         (this.bottle_collected * 10 / 2 < 100) ? this.bottle_collected * 10 / 2 :
@@ -337,6 +431,9 @@ class World {
         this.bottleBar.setPercentage(percentage);
     }
 
+    /**
+     * Function to check if the character is collecting coin.
+     */
     collectingCoin() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -346,6 +443,10 @@ class World {
         })
     }
 
+     /**
+     * Function to check which coin is collected.
+     * @param {Coin} coin - The coin.
+     */
     coinCollected(coin) {
         this.level.coins.forEach((item, index) => {
             if (item === coin) {
@@ -356,6 +457,9 @@ class World {
         });
     }
 
+    /**
+     * Function to update coin bar.
+     */
     updateCoinBar() {
         let percentage = (this.coin_collected > 0 && this.coin_collected < 6) ? 30 :
                         (this.coin_collected * 10 / 2 < 100) ? this.coin_collected * 10 / 2 :
@@ -363,6 +467,9 @@ class World {
         this.coinBar.setPercentage(percentage);
     }
 
+    /**
+     * Function to clear all running animations and reset all variables of world.
+     */
     destructor() {
         clearInterval(this.runInterval);
         cancelAnimationFrame(this.requestId);
@@ -384,6 +491,9 @@ class World {
         this.level = [];
     }
 
+    /**
+     * Function to clear all running animations of all enemies.
+     */
     destroyLevelEnemies() {
         this.level.enemies.forEach(enemy => {
             enemy.destructor();
@@ -391,6 +501,9 @@ class World {
         this.level.endboss[0].destructor();
     }
 
+    /**
+     * Function to clear all running animations of throwable object.
+     */
     destroyThrowableObject() {
         if(this.throwableObjects[0])
             this.throwableObjects[0].destructor();

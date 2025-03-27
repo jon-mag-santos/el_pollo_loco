@@ -30,6 +30,9 @@ class Snake extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Function to manage the animations and movements.
+     */
     animate() {
         this.runInterval = setInterval(() => {
             if(this.isDead()){
@@ -41,6 +44,9 @@ class Snake extends MoveableObject {
 
     }
     
+    /**
+     * Function to clear all running animations.
+     */
     destructor() {
         clearInterval(this.runInterval);
         clearInterval(this.animationIntervals);

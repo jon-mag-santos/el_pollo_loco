@@ -10,7 +10,7 @@ class Character extends MoveableObject {
     afterJump = false;
     throwingBottle = false;
     endBossEscaping = false;
-    takingHit = 0;
+    gettingHit = false;
     energy = 100;
     offset = {
         top: 100,
@@ -99,6 +99,9 @@ class Character extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Function to manage the animations and movements.
+     */
     animate() {
         this.runInterval = setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
@@ -139,6 +142,11 @@ class Character extends MoveableObject {
         }, 150);  
     }
 
+    /**
+     * Function represents the sequence of images to be animated.
+     * @param {Array} arr - The array of images to be animated.
+     * @param {boolean} idle - The value must be true when the idle animation is wished.
+     */
     playAnimation(arr, idle){
         arr = this.isLongIdle(this.currentImage, arr, idle);
         let i = this.currentImage % arr.length;
@@ -147,6 +155,12 @@ class Character extends MoveableObject {
         this.currentImage++;
     }
 
+    /**
+     * Function to control the long idle animation after 15 seconds.
+     * @param {number} currentImage - The current image of the array
+     * @param {Array} arr - The array of images to be animated.
+     * @param {boolean} idle - The value must be true when the idle animation is wished.
+     */
     isLongIdle(currentImage, arr, idle) {
         if(!idle || this.afterJump || this.isAboveGround() || !this.world.canThrowObject()) {
             this.longIdle = false;
@@ -165,6 +179,10 @@ class Character extends MoveableObject {
         }      
     }
 
+    /**
+     * Function to handle the move right or left of the character.
+     *  @param {boolean} right - The value is true, then move right, otherwise move left.
+     */
     isWalking(right) {
         playSound(WALK_AUDIO);
         if (right) {
@@ -173,17 +191,41 @@ class Character extends MoveableObject {
             this.moveLeft();
     }
 
+    /**
+     * Function represents the jump action.
+     */
     jump() {
         this.speedY = 20;
         this.y = this.speedY;
     }
 
+    /**
+     * Function to handle the jumping when the character is not above ground.
+     */
     isJumping() {
         if (!this.isAboveGround()){
             this.jump();
         }
     }
 
+    /**
+     * Function to manage the hits that the character is taking.
+     */
+    takingHit() {
+        if (!this.gettingHit) {
+            this.hit();
+            this.gettingHit = true;
+        } else {
+            let timePassed = new Date().getTime() - this.lastHit;
+            timePassed = timePassed / 1000;
+            if (timePassed > 1)
+                this.gettingHit = false;
+        }
+    }
+
+    /**
+     * Function to manage camera position.
+     */
     positionCameraX() {
         if (this.world.level.endboss[0].x > this.x - 350 && !this.endBossEscaping) {
             this.world.cam_x = -this.x + 100;
@@ -194,11 +236,17 @@ class Character extends MoveableObject {
         }
     }
 
+    /**
+     * Function to update status bar according to character's energy.
+     */
     updateStatusBar() {
         let percentage = (this.energy > 0 && this.energy < 30) ? 30 : this.energy;
         this.world.statusBar.setPercentage(percentage);
     }
 
+    /**
+     * Function to clear all running animations.
+     */
     destructor() {
         clearInterval(this.runInterval);
         clearInterval(this.animationIntervals);

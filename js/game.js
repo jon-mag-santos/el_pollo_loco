@@ -3,6 +3,10 @@ let world;
 let keyboard = new Keyboard();
 const isMobileDevice = window.innerWidth <= 1368;
 
+/**
+ * Function to initialize the game.
+ * @param {boolean} restart - The value is true when the user want to play again directly after game over.
+ */
 function init(restart = false) {
     if(restart)
         resetGame();
@@ -15,11 +19,17 @@ function init(restart = false) {
     enableMobileBtn();
 }
 
+/**
+ * Function to hide start screen and game over screen.
+ */
 function hideScreens() {
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("gameOverScreen").style.display = "none";
 }
 
+/**
+ * Function to adjust the sound and fullscreen control buttons by justifying center or space-around.
+ */
 function adjustControls() {
     let divBtnControl = document.getElementById("divBtnControl");
     const hasClass = divBtnControl.classList.contains("game-running");
@@ -34,6 +44,10 @@ function adjustControls() {
     }
 }
 
+/**
+ * Function to display game over screen according to game results.
+ * @param {boolean} win - if false, show "you lost!" game over screen.
+ */
 function showGameOver(win = true) {
     pauseGameMusic();
     if (win) {
@@ -45,12 +59,18 @@ function showGameOver(win = true) {
     }
 }
 
+/**
+ * Function to return to start screen.
+ */
 function returnToStart() {
     resetGame();
     document.getElementById("startScreen").style.display = "block";
     document.getElementById("gameOverScreen").style.display = "none";
 }
 
+/**
+ * Function to reset the principal game scopes.
+ */
 function resetGame() {
     if (world)
         world.destructor();
@@ -69,6 +89,9 @@ function resetGame() {
     disableMobileBtn();
 }
 
+/**
+ * Function to activate the fullscreen mode.
+ */
 function fullScreen() {
     let element = document.getElementById("gameContainer");
     let fullscreenBtn = document.getElementById("fullscreenBtn");
@@ -86,6 +109,10 @@ function fullScreen() {
     }
 }
 
+/**
+ * Function to request the fullscreen mode according to the user's web browser.
+ * @param {document} element - The div id="gameContainer".
+ */
 function enterFullscreen(element) {
     if(element.requestFullscreen) {
       element.requestFullscreen();
@@ -96,6 +123,9 @@ function enterFullscreen(element) {
     }
 }
 
+/**
+ * Function to exit the fullscreen mode according to the user's web browser.
+ */
 function exitFullscreen() {
     if(document.exitFullscreen) {
       document.exitFullscreen();
@@ -106,33 +136,58 @@ function exitFullscreen() {
     }
 }
 
+/**
+ * Function to request the fullscreen mode according to the user's web browser.
+ * @param {document} canvas - The canvas.
+ * @param {string} width - The width value.
+ * @param {string} height - The height value.
+ */
 function adjustCanvasSize(canvas, width, height) {
     canvas.style.width = width;
     canvas.style.height = height;
 }
 
+/**
+ * Function to adjust the space betweeen the buttons from the div id= "divBtnControl".
+ * @param {document} gap - The space in pixel.
+ */
 function adjustBtnsControl(gap = "0px") {
     let divBtnControl = document.getElementById("divBtnControl");
     const hasClass = divBtnControl.classList.contains("game-running");
     divBtnControl.style.gap = (hasClass) ? gap : "0px";
 }
 
+/**
+ * Function to show the screen with game instructions.
+ */
 function showInstructions() {
     document.getElementById("instructionScreen").style.display = "block";
 }
 
+/**
+ * Function to close the screen with game instructions.
+ */
 function closeInstructions() {
     document.getElementById("instructionScreen").style.display = "none";
 }
 
+/**
+ * Function to show the screen with the imprint and privacy police.
+ */
 function showImprint() {
     document.getElementById("imprintScreen").style.display = "block";
 }
 
+/**
+ * Function to close the screen with the imprint and privacy police,
+ */
 function closeImprint() {
     document.getElementById("imprintScreen").style.display = "none";
 }
 
+/**
+ * Function to toggle rotation from the screen.
+ */
 function toggleScreenRotation() {
     let rotateContainer = document.getElementById("rotation-container");
     let canvas = document.getElementById("canvas");
@@ -147,12 +202,18 @@ function toggleScreenRotation() {
     }
 }
 
+/**
+ * Function to enable the control button for mobile devices.
+ */
 function enableMobileBtn() {
     let bottomControls = document.getElementById("bottomControls");
     bottomControls.classList.remove("out-of-game");
     
 }
 
+/**
+ * Function to disable the control button for mobile devices.
+ */
 function disableMobileBtn() {
     let bottomControls = document.getElementById("bottomControls");
     bottomControls.classList.add("out-of-game");

@@ -16,6 +16,14 @@ const WALK_AUDIO = new Audio("./audio/walk.mp3");
 const YES_AUDIO = new Audio("./audio/yes.mp3");
 let soundMuted = false;
 
+/**
+ * Function to play an game audio.
+ * @param {Audio} audio - The audio to be played.
+ * @param {boolean} timeout - The value is true if timeout is wished.
+ * @param {number} time - The time of timeout.
+ * @param {boolean} loop - The value is true if loop is wished.
+ * @param {number} volume - The volume of the audio.
+ */
 function playSound(audio, timeout = false, time = 0, loop = false, volume = null) {
     if(volume)
         audio.volume = volume;
@@ -32,10 +40,17 @@ function playSound(audio, timeout = false, time = 0, loop = false, volume = null
     }
 }
 
+/**
+ * Function to pause an game audio.
+ * @param {Audio} audio - The audio to be paused.
+ */
 function pauseSound(audio){
     audio.pause();
 }
 
+/**
+ * Function to mute the game.
+ */
 function toggleSound() {
     soundMuted = !soundMuted;
     GAME_AUDIO.muted = soundMuted;
@@ -44,10 +59,16 @@ function toggleSound() {
                                     "./img/10_additional_icons/sound_on.png";
 }
 
+/**
+ * Function to play the background music.
+ */
 function playGameMusic() {
     playSound(GAME_AUDIO, false, 0, true, 0.2);
 }
 
+/**
+ * Function to pause the background music.
+ */
 function pauseGameMusic() {
     pauseSound(GAME_AUDIO);
 }

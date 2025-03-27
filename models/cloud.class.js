@@ -10,6 +10,9 @@ class Cloud extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Function to manage the movements.
+     */
     animate() {
         setInterval(()=> {
          this.moveLeft();
@@ -18,6 +21,10 @@ class Cloud extends MoveableObject {
         }, 1000/60);  
      }
 
+     /**
+     * Function to select dinamically between both types of clouds.
+     * @returns {number} - The value is 1 or 2.
+     */
      randomCloud() {
         return Math.floor(Math.random()*2 + 1);
     }

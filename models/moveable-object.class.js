@@ -11,6 +11,9 @@ class MoveableObject extends DrawableObject {
     deathAnimation = null;
     lastHit = 0;
 
+    /**
+     * Function to apply gravity to the moveable object.
+     */
     applyGravity() {
         setInterval(() => {
             if (!(this instanceof ThrowableObject)) {
@@ -33,10 +36,19 @@ class MoveableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+    /**
+     * Function to check with object is not on the ground.
+     */
     isAboveGround() {
         return this.y < 180;
     }
 
+    /**
+     * Function to handle the object animation according to its parameters.
+     * @param {Array} arr - The array of images to be animated.
+     * @param {number} fps - The frames per second, the interval wished.
+     * @param {boolean} moveLeft - The value is true, when the movement to left is wished during animation.
+     */
     playAnimation(arr, fps, moveLeft = false) {
         const intervalTime = (fps) ? fps : 1000 / 10; 
         const imgs = arr;
@@ -52,24 +64,42 @@ class MoveableObject extends DrawableObject {
         return intervalId;
     }
 
+    /**
+     * Function to cancel the animation by clearing its interval.
+     * @param {interval} intervalId - The animation interval.
+     */
     cancelAnimation(intervalId) {
         clearInterval(intervalId);
         return null;
     }
 
+    /**
+     * Function to stop the animation by clearing the intervals on the variable animationIntervals.
+     */
     stopAnimation() {
         clearInterval(this.animationIntervals);
         this.animationIntervals = null;
     }
 
+    /**
+     * Function to move the object to the right.
+     */
     moveRight() {
         this.x += this.speed;
     }
 
+    /**
+     * Function to move the object to the left.
+     */
     moveLeft() {
         this.x -= this.speed;
     }
 
+    /**
+     * Function to check the collision of the object with another object.
+     * @param {MoveableObject} mo - The object that is colliding.
+     * @returns {boolean} - The value is true when is colliding.
+     */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -77,6 +107,9 @@ class MoveableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
 
+    /**
+     * Function to reduce object's energy after a hit and play hurt sound.
+     */
     hit() {
         this.hurtSound();
         this.energy -= 5;
@@ -87,6 +120,9 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    /**
+     * Function to manage the hurt sounds according with its instance.
+     */
     hurtSound(){
         if(this instanceof Character) {
             if (!this.isDead())
@@ -100,12 +136,20 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    /**
+     * Function to control the hits that the object is getting according to the last hit gotten.
+     * @returns {boolean} - The value is true if hurt.
+     */
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
         return timePassed < 1;
     }
 
+    /**
+     * Function to check whether the object lost all energy.
+     * @returns {boolean} - The value is true when energy <= 0.
+     */
     isDead() {
         return this.energy <= 0;
     }

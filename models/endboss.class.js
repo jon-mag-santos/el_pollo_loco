@@ -70,6 +70,9 @@ class Endboss extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Function to manage the animations and movements.
+     */
     animate() {
         this.runInterval = setInterval(() => {
             if(this.isDead()){
@@ -96,6 +99,9 @@ class Endboss extends MoveableObject {
 
     }
 
+    /**
+     * Function to handle the walking animation.
+     */
     isWalking() {
         if(this.animationIntervals)
             this.stopAnimation();
@@ -104,15 +110,24 @@ class Endboss extends MoveableObject {
         }
     }
 
+    /**
+     * Function to pause the end boss when it is colliding.
+     */
     collisionPause() {
         this.speed = 0;
     }
 
+    /**
+     * Function to restore the end boss after collision pause.
+     */
     restoreSpeed(){
         this.booster += 0.25;
         this.speed = 15 + this.booster;
     }
 
+    /**
+     * Function to handle the hurting animation.
+     */
     isHurting() {
         if(!this.hurtAnimation) {
             if (this.animationIntervals)
@@ -131,10 +146,30 @@ class Endboss extends MoveableObject {
         }
     }
 
+    /**
+     * Function to handle the attacking animation.
+     */
+    isAttacking() {
+        if (!this.attackAnimation) {
+            this.cancelAllAnimations();
+            this.attackAnimation = this.playAnimation(this.IMAGES_ATTACK, 350);
+            setTimeout(() => {
+                this.attackAnimation = this.cancelAnimation(this.attackAnimation);
+            }, 1400);
+        }
+    }
+
+    /**
+     * Function to check if end boss got a new hit.
+     * @returns {boolean} - The value is true when energy is reduced
+     */
     newHit() {
         return this.energy != this.lastHit;
     }
 
+    /**
+     * Function to cancel all animations except death animation.
+     */
     cancelAllAnimations() {
         this.stopAnimation();
         this.hurtAnimation = this.cancelAnimation(this.hurtAnimation);
@@ -142,6 +177,9 @@ class Endboss extends MoveableObject {
         this.attackAnimation = this.cancelAnimation(this.attackAnimation);
     }
 
+    /**
+     * Function to show death animation.
+     */
     endBossDead() {
         if (!this.deathAnimation) {
             this.deathAnimation = this.playAnimation(this.IMAGES_DEAD, 150);
@@ -152,11 +190,17 @@ class Endboss extends MoveableObject {
         }
     }
 
+    /**
+     * Function to update status bar according to end boos's energy.
+     */
     updateStatusBar() {
         let percentage = (this.energy > 0 && this.energy < 30) ? 30 : this.energy;
         this.world.endBossBar.setPercentage(percentage);
     }
 
+    /**
+     * Function to clear all running animations.
+     */
     destructor() {
         clearInterval(this.runInterval);
         this.cancelAllAnimations();

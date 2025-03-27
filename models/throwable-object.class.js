@@ -38,6 +38,10 @@ class ThrowableObject extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Function to throw the object to the left or to the right.
+     * @param {boolean} otherDirection - The value is true if the character is moving left.
+     */
     throw(otherDirection) {
         this.speedY = 30;
         this.applyGravity();
@@ -55,15 +59,24 @@ class ThrowableObject extends MoveableObject {
         }, 60);
     }
 
+    /**
+     * Function to manage the rotation animation.
+     */
     animate() {
         this.animationIntervals = this.playAnimation(this.IMAGES_ROTATION, 50);
     }
 
+     /**
+     * Function to manage the splash animation.
+     */
     animateSplash() {
         this.stopAnimation();
         this.animationIntervals = this.playAnimation(this.IMAGES_SPLASH, 25);
     }
 
+    /**
+     * Function to clear all running animations.
+     */
     destructor() {
         clearInterval(this.animationIntervals);
     }

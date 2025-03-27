@@ -1,4 +1,8 @@
 let level1;
+
+/**
+ * Function represents the game level from background until enemies.
+ */
 function initLevel(){
     level1 = new Level(enemies = [
         new Snake(),
