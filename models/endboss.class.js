@@ -121,7 +121,7 @@ class Endboss extends MoveableObject {
      * Function to restore the end boss after collision pause.
      */
     restoreSpeed(){
-        this.booster += 0.25;
+        this.booster += 1;
         this.speed = 15 + this.booster;
     }
 

@@ -36,7 +36,11 @@ function playSound(audio, timeout = false, time = 0, loop = false, volume = null
         audio.loop = true;
         audio.play();
     }else if(!timeout && !loop && !soundMuted) {
-        audio.play();
+        if (!audio.paused && audio != WALK_AUDIO && audio != BOSS_INTRO_AUDIO) {
+            audio.currentTime = 0;
+            audio.play();
+        }else
+            audio.play();
     }
 }
 

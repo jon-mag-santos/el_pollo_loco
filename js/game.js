@@ -203,7 +203,7 @@ function closeStory() {
  * Function to toggle rotation from the screen.
  */
 function toggleScreenRotation() {
-    let rotateContainer = document.getElementById("rotation-container");
+    let rotateContainer = document.getElementById("rotationContainer");
     let canvas = document.getElementById("canvas");
     if (window.matchMedia("(orientation: portrait)").matches) {
         rotateContainer.style.display = "flex";
