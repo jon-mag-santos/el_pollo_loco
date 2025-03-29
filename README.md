@@ -1,7 +1,10 @@
 # El pollo loco
 Game built with HTML, CSS, and JavaScript.This HTML, CSS, and JavaScript-based game will delight more than simply children. The game depicts a character moving across a stage, collecting bottles and coins while battling opponents.
 
-## Features: 
+## Play NOW:
+https://jonas-m-dos-santos.developerakademie.net/el-pollo-loco/
+
+## Features 
 - Interactive gameplay with keyboard controllers.
 - An engaging tale with a hard boss battle.
 - Sound effects and background music to improve the gaming experience.
