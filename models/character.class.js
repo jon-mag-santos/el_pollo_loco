@@ -106,6 +106,8 @@ class Character extends MoveableObject {
         this.runInterval = setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
                 || this.world.keyboard.LEFT && this.x > 0) {
+                this.longIdle = false;
+                this.idleStart = false;
                 this.isWalking(this.world.keyboard.RIGHT);
             }
             
@@ -156,14 +158,14 @@ class Character extends MoveableObject {
     }
 
     /**
-     * Function to control the long idle animation after 15 seconds.
+     * Function to control the long idle animation.
      * @param {number} currentImage - The current image of the array
      * @param {Array} arr - The array of images to be animated.
      * @param {boolean} idle - The value must be true when the idle animation is wished.
      * @returns {Array} - The array of images.
      */
     isLongIdle(currentImage, arr, idle) {
-        if(!idle || this.afterJump || this.isAboveGround() || !this.world.canThrowObject()) {
+        if(!idle || this.afterJump || this.isAboveGround() || (!this.world.canThrowObject() && this.world.lastBottleThrown != 0)) {
             this.longIdle = false;
             this.idleStart = false;
             return arr;
@@ -171,7 +173,7 @@ class Character extends MoveableObject {
             this.currentImage = 0;
             this.idleStart = true;
         }
-        if (this.idleStart && currentImage % 100 == 0 || this.longIdle) {
+        if (this.idleStart && currentImage % 35 == 0 || this.longIdle) {
             this.longIdle = true;
             return this.IMAGES_LONG_IDLE;
         }else {
