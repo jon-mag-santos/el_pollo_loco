@@ -35,6 +35,7 @@ function playSound(audio, timeout = false, time = 0, loop = false, volume = null
     }else if(loop) {
         audio.loop = true;
         audio.play();
+        audio.muted = soundMuted;
     }else if(!timeout && !loop && !soundMuted) {
         if (!audio.paused && audio != WALK_AUDIO && audio != BOSS_INTRO_AUDIO) {
             audio.currentTime = 0;
@@ -56,7 +57,8 @@ function pauseSound(audio){
  * Function to mute the game.
  */
 function toggleSound() {
-    soundMuted = !soundMuted;
+    localStorage.setItem("soundOff", JSON.stringify(!JSON.parse(localStorage.getItem("soundOff"))));
+    soundMuted = JSON.parse(localStorage.getItem("soundOff"));
     GAME_AUDIO.muted = soundMuted;
     let soundBtn = document.getElementById("soundBtn");
     soundBtn.src = (soundMuted) ? "./img/10_additional_icons/sound_off.png" :

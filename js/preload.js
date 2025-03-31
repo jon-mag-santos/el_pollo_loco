@@ -191,3 +191,12 @@ audiosToPreload.forEach(file => {
     audio.preload = "auto"; // Ensures the browser preloads the file
     loadedAudios.push(audio);
 });
+
+
+//Check if the sound off is preset
+if (localStorage.getItem("soundOff") === null) {
+    localStorage.setItem("soundOff", JSON.stringify(false));
+}else if(JSON.parse(localStorage.getItem("soundOff"))) {
+    document.getElementById("soundBtn").src = "./img/10_additional_icons/sound_off.png";
+    soundMuted = true;
+}
