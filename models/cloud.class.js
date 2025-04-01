@@ -14,7 +14,7 @@ class Cloud extends MoveableObject {
      * Function to manage the movements.
      */
     animate() {
-        setInterval(()=> {
+        this.animationIntervals = setInterval(()=> {
          this.moveLeft();
          if(this.x < -1000)
             this.x = 6000;
@@ -27,5 +27,12 @@ class Cloud extends MoveableObject {
      */
      randomCloud() {
         return Math.floor(Math.random()*2 + 1);
+    }
+
+    /**
+     * Function to clear the running animation.
+     */
+    destructor() {
+        clearInterval(this.animationIntervals);
     }
 }

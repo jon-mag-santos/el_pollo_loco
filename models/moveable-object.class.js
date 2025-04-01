@@ -24,20 +24,27 @@ class MoveableObject extends DrawableObject {
                 if (this.y > 180)
                     this.y = 180
             } else {
-                if (!this.isSplashed) {
-                    this.y -= this.speedY;
-                    this.speedY -= this.acceleration;
-                    if(this.y >= 375){
-                        this.isSplashed = true;
-                        this.y = 375;
-                    }
-                }
+                this.isBottleSplashed();
             }
         }, 1000 / 25);
     }
 
     /**
-     * Function to check with object is not on the ground.
+     * Function to check if bottle is splashed.
+     */
+    isBottleSplashed() {
+        if (!this.isSplashed) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+            if(this.y >= 375){
+                this.isSplashed = true;
+                this.y = 375;
+            }
+        }
+    }
+
+    /**
+     * Function to check if object is not on the ground.
      * @returns {boolean} - The value is true when object is not on the ground.
      */
     isAboveGround() {
@@ -115,7 +122,7 @@ class MoveableObject extends DrawableObject {
      */
     hit() {
         this.hurtSound();
-        this.energy -= 5;
+        this.energy -= 10;
         if (this.energy <= 0) {
             this.energy = 0;
         } else {

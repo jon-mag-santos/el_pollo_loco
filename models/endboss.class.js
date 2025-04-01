@@ -4,7 +4,7 @@ class Endboss extends MoveableObject {
     width = 400;
     height = 390;
     booster = 1;
-    speed = 15;
+    speed = 20;
     energy = 100;
     walkAnimation = null;
     hurtAnimation = null;
@@ -76,27 +76,16 @@ class Endboss extends MoveableObject {
     animate() {
         this.runInterval = setInterval(() => {
             if(this.isDead()){
-                this.speed = 0;
-                this.cancelAllAnimations();
-                this.updateStatusBar();
-                this.endBossDead();
+                this.runDeathConditions();
             }else if(this.isHurt() && this.newHit()) {
-                this.updateStatusBar();
-                this.lastHit = this.energy;
-                this.isHurting();
+                this.runHurtConditions();
             }else if(!this.world.isCharacterTooFar(this) && !this.bossIntro) {
-                playSound(BOSS_INTRO_AUDIO);
-                setTimeout(() => {
-                    this.bossIntro = true;
-                }, 1500);
-            }else if(this.bossIntro) {
-                this.isWalking();
-            }else if(this.isColliding(this.world.character)) {
+                this.runIntroConditions();
+            }else if(this.isColliding(this.world.character) && !this.isDead()) {
                 this.isAttacking();
             }
         }, 150);
         this.animationIntervals = this.playAnimation(this.IMAGES_ALERT, 500);
-
     }
 
     /**
@@ -121,28 +110,24 @@ class Endboss extends MoveableObject {
      * Function to restore the end boss after collision pause.
      */
     restoreSpeed(){
-        this.booster += 1;
-        this.speed = 15 + this.booster;
+        this.speed = 20 + this.booster;
     }
 
     /**
      * Function to handle the hurting animation.
      */
     isHurting() {
-        if(!this.hurtAnimation) {
-            if (this.animationIntervals)
-                this.stopAnimation();
-            if (this.walkAnimation) {
-                this.collisionPause();
-            }
-            this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 300);
+        if(!this.hurtAnimation && !this.isDead()) {
+            this.cancelAllAnimations();
+            this.hurtAnimation = this.playAnimation(this.IMAGES_HURT, 200);
             setTimeout(() => {
                 this.hurtAnimation = this.cancelAnimation(this.hurtAnimation);
-                if(!this.walkAnimation) {
-                    this.isWalking();
-                }else
+                if (!this.isDead()) {
                     this.restoreSpeed();
-            }, 600);
+                    this.isWalking();
+                    this.booster += 15;
+                }  
+            }, 1200);
         }
     }
 
@@ -152,11 +137,57 @@ class Endboss extends MoveableObject {
     isAttacking() {
         if (!this.attackAnimation) {
             this.cancelAllAnimations();
-            this.attackAnimation = this.playAnimation(this.IMAGES_ATTACK, 350);
-            setTimeout(() => {
-                this.attackAnimation = this.cancelAnimation(this.attackAnimation);
-            }, 1400);
+            if (this.walkAnimation) {
+                this.collisionPause();
+                this.walkAnimation = this.cancelAnimation(this.walkAnimation);
+            }
+            this.attackAnimation = this.playAnimation(this.IMAGES_ATTACK, 150);
+            this.cancelAttack();
         }
+    }
+
+    /**
+     * Function to handle the death conditions & animation.
+     */
+    runDeathConditions() {
+        this.speed = 0;
+        this.cancelAllAnimations();
+        this.updateStatusBar();
+        this.endBossDead();
+    }
+
+     /**
+     * Function to handle the hurting conditions & animation.
+     */
+    runHurtConditions() {
+        this.updateStatusBar();
+        this.lastHit = this.energy;
+        this.isHurting();
+    }
+
+     /**
+     * Function to handle the intro conditions & animation.
+     */
+    runIntroConditions() {
+        playSound(BOSS_INTRO_AUDIO);
+        setTimeout(() => {
+            this.bossIntro = true;
+            this.isWalking();
+        }, 1500);
+    }
+
+    /**
+     * Function to cancel the attacking animation.
+     */
+    cancelAttack() {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = setTimeout(() => {
+            this.attackAnimation = this.cancelAnimation(this.attackAnimation);
+            if (!this.isDead()) {
+                this.restoreSpeed();
+                this.isWalking();
+            }
+        }, 1800);
     }
 
     /**
@@ -183,6 +214,8 @@ class Endboss extends MoveableObject {
     endBossDead() {
         if (!this.deathAnimation) {
             this.deathAnimation = this.playAnimation(this.IMAGES_DEAD, 150);
+            clearTimeout(this.timeoutId);
+            this.timeoutId = null;
             setTimeout(() => {
                 this.cancelAnimation(this.deathAnimation);
                 this.loadImage("img/4_enemie_boss_chicken/5_dead/G26.png");

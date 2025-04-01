@@ -27,6 +27,13 @@ class Coin extends MoveableObject {
      * Function to manage the animation.
      */
     animate() {
-        this.playAnimation(this.IMAGES_COIN, 200);
+        this.animationIntervals = this.playAnimation(this.IMAGES_COIN, 200);
+    }
+
+    /**
+     * Function to clear the running animation.
+     */
+    destructor() {
+        clearInterval(this.animationIntervals);
     }
 }

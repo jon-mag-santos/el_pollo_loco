@@ -103,35 +103,10 @@ class Character extends MoveableObject {
      * Function to manage the animations and movements.
      */
     animate() {
-        this.runInterval = setInterval(() => {
-            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
-                || this.world.keyboard.LEFT && this.x > 0) {
-                this.longIdle = false;
-                this.idleStart = false;
-                this.isWalking(this.world.keyboard.RIGHT);
-            }
-            
-            if(this.world.keyboard.UP || this.world.keyboard.SPACE){
-                playSound(JUMP_AUDIO);
-                this.isJumping();
-            }
-            
-            if(this.isAboveGround()){
-                this.afterJump = true;
-            }else
-                this.afterJump = false;
-
-            this.positionCameraX();
-        }, 1000/60);
-
+        this.runControl();
         this.animationIntervals = setInterval(() => {
             if(this.isDead()){
-                if(this.speed != 0){
-                    this.playAnimation(this.IMAGES_DEAD);
-                    setTimeout(() => {
-                        this.speed = 0;
-                    }, 350);
-                }
+                this.playDeathAnimation();
             }else if(this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
@@ -142,6 +117,36 @@ class Character extends MoveableObject {
                 this.playAnimation(this.IMAGES_IDLE, true);
             }
         }, 150);  
+    }
+
+    /**
+     * Function to control keyboard events, character y-position and camera x-position.
+     */
+    runControl() {
+        this.runInterval = setInterval(() => {
+            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
+                || this.world.keyboard.LEFT && this.x > 0) {
+                this.longIdle = false;
+                this.idleStart = false;
+                this.isWalking(this.world.keyboard.RIGHT);
+            }
+            if(this.world.keyboard.UP || this.world.keyboard.SPACE){
+                playSound(JUMP_AUDIO);
+                this.isJumping();
+            }
+            this.isAfterJump();
+            this.positionCameraX();
+        }, 1000/60);
+    }
+
+    /**
+     * Function to check character y-position after jump.
+     */
+    isAfterJump() {
+        if(this.isAboveGround()){
+            this.afterJump = true;
+        }else
+            this.afterJump = false;
     }
 
     /**
@@ -217,12 +222,29 @@ class Character extends MoveableObject {
     takingHit() {
         if (!this.gettingHit) {
             this.hit();
+            this.speed = 2;
+            setTimeout(() => {
+                this.speed = 10;
+                this.gettingHit = false;
+            }, 500);
             this.gettingHit = true;
         } else {
             let timePassed = new Date().getTime() - this.lastHit;
             timePassed = timePassed / 1000;
             if (timePassed > 1)
                 this.gettingHit = false;
+        }
+    }
+
+    /**
+     * Function to play the character's death animation.
+     */
+    playDeathAnimation() {
+        if(this.speed != 0){
+            this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+                this.speed = 0;
+            }, 350);
         }
     }
 
