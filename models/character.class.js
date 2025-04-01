@@ -124,15 +124,17 @@ class Character extends MoveableObject {
      */
     runControl() {
         this.runInterval = setInterval(() => {
-            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
-                || this.world.keyboard.LEFT && this.x > 0) {
-                this.longIdle = false;
-                this.idleStart = false;
-                this.isWalking(this.world.keyboard.RIGHT);
-            }
-            if(this.world.keyboard.UP || this.world.keyboard.SPACE){
-                playSound(JUMP_AUDIO);
-                this.isJumping();
+            if(!this.isDead()) {
+                if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x 
+                    || this.world.keyboard.LEFT && this.x > 0) {
+                    this.longIdle = false;
+                    this.idleStart = false;
+                    this.isWalking(this.world.keyboard.RIGHT);
+                }
+                if(this.world.keyboard.UP || this.world.keyboard.SPACE){
+                    playSound(JUMP_AUDIO);
+                    this.isJumping();
+                }
             }
             this.isAfterJump();
             this.positionCameraX();
