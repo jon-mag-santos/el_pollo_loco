@@ -242,12 +242,11 @@ class Character extends MoveableObject {
      * Function to play the character's death animation.
      */
     playDeathAnimation() {
-        if(this.speed != 0){
-            this.playAnimation(this.IMAGES_DEAD);
-            setTimeout(() => {
-                this.speed = 0;
-            }, 350);
-        }
+        this.speed = 0;
+        this.deathAnimation =this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            clearInterval(this.deathAnimation);
+        }, 350);
     }
 
     /**

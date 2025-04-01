@@ -328,7 +328,7 @@ class World {
             this.level.endboss[0].speed = 0;
             setTimeout(() => {
                 this.gameOver(false);
-            }, 1200);
+            }, 700);
         } else if (this.level.enemies.length > 0) {
             this.checkEnemiesDeaths();
         }   
